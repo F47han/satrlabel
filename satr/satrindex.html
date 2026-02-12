@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satr | Timeless Abayas</title>
+    <style>
+        /* Immediate background application */
+        html {
+            background-color: #4a3326;
+            min-height: 100%;
+        }
+        body {
+            background: linear-gradient(to bottom, #4a3326 0%, #4a3326 55%, #ffffff 100%);
+            margin: 0;
+            min-height: 100vh;
+        }
+        /* Hide content until fonts load to prevent layout shift */
+        body:not(.fonts-loaded) * {
+            opacity: 0;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500&family=Playfair+Display+SC:wght@400;700;900&display=swap" rel="stylesheet" onload="document.body.classList.add('fonts-loaded')">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --dark-brown: #4a3326;
+            --medium-brown: #7a6855;
+            --light-brown: #a89a89;
+            --off-white: #f9f7f5;
+            --white: #ffffff;
+            --transition: all 0.3s ease;
+            --animation-timing: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--dark-brown);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.5rem;
+            position: relative;
+            overflow-x: hidden;
+            background: linear-gradient(to bottom, var(--dark-brown) 0%, var(--dark-brown) 55%, var(--white) 100%) !important;
+        }
+
+        /* Gradient overlay for depth - STATIC, no animation to prevent flash */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 20%, rgba(74, 51, 38, 0.08) 0%, rgba(255, 255, 255, 0) 60%);
+            z-index: -1;
+            opacity: 1; /* Removed animation - prevents repaint flash */
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            width: 100%;
+            max-width: 900px;
+            padding-top: 1rem;
+            position: relative;
+            z-index: 10;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1.2s var(--animation-timing) 0.3s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-family: 'Playfair Display SC', serif;
+            font-size: 4.8rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.1em;
+            color: var(--white);
+            position: relative;
+            display: inline-block;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+            opacity: 0;
+            transform: translateY(15px);
+            animation: fadeInUp 1.4s var(--animation-timing) 0.6s forwards;
+        }
+
+        h1::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 1.5px;
+            background-color: var(--white);
+            opacity: 0;
+            transform: translateX(-50%) scaleX(0.8);
+            animation: underlineGrow 1.2s var(--animation-timing) 1.2s forwards;
+        }
+
+        @keyframes underlineGrow {
+            to {
+                opacity: 1;
+                transform: translateX(-50%) scaleX(1);
+            }
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.8rem;
+            cursor: pointer;
+            position: absolute;
+            top: 1.2rem;
+            right: 1.2rem;
+            z-index: 100;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            animation: fadeIn 1s ease-in 0.8s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        nav {
+            margin-top: 1.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.35);
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInUp 1.2s var(--animation-timing) 0.9s forwards;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--white);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            font-size: 1rem;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            padding: 0.6rem 0.4rem;
+            border-radius: 4px;
+            transition: var(--transition);
+            position: relative;
+            display: inline-block;
+            min-width: 80px;
+            text-align: center;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(8px);
+        }
+
+        /* Staggered nav link animations */
+        nav a:nth-child(1) { animation: fadeInUp 0.9s var(--animation-timing) 1.2s forwards; }
+        nav a:nth-child(2) { animation: fadeInUp 0.9s var(--animation-timing) 1.35s forwards; }
+        nav a:nth-child(3) { animation: fadeInUp 0.9s var(--animation-timing) 1.5s forwards; }
+        nav a:nth-child(4) { animation: fadeInUp 0.9s var(--animation-timing) 1.65s forwards; }
+
+        nav a:hover, 
+        nav a.active {
+            color: var(--white);
+        }
+
+        nav a::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+            width: 60%;
+            height: 1.5px;
+            background-color: var(--white);
+            transition: var(--transition);
+            transform-origin: center;
+        }
+
+        nav a:hover::after,
+        nav a.active::after {
+            transform: translateX(-50%) scaleX(1);
+        }
+
+        .brand-description {
+            max-width: 750px;
+            text-align: center;
+            margin: 2.5rem auto 3.5rem;
+            font-size: 1.4rem;
+            font-weight: 300;
+            color: var(--white);
+            line-height: 1.85;
+            padding: 0 1.5rem;
+            font-style: italic;
+            position: relative;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            z-index: 5;
+            opacity: 0;
+            transform: translateY(25px);
+            animation: fadeInUp 1.6s var(--animation-timing) 1.8s forwards;
+        }
+
+        .brand-description::before,
+        .brand-description::after {
+            content: '"';
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4.2rem;
+            color: rgba(255, 255, 255, 0.12);
+            position: absolute;
+            line-height: 1;
+            z-index: -1;
+            opacity: 0;
+            animation: fadeIn 2s ease-in-out 2.2s forwards;
+        }
+
+        .brand-description::before {
+            top: -2rem;
+            left: -1.3rem;
+        }
+
+        .brand-description::after {
+            content: '"';
+            bottom: -2.7rem;
+            right: -1.3rem;
+            transform: rotate(180deg);
+        }
+
+        .products-section {
+            width: 100%;
+            max-width: 1300px;
+            margin: 0 auto;
+            z-index: 5;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1.4s var(--animation-timing) 2.4s forwards;
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.3rem;
+            margin-bottom: 3rem;
+            color: var(--dark-brown);
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            animation: fadeIn 1.2s var(--animation-timing) 2.6s forwards;
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 65px;
+            height: 2px;
+            background-color: var(--medium-brown);
+            opacity: 0;
+            animation: underlineGrow 1.2s var(--animation-timing) 2.8s forwards;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.2rem;
+            width: 100%;
+            margin-top: 1.2rem;
+        }
+
+        .product-card {
+            display: block;
+            background: var(--white);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+            position: relative;
+            min-height: 490px;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            transform: translateY(40px);
+            will-change: transform, opacity;
+        }
+
+        /* Staggered product card animations */
+        .product-card:nth-child(1) { animation: fadeInUp 1.2s var(--animation-timing) 3s forwards; }
+        .product-card:nth-child(2) { animation: fadeInUp 1.2s var(--animation-timing) 3.2s forwards; }
+        .product-card:nth-child(3) { animation: fadeInUp 1.2s var(--animation-timing) 3.4s forwards; }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+            transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .product-image-placeholder {
+            width: 100%;
+            height: 330px;
+            background: linear-gradient(135deg, var(--light-brown) 0%, var(--off-white) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s var(--animation-timing);
+        }
+
+        .product-card:hover .product-image-placeholder {
+            transform: translateY(-5px);
+        }
+
+        .product-card.appear .product-image-placeholder {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.2s;
+        }
+
+        .product-image-placeholder::before {
+            content: "";
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(74, 51, 38, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
+            top: -50%;
+            left: -50%;
+            transform: rotate(30deg);
+        }
+
+        .product-image-placeholder span {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            color: var(--medium-brown);
+            opacity: 0.75;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 300;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.5s ease, transform 0.5s var(--animation-timing);
+        }
+
+        .product-card.appear .product-image-placeholder span {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.4s;
+        }
+
+        .product-card h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.85rem;
+            margin: 1.6rem 1.6rem 0.9rem;
+            color: var(--dark-brown);
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.5s ease, transform 0.5s var(--animation-timing);
+        }
+
+        .product-card.appear h2 {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.5s;
+        }
+
+        .product-card p {
+            margin: 0 1.6rem 1.6rem;
+            font-size: 1.03rem;
+            color: var(--dark-brown);
+            opacity: 0;
+            line-height: 1.75;
+            flex-grow: 1;
+            transform: translateY(10px);
+            transition: opacity 0.5s ease, transform 0.5s var(--animation-timing);
+        }
+
+        .product-card.appear p {
+            opacity: 0.87;
+            transform: translateY(0);
+            transition-delay: 0.6s;
+        }
+
+        footer {
+            margin-top: 4rem;
+            padding: 1.8rem 1rem;
+            text-align: center;
+            width: 100%;
+            max-width: 800px;
+            border-top: 1px solid var(--light-brown);
+            margin-bottom: 1.5rem;
+            z-index: 5;
+            opacity: 0;
+            transform: translateY(15px);
+            animation: fadeInUp 1.2s var(--animation-timing) 3.8s forwards;
+        }
+
+        footer p {
+            font-size: 0.92rem;
+            color: var(--dark-brown);
+            letter-spacing: 0.5px;
+            line-height: 1.6;
+        }
+
+        /* Scroll-triggered animations */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s var(--animation-timing), transform 0.8s var(--animation-timing);
+        }
+
+        .scroll-animate.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Reduced motion preference */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            
+            .product-card:hover {
+                transform: translateY(-4px);
+            }
+            
+            html {
+                background-color: #4a3326 !important;
+            }
+            body {
+                background: linear-gradient(to bottom, #4a3326 0%, #4a3326 55%, #ffffff 100%) !important;
+            }
+        }
+
+        /* Tablet Optimization */
+        @media (min-width: 768px) {
+            body { padding: 2rem; }
+            h1 { font-size: 5.1rem; }
+            nav { gap: 2.6rem; padding-top: 1.3rem; }
+            nav a { font-size: 1.08rem; letter-spacing: 1px; padding: 0.65rem 0.55rem; }
+            .brand-description { font-size: 1.55rem; margin: 3rem auto 4rem; max-width: 800px; padding: 0 2rem; }
+            .brand-description::before, .brand-description::after { font-size: 4.8rem; }
+            .section-title { font-size: 2.5rem; margin-bottom: 3.5rem; }
+            .section-title::after { width: 75px; bottom: -10px; }
+            .products-grid { gap: 2.6rem; margin-top: 1.5rem; }
+            .product-image-placeholder { height: 360px; }
+            .product-image-placeholder span { font-size: 1.7rem; }
+            .product-card h2 { font-size: 1.95rem; margin: 1.7rem 1.7rem 1rem; }
+            .product-card p { font-size: 1.08rem; margin: 0 1.7rem 1.8rem; }
+            footer { margin-top: 4.5rem; padding: 2rem; }
+            footer p { font-size: 0.98rem; }
+        }
+
+        /* Desktop Optimization */
+        @media (min-width: 1024px) {
+            h1 { font-size: 5rem; }
+            nav { gap: 3.2rem; }
+            nav a { font-size: 1.15rem; letter-spacing: 1.3px; padding: 0.75rem 0.65rem; }
+            .brand-description { font-size: 1.65rem; }
+            .section-title { font-size: 2.7rem; }
+            .products-grid { grid-template-columns: repeat(3, 1fr); gap: 3rem; }
+            .product-image-placeholder { height: 380px; }
+            .product-image-placeholder span { font-size: 1.8rem; }
+            .product-card h2 { font-size: 2.05rem; margin: 1.8rem 1.8rem 1.1rem; }
+            .product-card p { font-size: 1.1rem; margin: 0 1.8rem 1.9rem; }
+            footer { margin-top: 5rem; padding: 2.2rem; }
+        }
+
+        /* Mobile Menu for Small Screens */
+        @media (max-width: 767px) {
+            .menu-toggle { display: block; }
+            nav {
+                display: none;
+                flex-direction: column;
+                gap: 1.2rem;
+                padding-top: 1.4rem;
+                border-top: 1px solid rgba(255, 255, 255, 0.4);
+                background: rgba(74, 51, 38, 0.85);
+                border-radius: 12px;
+                margin-top: 1.2rem;
+                backdrop-filter: blur(5px);
+            }
+            nav.show { display: flex; opacity: 1; transform: translateY(0); }
+            nav a { font-size: 1.2rem; padding: 0.9rem 0; letter-spacing: 1.2px; min-width: auto; width: 100%; opacity: 1; transform: none; animation: none !important; }
+            nav a::after { display: none; }
+            nav a:hover { background: rgba(255, 255, 255, 0.15); }
+            h1 { font-size: 4rem; }
+            h1::after { width: 48px; bottom: -9px; }
+            .brand-description { font-size: 1.28rem; margin: 2.2rem auto 3rem; padding: 0 1.2rem; line-height: 1.8; }
+            .brand-description::before { font-size: 3.6rem; top: -1.7rem; left: -1rem; }
+            .brand-description::after { font-size: 3.6rem; bottom: -2.4rem; right: -1rem; }
+            .section-title { font-size: 2.1rem; margin-bottom: 2.7rem; }
+            .section-title::after { width: 60px; bottom: -8px; }
+            .products-grid { gap: 1.8rem; }
+            .product-image-placeholder { height: 300px; }
+            .product-image-placeholder span { font-size: 1.45rem; }
+            .product-card { min-height: 470px; }
+            .product-card h2 { font-size: 1.75rem; margin: 1.5rem 1.5rem 0.85rem; }
+            .product-card p { font-size: 1rem; margin: 0 1.5rem 1.5rem; line-height: 1.7; }
+            footer { margin-top: 3.5rem; padding: 1.6rem 1rem; }
+            .product-card { animation-duration: 1s !important; }
+            .product-card:hover { transform: translateY(-4px); box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button class="menu-toggle" id="menuToggle">☰</button>
+        <h1>Satr</h1>
+        <nav id="mainNav">
+            <a href="satrindex.html" class="active">Home</a>
+            <a href="productsatr.html">Products</a>
+            <a href="aboutme.html">About</a>
+            <a href="moodboard.html">Moods</a>
+        </nav>
+    </header>
+    
+    <main>
+        <p class="brand-description">
+            Satr was born from a personal journey, to create abayas that reflect identity while embracing modern elegance. Each piece is carefully crafted with intention and care, designed for women who move through the world with confidence and grace. This is more than clothing; it's a reflection of who you are.
+        </p>
+        
+        <section class="products-section">
+            <h2 class="section-title">Our Signature Pieces</h2>
+            <div class="products-grid">
+                <a href="productsatr.html" class="product-card scroll-animate">
+                    <div class="product-image-placeholder">
+                        <span>Desert Whisper</span>
+                    </div>
+                    <h2>Desert Whisper Abaya</h2>
+                    <p>Handcrafted from premium crepe with subtle pearl detailing along the cuffs and hem. Features a flowing silhouette and hidden inner pockets for everyday elegance.</p>
+                </a>
+                
+                <a href="productsatr.html" class="product-card scroll-animate">
+                    <div class="product-image-placeholder">
+                        <span>Midnight Elegance</span>
+                    </div>
+                    <h2>Midnight Elegance Abaya</h2>
+                    <p>Luxurious velvet abaya with delicate gold-thread embroidery at the neckline. Fully lined with silk for comfort, featuring a modest train and adjustable waist tie.</p>
+                </a>
+                
+                <a href="productsatr.html" class="product-card scroll-animate">
+                    <div class="product-image-placeholder">
+                        <span>Sand Dune Flow</span>
+                    </div>
+                    <h2>Sand Dune Flow Abaya</h2>
+                    <p>Lightweight chiffon abaya with layered sleeves and a subtle ombre effect from light beige to soft cream. Perfect for warm days with its breathable fabric and relaxed fit.</p>
+                </a>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 Satr. Handcrafted with love for the modern Muslimah.</p>
+    </footer>
+
+    <script>
+        // Critical fix: Ensure background is set immediately on load
+        document.documentElement.style.backgroundColor = '#4a3326';
+        document.body.style.background = 'linear-gradient(to bottom, #4a3326 0%, #4a3326 55%, #ffffff 100%)';
+        
+        // Mobile menu toggle and animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ensure fonts-loaded class is added if fonts load quickly
+            if (document.fonts && document.fonts.ready) {
+                document.fonts.ready.then(() => {
+                    document.body.classList.add('fonts-loaded');
+                });
+            } else {
+                // Fallback for browsers without FontFaceSet
+                setTimeout(() => {
+                    document.body.classList.add('fonts-loaded');
+                }, 300);
+            }
+            
+            const menuToggle = document.getElementById('menuToggle');
+            const nav = document.getElementById('mainNav');
+            
+            menuToggle.addEventListener('click', function() {
+                nav.classList.toggle('show');
+                if (nav.classList.contains('show')) {
+                    menuToggle.textContent = '✕';
+                } else {
+                    menuToggle.textContent = '☰';
+                }
+            });
+            
+            // Close menu when clicking a link on mobile
+            const navLinks = nav.querySelectorAll('a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 767) {
+                        nav.classList.remove('show');
+                        menuToggle.textContent = '☰';
+                    }
+                });
+            });
+            
+            // Close menu when clicking outside on mobile
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 767 && 
+                    !nav.contains(event.target) && 
+                    !menuToggle.contains(event.target) && 
+                    nav.classList.contains('show')) {
+                    nav.classList.remove('show');
+                    menuToggle.textContent = '☰';
+                }
+            });
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 767 && nav.classList.contains('show')) {
+                    nav.classList.remove('show');
+                    menuToggle.textContent = '☰';
+                }
+            });
+            
+            // Scroll-triggered animations
+            const animateOnScroll = () => {
+                const elements = document.querySelectorAll('.scroll-animate');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.3;
+                    
+                    if (elementPosition < screenPosition) {
+                        element.classList.add('appear');
+                    }
+                });
+            };
+            
+            // Initial check on load
+            window.addEventListener('load', animateOnScroll);
+            
+            // Check on scroll
+            window.addEventListener('scroll', animateOnScroll);
+            
+            // Check on resize
+            window.addEventListener('resize', animateOnScroll);
+            
+            // Trigger initial check
+            setTimeout(animateOnScroll, 300);
+            
+            // Additional safeguard: ensure background is set after DOM load
+            setTimeout(() => {
+                document.documentElement.style.backgroundColor = '#4a3326';
+                document.body.style.background = 'linear-gradient(to bottom, #4a3326 0%, #4a3326 55%, #ffffff 100%)';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
