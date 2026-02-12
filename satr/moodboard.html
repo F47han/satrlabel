@@ -370,52 +370,60 @@
         
         <div class="slider-container" id="sliderContainer">
             <div class="slider-wrapper" id="sliderWrapper">
+                
                 <section class="moodboard">
-                    <h2>Fahda</h2>
+                    <h2>Noor</h2>
                     <div class="image-placeholder">
-                        <img class="moodboard-image" src="fahdamoodboard.jpg" alt="Fahda Moodboard">
+                        <img class="moodboard-image" src="noormoodboard.JPG" alt="Noor Moodboard">
                     </div>
                 </section>
 
                 <section class="moodboard">
                     <h2>Dahlia</h2>
                     <div class="image-placeholder">
-                        <img class="moodboard-image" src="dahliamoodboard.jpg" alt="Dahlia Moodboard">
+                        <img class="moodboard-image" src="dahliamoodboard.JPG" alt="Dahlia Moodboard">
                     </div>
                 </section>
 
                 <section class="moodboard">
                     <h2>Nila</h2>
                     <div class="image-placeholder">
-                        <img class="moodboard-image" src="nilamoodboard.jpg" alt="Nila Moodboard">
+                        <img class="moodboard-image" src="nilamoodboard.JPG" alt="Nila Moodboard">
                     </div>
                 </section>
 
                 <section class="moodboard">
                     <h2>Sera</h2>
                     <div class="image-placeholder">
-                        <img class="moodboard-image" src="seramoodboard.jpg" alt="Sera Moodboard">
+                        <img class="moodboard-image" src="seramoodboard.JPG" alt="Sera Moodboard">
                     </div>
                 </section>
 
                 <section class="moodboard">
                     <h2>Layla</h2>
                     <div class="image-placeholder">
-                        <img class="moodboard-image" src="laylamoodboard.jpg" alt="Layla Moodboard">
+                        <img class="moodboard-image" src="laylamoodboard.JPG" alt="Layla Moodboard">
                     </div>
                 </section>
 
                 <section class="moodboard">
                     <h2>Fahda</h2>
                     <div class="image-placeholder">
-                        <img class="moodboard-image" src="fahdamoodboard.jpg" alt="Fahda Moodboard">
+                        <img class="moodboard-image" src="fahdamoodboard.JPG" alt="Fahda Moodboard">
+                    </div>
+                </section>
+
+                <section class="moodboard">
+                    <h2>Noor</h2>
+                    <div class="image-placeholder">
+                        <img class="moodboard-image" src="noormoodboard.JPG" alt="Noor Moodboard">
                     </div>
                 </section>
 
                 <section class="moodboard">
                     <h2>Dahlia</h2>
                     <div class="image-placeholder">
-                        <img class="moodboard-image" src="dahliamoodboard.jpg" alt="Dahlia Moodboard">
+                        <img class="moodboard-image" src="dahliamoodboard.JPG" alt="Dahlia Moodboard">
                     </div>
                 </section>
             </div>
@@ -436,7 +444,7 @@
             const sliderWrapper = document.getElementById('sliderWrapper');
             const slides = document.querySelectorAll('.moodboard');
             
-            let currentIndex = 1; // Start at first real slide
+            let currentIndex = 1; // Start at first real slide (Dahlia)
             let isDragging = false;
             let startX = 0;
             let currentTranslate = 0;
@@ -445,6 +453,7 @@
 
             updatePosition();
 
+            // Event Listeners
             sliderContainer.addEventListener('mousedown', dragStart);
             sliderContainer.addEventListener('touchstart', dragStart);
             sliderContainer.addEventListener('mouseup', dragEnd);
@@ -473,6 +482,7 @@
                 cancelAnimationFrame(animationID);
                 const movedBy = currentTranslate - prevTranslate;
 
+                // Move threshold
                 if (movedBy < -10) currentIndex++;
                 else if (movedBy > 10) currentIndex--;
 
@@ -498,6 +508,7 @@
                 setSliderTransform();
                 prevTranslate = currentTranslate;
 
+                // Handle Infinite Loop Jump
                 sliderWrapper.addEventListener('transitionend', function loopJump() {
                     if (currentIndex === 0) {
                         currentIndex = slides.length - 2;
