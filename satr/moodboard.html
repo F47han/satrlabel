@@ -126,53 +126,77 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const sliderContainer = document.getElementById('sliderContainer');
-            const sliderWrapper = document.getElementById('sliderWrapper');
-            const slides = document.querySelectorAll('.moodboard');
-            let currentIndex = 1;
-            let isDragging = false;
-            let startX = 0;
-            let currentTranslate = 0;
-            let prevTranslate = 0;
+    const sliderContainer = document.getElementById('sliderContainer');
+    const sliderWrapper = document.getElementById('sliderWrapper');
+    const slides = document.querySelectorAll('.moodboard');
+    let currentIndex = 1;
+    let isDragging = false;
+    let startX = 0;
+    let currentTranslate = 0;
+    let prevTranslate = 0;
 
-            const updatePosition = () => {
-                sliderWrapper.style.transition = 'none';
-                currentTranslate = currentIndex * -100;
-                prevTranslate = currentTranslate;
-                sliderWrapper.style.transform = `translateX(${currentTranslate}%)`;
-            };
+    const updatePosition = () => {
+        sliderWrapper.style.transition = 'none';
+        currentTranslate = currentIndex * -100;
+        prevTranslate = currentTranslate;
+        sliderWrapper.style.transform = `translateX(${currentTranslate}%)`;
+    };
 
+    updatePosition();
+
+    // Helper function to get X position for both Mouse and Touch
+    const getPositionX = (event) => {
+        return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
+    };
+
+    const dragStart = (e) => {
+        isDragging = true;
+        startX = getPositionX(e);
+        sliderWrapper.style.transition = 'none';
+        sliderContainer.style.cursor = 'grabbing';
+    };
+
+    const dragMove = (e) => {
+        if (!isDragging) return;
+        const currentX = getPositionX(e);
+        currentTranslate = prevTranslate + ((currentX - startX) / window.innerWidth) * 100;
+        sliderWrapper.style.transform = `translateX(${currentTranslate}%)`;
+    };
+
+    const dragEnd = () => {
+        if (!isDragging) return;
+        isDragging = false;
+        sliderContainer.style.cursor = 'grab';
+        
+        const movedBy = currentTranslate - prevTranslate;
+        
+        // Threshold to trigger slide change (10% of width)
+        if (movedBy < -10) currentIndex++;
+        else if (movedBy > 10) currentIndex--;
+
+        sliderWrapper.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
+        currentTranslate = currentIndex * -100;
+        sliderWrapper.style.transform = `translateX(${currentTranslate}%)`;
+        prevTranslate = currentTranslate;
+
+        sliderWrapper.addEventListener('transitionend', function loop() {
+            if (currentIndex === 0) currentIndex = slides.length - 2;
+            if (currentIndex === slides.length - 1) currentIndex = 1;
             updatePosition();
+            sliderWrapper.removeEventListener('transitionend', loop);
+        }, { once: true });
+    };
 
-            sliderContainer.addEventListener('mousedown', e => {
-                isDragging = true;
-                startX = e.pageX;
-                sliderWrapper.style.transition = 'none';
-            });
+    // Desktop Events
+    sliderContainer.addEventListener('mousedown', dragStart);
+    window.addEventListener('mousemove', dragMove);
+    window.addEventListener('mouseup', dragEnd);
 
-            sliderContainer.addEventListener('mousemove', e => {
-                if (!isDragging) return;
-                const currentX = e.pageX;
-                currentTranslate = prevTranslate + ((currentX - startX) / window.innerWidth) * 100;
-                sliderWrapper.style.transform = `translateX(${currentTranslate}%)`;
-            });
-
-            sliderContainer.addEventListener('mouseup', () => {
-                isDragging = false;
-                const movedBy = currentTranslate - prevTranslate;
-                if (movedBy < -10) currentIndex++;
-                else if (movedBy > 10) currentIndex--;
-
-                sliderWrapper.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
-                currentTranslate = currentIndex * -100;
-                sliderWrapper.style.transform = `translateX(${currentTranslate}%)`;
-                prevTranslate = currentTranslate;
-
-                sliderWrapper.addEventListener('transitionend', function loop() {
-                    if (currentIndex === 0) currentIndex = slides.length - 2;
-                    if (currentIndex === slides.length - 1) currentIndex = 1;
-                    updatePosition();
-                    sliderWrapper.removeEventListener('transitionend', loop);
+    // Mobile/Touch Events
+    sliderContainer.addEventListener('touchstart', dragStart, { passive: true });
+    sliderContainer.addEventListener('touchmove', dragMove, { passive: true });
+    sliderContainer.addEventListener('touchend', dragEnd);
+});
                 });
             });
         });
