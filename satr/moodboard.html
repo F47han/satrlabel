@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mood | Satr</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500&family=Playfair+Display+SC:wght@400;700;900&display=swap" rel="stylesheet" onload="document.body.classList.add('fonts-loaded')">
     <style>
         html {
             background-color: #4a3326;
@@ -31,36 +32,65 @@
             --white: #ffffff;
             --animation-timing: cubic-bezier(0.16, 1, 0.3, 1);
         }
+
+        /* Prevent layout shift before fonts load */
+        body:not(.fonts-loaded) * { opacity: 0; }
+
         header {
             text-align: center;
             margin-bottom: 2rem;
             width: 100%;
             max-width: 900px;
             padding-top: 1rem;
-            z-index: 10;
+            z-index: 100; /* Higher z-index for the menu */
             opacity: 0;
             animation: fadeInUp 1.2s var(--animation-timing) 0.3s forwards;
         }
+
         @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+
         h1 {
             font-family: 'Playfair Display SC', serif;
             font-size: 4.8rem;
             color: var(--white);
             text-shadow: 0 2px 6px rgba(0,0,0,0.25);
         }
+
+        /* Mobile Menu Toggle - From Part 2 */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.8rem;
+            cursor: pointer;
+            position: absolute;
+            top: 1.2rem;
+            right: 1.2rem;
+            z-index: 101;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
         nav {
             margin-top: 1.5rem;
             display: flex;
             justify-content: center;
             gap: 2rem;
             border-top: 1px solid rgba(255, 255, 255, 0.35);
+            transition: all 0.4s ease;
         }
+
         nav a {
             text-decoration: none;
             color: var(--white);
             text-transform: uppercase;
             padding: 0.6rem 0.4rem;
+            font-weight: 500;
+            letter-spacing: 0.8px;
+            font-size: 1rem;
         }
+
+        /* Slider Styles */
         .slider-container {
             position: relative;
             width: 100vw;
@@ -90,113 +120,156 @@
             color: var(--white);
             margin-bottom: 2rem;
         }
+
+        /* Mobile Responsive Fixes - Matching Part 2 Navigation */
         @media (max-width: 767px) {
             h1 { font-size: 3.2rem; }
             .moodboard h2 { font-size: 2.8rem; }
             .image-placeholder { height: 50vh; }
+
+            .menu-toggle { display: block; }
+
+            nav {
+                display: none;
+                flex-direction: column;
+                gap: 1.2rem;
+                padding: 1.4rem;
+                background: rgba(74, 51, 38, 0.9);
+                border-radius: 12px;
+                backdrop-filter: blur(8px);
+                margin-top: 1.2rem;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            nav.show { display: flex; }
+            
+            nav a {
+                font-size: 1.2rem;
+                padding: 0.9rem 0;
+                width: 100%;
+                text-align: center;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            }
         }
     </style>
 </head>
 <body>
     <header>
+        <button class="menu-toggle" id="menuToggle">☰</button>
         <h1>Satr</h1>
-        <nav>
+        <nav id="mainNav">
             <a href="satrindex.html">Home</a>
             <a href="productsatr.html">Products</a>
             <a href="aboutme.html">About</a>
-            <a href="moodboard.html">Moods</a>
+            <a href="moodboard.html" class="active">Moods</a>
         </nav>
     </header>
+
     <main>
         <div class="slider-container" id="sliderContainer">
             <div class="slider-wrapper" id="sliderWrapper">
                 <section class="moodboard"><h2>Noor</h2><div class="image-placeholder"><img class="moodboard-image" src="noormoodboard.jpg"></div></section>
-                
                 <section class="moodboard"><h2>Dahlia</h2><div class="image-placeholder"><img class="moodboard-image" src="dahliamoodboard.jpg"></div></section>
                 <section class="moodboard"><h2>Nila</h2><div class="image-placeholder"><img class="moodboard-image" src="nilamoodboard.jpg"></div></section>
                 <section class="moodboard"><h2>Sera</h2><div class="image-placeholder"><img class="moodboard-image" src="seramoodboard.jpg"></div></section>
                 <section class="moodboard"><h2>Layla</h2><div class="image-placeholder"><img class="moodboard-image" src="laylamoodboard.jpg"></div></section>
                 <section class="moodboard"><h2>Fahda</h2><div class="image-placeholder"><img class="moodboard-image" src="fahdamoodboard.jpg"></div></section>
                 <section class="moodboard"><h2>Noor</h2><div class="image-placeholder"><img class="moodboard-image" src="noormoodboard.jpg"></div></section>
-
-                <section class="moodboard"><h2>Dahlia</h2><div class="image-placeholder"><img class="moodboard-image" src="dahliamoodboard.JPG"></div></section>
+                <section class="moodboard"><h2>Dahlia</h2><div class="image-placeholder"><img class="moodboard-image" src="dahliamoodboard.jpg"></div></section>
             </div>
         </div>
     </main>
 
     <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const sliderContainer = document.getElementById('sliderContainer');
-    const sliderWrapper = document.getElementById('sliderWrapper');
-    const slides = document.querySelectorAll('.moodboard');
-    let currentIndex = 1;
-    let isDragging = false;
-    let startX = 0;
-    let currentTranslate = 0;
-    let prevTranslate = 0;
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Navigation Logic (From Part 2) ---
+            const menuToggle = document.getElementById('menuToggle');
+            const nav = document.getElementById('mainNav');
+            
+            menuToggle.addEventListener('click', function() {
+                nav.classList.toggle('show');
+                menuToggle.textContent = nav.classList.contains('show') ? '✕' : '☰';
+            });
 
-    const updatePosition = () => {
-        sliderWrapper.style.transition = 'none';
-        currentTranslate = currentIndex * -100;
-        prevTranslate = currentTranslate;
-        sliderWrapper.style.transform = `translateX(${currentTranslate}%)`;
-    };
+            // Close menu on link click
+            nav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 767) {
+                        nav.classList.remove('show');
+                        menuToggle.textContent = '☰';
+                    }
+                });
+            });
 
-    updatePosition();
+            // --- Slider Logic (Universal Touch/Mouse) ---
+            const sliderContainer = document.getElementById('sliderContainer');
+            const sliderWrapper = document.getElementById('sliderWrapper');
+            const slides = document.querySelectorAll('.moodboard');
+            let currentIndex = 1;
+            let isDragging = false;
+            let startX = 0;
+            let currentTranslate = 0;
+            let prevTranslate = 0;
 
-    // Helper function to get X position for both Mouse and Touch
-    const getPositionX = (event) => {
-        return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
-    };
+            const updatePosition = () => {
+                sliderWrapper.style.transition = 'none';
+                currentTranslate = currentIndex * -100;
+                prevTranslate = currentTranslate;
+                sliderWrapper.style.transform = `translateX(${currentTranslate}%)`;
+            };
 
-    const dragStart = (e) => {
-        isDragging = true;
-        startX = getPositionX(e);
-        sliderWrapper.style.transition = 'none';
-        sliderContainer.style.cursor = 'grabbing';
-    };
-
-    const dragMove = (e) => {
-        if (!isDragging) return;
-        const currentX = getPositionX(e);
-        currentTranslate = prevTranslate + ((currentX - startX) / window.innerWidth) * 100;
-        sliderWrapper.style.transform = `translateX(${currentTranslate}%)`;
-    };
-
-    const dragEnd = () => {
-        if (!isDragging) return;
-        isDragging = false;
-        sliderContainer.style.cursor = 'grab';
-        
-        const movedBy = currentTranslate - prevTranslate;
-        
-        // Threshold to trigger slide change (10% of width)
-        if (movedBy < -10) currentIndex++;
-        else if (movedBy > 10) currentIndex--;
-
-        sliderWrapper.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
-        currentTranslate = currentIndex * -100;
-        sliderWrapper.style.transform = `translateX(${currentTranslate}%)`;
-        prevTranslate = currentTranslate;
-
-        sliderWrapper.addEventListener('transitionend', function loop() {
-            if (currentIndex === 0) currentIndex = slides.length - 2;
-            if (currentIndex === slides.length - 1) currentIndex = 1;
             updatePosition();
-            sliderWrapper.removeEventListener('transitionend', loop);
-        }, { once: true });
-    };
 
-    // Desktop Events
-    sliderContainer.addEventListener('mousedown', dragStart);
-    window.addEventListener('mousemove', dragMove);
-    window.addEventListener('mouseup', dragEnd);
+            const getPositionX = (event) => event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
 
-    // Mobile/Touch Events
-    sliderContainer.addEventListener('touchstart', dragStart, { passive: true });
-    sliderContainer.addEventListener('touchmove', dragMove, { passive: true });
-    sliderContainer.addEventListener('touchend', dragEnd);
-}); // This is the only closing bracket needed for the whole block
-</script>
+            const dragStart = (e) => {
+                if(e.target.closest('nav')) return; // Don't drag if clicking menu
+                isDragging = true;
+                startX = getPositionX(e);
+                sliderWrapper.style.transition = 'none';
+            };
+
+            const dragMove = (e) => {
+                if (!isDragging) return;
+                const currentX = getPositionX(e);
+                currentTranslate = prevTranslate + ((currentX - startX) / window.innerWidth) * 100;
+                sliderWrapper.style.transform = `translateX(${currentTranslate}%)`;
+            };
+
+            const dragEnd = () => {
+                if (!isDragging) return;
+                isDragging = false;
+                const movedBy = currentTranslate - prevTranslate;
+                if (movedBy < -10) currentIndex++;
+                else if (movedBy > 10) currentIndex--;
+
+                sliderWrapper.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
+                currentTranslate = currentIndex * -100;
+                sliderWrapper.style.transform = `translateX(${currentTranslate}%)`;
+                prevTranslate = currentTranslate;
+
+                sliderWrapper.addEventListener('transitionend', function loop() {
+                    if (currentIndex === 0) currentIndex = slides.length - 2;
+                    if (currentIndex === slides.length - 1) currentIndex = 1;
+                    updatePosition();
+                    sliderWrapper.removeEventListener('transitionend', loop);
+                }, { once: true });
+            };
+
+            sliderContainer.addEventListener('mousedown', dragStart);
+            window.addEventListener('mousemove', dragMove);
+            window.addEventListener('mouseup', dragEnd);
+            sliderContainer.addEventListener('touchstart', dragStart, { passive: true });
+            sliderContainer.addEventListener('touchmove', dragMove, { passive: true });
+            sliderContainer.addEventListener('touchend', dragEnd);
+
+            // Font Load Helper
+            if (document.fonts) {
+                document.fonts.ready.then(() => document.body.classList.add('fonts-loaded'));
+            } else {
+                setTimeout(() => document.body.classList.add('fonts-loaded'), 300);
+            }
+        });
+    </script>
 </body>
 </html>
