@@ -125,7 +125,7 @@
     </main>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
     const sliderContainer = document.getElementById('sliderContainer');
     const sliderWrapper = document.getElementById('sliderWrapper');
     const slides = document.querySelectorAll('.moodboard');
@@ -196,10 +196,7 @@
     sliderContainer.addEventListener('touchstart', dragStart, { passive: true });
     sliderContainer.addEventListener('touchmove', dragMove, { passive: true });
     sliderContainer.addEventListener('touchend', dragEnd);
-});
-                });
-            });
-        });
-    </script>
+}); // This is the only closing bracket needed for the whole block
+</script>
 </body>
 </html>
