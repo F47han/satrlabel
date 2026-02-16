@@ -26,7 +26,6 @@
         @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
         h1 { font-family: 'Playfair Display SC', serif; font-size: 4.2rem; text-shadow: 0 2px 6px rgba(0,0,0,0.25); }
 
-        /* Mobile Menu Button */
         .menu-toggle {
             display: none; background: none; border: none; color: white;
             font-size: 1.8rem; cursor: pointer; position: absolute;
@@ -42,7 +41,6 @@
             padding: 0.6rem 0.4rem; font-size: 0.9rem; letter-spacing: 1px;
         }
 
-        /* Slider Styles */
         .slider-container { width: 100vw; overflow: hidden; cursor: grab; }
         .slider-wrapper { display: flex; will-change: transform; }
         .moodboard {
@@ -54,7 +52,6 @@
             margin-bottom: 0.5rem;
         }
         
-        /* New Description Styling */
         .mood-desc {
             max-width: 600px; font-family: 'Cormorant Garamond', serif;
             font-size: 1.2rem; line-height: 1.5; margin-bottom: 2rem;
@@ -99,6 +96,12 @@
     <main>
         <div class="slider-container" id="sliderContainer">
             <div class="slider-wrapper" id="sliderWrapper">
+                <section class="moodboard">
+                    <h2>Fahda</h2>
+                    <p class="mood-desc">Glamour Black — A classic black elevated with subtle wildness. Fahda’s leopard‑pattern lace adds a modern, confident edge while keeping the silhouette timeless.</p>
+                    <div class="image-placeholder"><img class="moodboard-image" src="fahdamoodboard.jpg"></div>
+                </section>
+
                 <section class="moodboard">
                     <h2>Noor</h2>
                     <p class="mood-desc">White — Light, airy, and effortlessly pure. Noor captures and reflects light with every step, offering a serene, angelic presence.</p>
@@ -146,7 +149,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Navigation
             const menuToggle = document.getElementById('menuToggle');
             const nav = document.getElementById('mainNav');
             menuToggle.addEventListener('click', () => {
@@ -154,10 +156,9 @@
                 menuToggle.textContent = nav.classList.contains('show') ? '✕' : '☰';
             });
 
-            // Slider
             const sliderWrapper = document.getElementById('sliderWrapper');
             const slides = document.querySelectorAll('.moodboard');
-            let currentIndex = 1;
+            let currentIndex = 1; // Starts on Noor
             let isDragging = false, startX = 0, currentTranslate = 0, prevTranslate = 0;
 
             const updatePosition = () => {
@@ -169,36 +170,53 @@
             updatePosition();
 
             const getX = (e) => e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
-            const dragStart = (e) => { isDragging = true; startX = getX(e); sliderWrapper.style.transition = 'none'; };
+            
+            const dragStart = (e) => { 
+                isDragging = true; 
+                startX = getX(e); 
+                sliderWrapper.style.transition = 'none'; 
+            };
+
             const dragMove = (e) => {
                 if (!isDragging) return;
-                currentTranslate = prevTranslate + ((getX(e) - startX) / window.innerWidth) * 100;
+                const currentX = getX(e);
+                currentTranslate = prevTranslate + ((currentX - startX) / window.innerWidth) * 100;
                 sliderWrapper.style.transform = `translateX(${currentTranslate}%)`;
             };
+
             const dragEnd = () => {
                 if (!isDragging) return;
                 isDragging = false;
                 const movedBy = currentTranslate - prevTranslate;
-                if (movedBy < -10) currentIndex++; else if (movedBy > 10) currentIndex--;
+
+                if (movedBy < -10) currentIndex++;
+                else if (movedBy > 10) currentIndex--;
+
                 sliderWrapper.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
                 currentTranslate = currentIndex * -100;
                 sliderWrapper.style.transform = `translateX(${currentTranslate}%)`;
                 prevTranslate = currentTranslate;
 
                 sliderWrapper.addEventListener('transitionend', function loop() {
-                    if (currentIndex === 0) currentIndex = slides.length - 2;
-                    if (currentIndex === slides.length - 1) currentIndex = 1;
-                    updatePosition();
-                    sliderWrapper.removeEventListener('transitionend', loop);
+                    // Logic to jump between clones and originals seamlessly
+                    if (currentIndex === 0) {
+                        currentIndex = slides.length - 2; 
+                        updatePosition();
+                    }
+                    if (currentIndex === slides.length - 1) {
+                        currentIndex = 1; 
+                        updatePosition();
+                    }
                 }, { once: true });
             };
 
-            document.getElementById('sliderContainer').addEventListener('mousedown', dragStart);
+            const container = document.getElementById('sliderContainer');
+            container.addEventListener('mousedown', dragStart);
             window.addEventListener('mousemove', dragMove);
             window.addEventListener('mouseup', dragEnd);
-            document.getElementById('sliderContainer').addEventListener('touchstart', dragStart);
-            document.getElementById('sliderContainer').addEventListener('touchmove', dragMove);
-            document.getElementById('sliderContainer').addEventListener('touchend', dragEnd);
+            container.addEventListener('touchstart', dragStart);
+            container.addEventListener('touchmove', dragMove);
+            container.addEventListener('touchend', dragEnd);
 
             if (document.fonts) document.fonts.ready.then(() => document.body.classList.add('fonts-loaded'));
         });
