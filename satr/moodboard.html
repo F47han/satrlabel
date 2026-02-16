@@ -6,150 +6,81 @@
     <title>Mood | Satr</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500&family=Playfair+Display+SC:wght@400;700;900&display=swap" rel="stylesheet" onload="document.body.classList.add('fonts-loaded')">
     <style>
-        html {
-            background-color: #4a3326;
-            min-height: 100%;
-        }
+        html { background-color: #4a3326; min-height: 100%; }
         body {
             background: linear-gradient(to bottom, #4a3326 0%, #4f382d 25%, #4a3326 55%, #f1ede6 85%, #ffffff 100%);
-            background-attachment: scroll;
-            background-repeat: no-repeat;
-            margin: 0;
-            min-height: 100vh;
+            margin: 0; min-height: 100vh;
             font-family: 'Montserrat', sans-serif;
-            color: #4a3326;
-            line-height: 1.6;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 1.5rem;
-            position: relative;
-            overflow-x: hidden;
+            color: #ffffff;
+            display: flex; flex-direction: column; align-items: center;
+            padding: 1.5rem; position: relative; overflow-x: hidden;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root {
-            --dark-brown: #4a3326;
-            --white: #ffffff;
-            --animation-timing: cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        /* Prevent layout shift before fonts load */
         body:not(.fonts-loaded) * { opacity: 0; }
 
         header {
-            text-align: center;
-            margin-bottom: 2rem;
-            width: 100%;
-            max-width: 900px;
-            padding-top: 1rem;
-            z-index: 100; /* Higher z-index for the menu */
-            opacity: 0;
-            animation: fadeInUp 1.2s var(--animation-timing) 0.3s forwards;
+            text-align: center; margin-bottom: 1rem; width: 100%;
+            max-width: 900px; z-index: 100;
+            opacity: 0; animation: fadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
         }
-
         @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+        h1 { font-family: 'Playfair Display SC', serif; font-size: 4.2rem; text-shadow: 0 2px 6px rgba(0,0,0,0.25); }
 
-        h1 {
-            font-family: 'Playfair Display SC', serif;
-            font-size: 4.8rem;
-            color: var(--white);
-            text-shadow: 0 2px 6px rgba(0,0,0,0.25);
-        }
-
-        /* Mobile Menu Toggle - From Part 2 */
+        /* Mobile Menu Button */
         .menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--white);
-            font-size: 1.8rem;
-            cursor: pointer;
-            position: absolute;
-            top: 1.2rem;
-            right: 1.2rem;
-            z-index: 101;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+            display: none; background: none; border: none; color: white;
+            font-size: 1.8rem; cursor: pointer; position: absolute;
+            top: 1.2rem; right: 1.2rem; z-index: 101;
         }
 
         nav {
-            margin-top: 1.5rem;
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
+            margin-top: 1rem; display: flex; justify-content: center; gap: 2rem;
             border-top: 1px solid rgba(255, 255, 255, 0.35);
-            transition: all 0.4s ease;
         }
-
         nav a {
-            text-decoration: none;
-            color: var(--white);
-            text-transform: uppercase;
-            padding: 0.6rem 0.4rem;
-            font-weight: 500;
-            letter-spacing: 0.8px;
-            font-size: 1rem;
+            text-decoration: none; color: white; text-transform: uppercase;
+            padding: 0.6rem 0.4rem; font-size: 0.9rem; letter-spacing: 1px;
         }
 
         /* Slider Styles */
-        .slider-container {
-            position: relative;
-            width: 100vw;
-            overflow: hidden;
-            cursor: grab;
-        }
+        .slider-container { width: 100vw; overflow: hidden; cursor: grab; }
         .slider-wrapper { display: flex; will-change: transform; }
         .moodboard {
-            min-width: 100vw;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 2rem;
+            min-width: 100vw; display: flex; flex-direction: column;
+            align-items: center; padding: 2rem 1rem; text-align: center;
         }
+        .moodboard h2 {
+            font-family: 'Playfair Display SC', serif; font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* New Description Styling */
+        .mood-desc {
+            max-width: 600px; font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem; line-height: 1.5; margin-bottom: 2rem;
+            color: rgba(255,255,255,0.9); font-style: italic;
+        }
+
         .image-placeholder {
-            width: 90%;
-            max-width: 1100px;
-            height: 70vh;
-            border-radius: 14px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+            width: 90%; max-width: 1000px; height: 60vh;
+            border-radius: 14px; box-shadow: 0 15px 40px rgba(0,0,0,0.3);
             overflow: hidden;
         }
         .moodboard-image { width: 100%; height: 100%; object-fit: cover; }
-        .moodboard h2 {
-            font-family: 'Playfair Display SC', serif;
-            font-size: 4rem;
-            color: var(--white);
-            margin-bottom: 2rem;
-        }
 
-        /* Mobile Responsive Fixes - Matching Part 2 Navigation */
         @media (max-width: 767px) {
-            h1 { font-size: 3.2rem; }
-            .moodboard h2 { font-size: 2.8rem; }
-            .image-placeholder { height: 50vh; }
-
+            h1 { font-size: 3rem; }
             .menu-toggle { display: block; }
-
             nav {
-                display: none;
-                flex-direction: column;
-                gap: 1.2rem;
-                padding: 1.4rem;
-                background: rgba(74, 51, 38, 0.9);
-                border-radius: 12px;
-                backdrop-filter: blur(8px);
-                margin-top: 1.2rem;
-                border: 1px solid rgba(255, 255, 255, 0.1);
+                display: none; flex-direction: column; gap: 1rem;
+                padding: 1.5rem; background: rgba(74, 51, 38, 0.95);
+                border-radius: 12px; backdrop-filter: blur(10px);
+                position: absolute; top: 4rem; width: 90%; left: 5%;
             }
-
             nav.show { display: flex; }
-            
-            nav a {
-                font-size: 1.2rem;
-                padding: 0.9rem 0;
-                width: 100%;
-                text-align: center;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            }
+            .moodboard h2 { font-size: 2.5rem; }
+            .mood-desc { font-size: 1.1rem; padding: 0 10px; }
+            .image-placeholder { height: 45vh; }
         }
     </style>
 </head>
@@ -161,55 +92,73 @@
             <a href="satrindex.html">Home</a>
             <a href="productsatr.html">Products</a>
             <a href="aboutme.html">About</a>
-            <a href="moodboard.html" class="active">Moods</a>
+            <a href="moodboard.html">Moods</a>
         </nav>
     </header>
 
     <main>
         <div class="slider-container" id="sliderContainer">
             <div class="slider-wrapper" id="sliderWrapper">
-                <section class="moodboard"><h2>Noor</h2><div class="image-placeholder"><img class="moodboard-image" src="noormoodboard.jpg"></div></section>
-                <section class="moodboard"><h2>Dahlia</h2><div class="image-placeholder"><img class="moodboard-image" src="dahliamoodboard.jpg"></div></section>
-                <section class="moodboard"><h2>Nila</h2><div class="image-placeholder"><img class="moodboard-image" src="nilamoodboard.jpg"></div></section>
-                <section class="moodboard"><h2>Sera</h2><div class="image-placeholder"><img class="moodboard-image" src="seramoodboard.jpg"></div></section>
-                <section class="moodboard"><h2>Layla</h2><div class="image-placeholder"><img class="moodboard-image" src="laylamoodboard.jpg"></div></section>
-                <section class="moodboard"><h2>Fahda</h2><div class="image-placeholder"><img class="moodboard-image" src="fahdamoodboard.jpg"></div></section>
-                <section class="moodboard"><h2>Noor</h2><div class="image-placeholder"><img class="moodboard-image" src="noormoodboard.jpg"></div></section>
-                <section class="moodboard"><h2>Dahlia</h2><div class="image-placeholder"><img class="moodboard-image" src="dahliamoodboard.jpg"></div></section>
+                <section class="moodboard">
+                    <h2>Noor</h2>
+                    <p class="mood-desc">White — Light, airy, and effortlessly pure. Noor captures and reflects light with every step, offering a serene, angelic presence.</p>
+                    <div class="image-placeholder"><img class="moodboard-image" src="noormoodboard.jpg"></div>
+                </section>
+
+                <section class="moodboard">
+                    <h2>Dahlia</h2>
+                    <p class="mood-desc">Butter Yellow — A soft, luminous yellow that feels like calm in fabric form. Dahlia moves with a gentle grace, perfect for moments where femininity is felt, not spoken.</p>
+                    <div class="image-placeholder"><img class="moodboard-image" src="dahliamoodboard.jpg"></div>
+                </section>
+
+                <section class="moodboard">
+                    <h2>Nila</h2>
+                    <p class="mood-desc">Black Open — Bold, architectural, and unapologetically modern. Nila’s open design and lattice lace detailing create a striking balance of structure and flow.</p>
+                    <div class="image-placeholder"><img class="moodboard-image" src="nilamoodboard.jpg"></div>
+                </section>
+
+                <section class="moodboard">
+                    <h2>Sera</h2>
+                    <p class="mood-desc">Forest Green — Earthy, ethereal, and delicately detailed. Sera blends deep green tones with soft scalloped accents for a look that feels grounded yet graceful.</p>
+                    <div class="image-placeholder"><img class="moodboard-image" src="seramoodboard.jpg"></div>
+                </section>
+
+                <section class="moodboard">
+                    <h2>Layla</h2>
+                    <p class="mood-desc">Deep Purple — A deep plum tone wrapped in quiet elegance. Layla’s minimal silhouette and tonal lace create a monochromatic look that whispers confidence.</p>
+                    <div class="image-placeholder"><img class="moodboard-image" src="laylamoodboard.jpg"></div>
+                </section>
+
+                <section class="moodboard">
+                    <h2>Fahda</h2>
+                    <p class="mood-desc">Glamour Black — A classic black elevated with subtle wildness. Fahda’s leopard‑pattern lace adds a modern, confident edge while keeping the silhouette timeless.</p>
+                    <div class="image-placeholder"><img class="moodboard-image" src="fahdamoodboard.jpg"></div>
+                </section>
+
+                <section class="moodboard">
+                    <h2>Noor</h2>
+                    <p class="mood-desc">White — Light, airy, and effortlessly pure. Noor captures and reflects light with every step, offering a serene, angelic presence.</p>
+                    <div class="image-placeholder"><img class="moodboard-image" src="noormoodboard.jpg"></div>
+                </section>
             </div>
         </div>
     </main>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // --- Navigation Logic (From Part 2) ---
+            // Navigation
             const menuToggle = document.getElementById('menuToggle');
             const nav = document.getElementById('mainNav');
-            
-            menuToggle.addEventListener('click', function() {
+            menuToggle.addEventListener('click', () => {
                 nav.classList.toggle('show');
                 menuToggle.textContent = nav.classList.contains('show') ? '✕' : '☰';
             });
 
-            // Close menu on link click
-            nav.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => {
-                    if (window.innerWidth <= 767) {
-                        nav.classList.remove('show');
-                        menuToggle.textContent = '☰';
-                    }
-                });
-            });
-
-            // --- Slider Logic (Universal Touch/Mouse) ---
-            const sliderContainer = document.getElementById('sliderContainer');
+            // Slider
             const sliderWrapper = document.getElementById('sliderWrapper');
             const slides = document.querySelectorAll('.moodboard');
             let currentIndex = 1;
-            let isDragging = false;
-            let startX = 0;
-            let currentTranslate = 0;
-            let prevTranslate = 0;
+            let isDragging = false, startX = 0, currentTranslate = 0, prevTranslate = 0;
 
             const updatePosition = () => {
                 sliderWrapper.style.transition = 'none';
@@ -217,32 +166,20 @@
                 prevTranslate = currentTranslate;
                 sliderWrapper.style.transform = `translateX(${currentTranslate}%)`;
             };
-
             updatePosition();
 
-            const getPositionX = (event) => event.type.includes('mouse') ? event.pageX : event.touches[0].clientX;
-
-            const dragStart = (e) => {
-                if(e.target.closest('nav')) return; // Don't drag if clicking menu
-                isDragging = true;
-                startX = getPositionX(e);
-                sliderWrapper.style.transition = 'none';
-            };
-
+            const getX = (e) => e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+            const dragStart = (e) => { isDragging = true; startX = getX(e); sliderWrapper.style.transition = 'none'; };
             const dragMove = (e) => {
                 if (!isDragging) return;
-                const currentX = getPositionX(e);
-                currentTranslate = prevTranslate + ((currentX - startX) / window.innerWidth) * 100;
+                currentTranslate = prevTranslate + ((getX(e) - startX) / window.innerWidth) * 100;
                 sliderWrapper.style.transform = `translateX(${currentTranslate}%)`;
             };
-
             const dragEnd = () => {
                 if (!isDragging) return;
                 isDragging = false;
                 const movedBy = currentTranslate - prevTranslate;
-                if (movedBy < -10) currentIndex++;
-                else if (movedBy > 10) currentIndex--;
-
+                if (movedBy < -10) currentIndex++; else if (movedBy > 10) currentIndex--;
                 sliderWrapper.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
                 currentTranslate = currentIndex * -100;
                 sliderWrapper.style.transform = `translateX(${currentTranslate}%)`;
@@ -256,19 +193,14 @@
                 }, { once: true });
             };
 
-            sliderContainer.addEventListener('mousedown', dragStart);
+            document.getElementById('sliderContainer').addEventListener('mousedown', dragStart);
             window.addEventListener('mousemove', dragMove);
             window.addEventListener('mouseup', dragEnd);
-            sliderContainer.addEventListener('touchstart', dragStart, { passive: true });
-            sliderContainer.addEventListener('touchmove', dragMove, { passive: true });
-            sliderContainer.addEventListener('touchend', dragEnd);
+            document.getElementById('sliderContainer').addEventListener('touchstart', dragStart);
+            document.getElementById('sliderContainer').addEventListener('touchmove', dragMove);
+            document.getElementById('sliderContainer').addEventListener('touchend', dragEnd);
 
-            // Font Load Helper
-            if (document.fonts) {
-                document.fonts.ready.then(() => document.body.classList.add('fonts-loaded'));
-            } else {
-                setTimeout(() => document.body.classList.add('fonts-loaded'), 300);
-            }
+            if (document.fonts) document.fonts.ready.then(() => document.body.classList.add('fonts-loaded'));
         });
     </script>
 </body>
