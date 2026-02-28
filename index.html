@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satr | Timeless Abayas</title>
+    <style>
+        /* Immediate background application to prevent white flash */
+        html {
+            background-color: #4a3326;
+            min-height: 100%;
+        }
+        body {
+            background: linear-gradient(to bottom, #4a3326 0%, #4a3326 55%, #ffffff 100%);
+            margin: 0;
+            min-height: 100vh;
+        }
+        /* Hide content until fonts load to prevent layout shift */
+        body:not(.fonts-loaded) * {
+            opacity: 0;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500&family=Playfair+Display+SC:wght@400;700;900&display=swap" rel="stylesheet" onload="document.body.classList.add('fonts-loaded')">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --dark-brown: #4a3326;
+            --medium-brown: #7a6855;
+            --light-brown: #a89a89;
+            --off-white: #f9f7f5;
+            --white: #ffffff;
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --animation-timing: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--dark-brown);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.5rem;
+            position: relative;
+            overflow-x: hidden;
+            background: linear-gradient(to bottom, var(--dark-brown) 0%, var(--dark-brown) 55%, var(--white) 100%) !important;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            width: 100%;
+            max-width: 900px;
+            padding-top: 1rem;
+            z-index: 10;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1.2s var(--animation-timing) 0.3s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-family: 'Playfair Display SC', serif;
+            font-size: 4.8rem;
+            font-weight: 400; /* Thinner, more elegant weight */
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.1em;
+            color: var(--white);
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        nav {
+            margin-top: 1.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.35);
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--white);
+            font-weight: 500;
+            font-size: 1rem;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            padding: 0.6rem 0.4rem;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        nav a.active::after, nav a:hover::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 1.5px;
+            background-color: var(--white);
+        }
+
+        .brand-description {
+            max-width: 750px;
+            text-align: center;
+            margin: 2.5rem auto 3.5rem;
+            font-size: 1.4rem;
+            font-weight: 300;
+            color: var(--white);
+            line-height: 1.85;
+            padding: 0 1.5rem;
+            font-style: italic;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(25px);
+            animation: fadeInUp 1.6s var(--animation-timing) 1s forwards;
+        }
+
+        .products-section {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.3rem;
+            margin-bottom: 3rem;
+            color: var(--dark-brown);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            width: 100%;
+        }
+
+        .product-card {
+            display: block;
+            background: var(--white);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .product-card.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 1.8rem;
+            text-align: center;
+        }
+
+        .product-info h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.9rem;
+            color: var(--dark-brown);
+            margin-bottom: 0.6rem;
+            font-weight: 500;
+        }
+
+        .product-info p {
+            font-size: 0.95rem;
+            color: var(--medium-brown);
+            line-height: 1.6;
+        }
+
+        footer {
+            margin-top: 5rem;
+            padding: 2.5rem;
+            text-align: center;
+            width: 100%;
+            border-top: 1px solid var(--light-brown);
+            color: var(--dark-brown);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 767px) {
+            h1 { font-size: 3.8rem; }
+            nav { gap: 1.2rem; }
+            .brand-description { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Satr</h1>
+        <nav>
+            <a href="satrindex.html" class="active">Home</a>
+            <a href="productsatr.html">Products</a>
+            <a href="aboutme.html">About</a>
+            <a href="moodboard.html">Moods</a>
+        </nav>
+    </header>
+
+    <main>
+        <p class="brand-description">
+            Satr was born from a personal journey, to create abayas that reflect identity while embracing modern elegance. Each piece is carefully crafted with intention and care, designed for women who move through the world with confidence and grace.
+        </p>
+
+        <section class="products-section">
+            <h2 class="section-title">The Signature Pieces</h2>
+            <div class="products-grid">
+                
+                <a href="flora.html" class="product-card scroll-animate">
+                    <img src="flora1.JPEG" alt="Flora Abaya" class="product-image">
+                    <div class="product-info">
+                        <h2>The Flora</h2>
+                        <p>A delicate balance of botanical elegance and modest structure.</p>
+                    </div>
+                </a>
+
+                <a href="noor.html" class="product-card scroll-animate">
+                    <img src="noor1.JPEG" alt="Noor Abaya" class="product-image">
+                    <div class="product-info">
+                        <h2>The Noor</h2>
+                        <p>Radiant simplicity designed to catch the light and embody sophistication.</p>
+                    </div>
+                </a>
+
+                <a href="sahara.html" class="product-card scroll-animate">
+                    <img src="sahara1.JPEG" alt="Sahara Abaya" class="product-image">
+                    <div class="product-info">
+                        <h2>The Sahara</h2>
+                        <p>Inspired by the warmth of the dunes, offering a flowing, earthy aesthetic.</p>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Satr. Handcrafted with love.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Reveal content after fonts load
+            if (document.fonts) {
+                document.fonts.ready.then(() => document.body.classList.add('fonts-loaded'));
+            } else {
+                setTimeout(() => document.body.classList.add('fonts-loaded'), 300);
+            }
+
+            // Scroll trigger for product cards
+            const observerOptions = { threshold: 0.1 };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('appear');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.scroll-animate').forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Satr | Timeless Abayas</title>
+    <style>
+        /* Background & Font Loading */
+        html { background-color: #4a3326; min-height: 100%; }
+        body {
+            background: linear-gradient(to bottom, #4a3326 0%, #4a3326 55%, #ffffff 100%);
+            margin: 0;
+            min-height: 100vh;
+        }
+        body:not(.fonts-loaded) * { opacity: 0; }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500&family=Playfair+Display+SC:wght@400;700;900&display=swap" rel="stylesheet" onload="document.body.classList.add('fonts-loaded')">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --dark-brown: #4a3326;
+            --medium-brown: #7a6855;
+            --light-brown: #a89a89;
+            --white: #ffffff;
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --animation-timing: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--dark-brown);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem;
+            overflow-x: hidden;
+            background: linear-gradient(to bottom, var(--dark-brown) 0%, var(--dark-brown) 55%, var(--white) 100%) !important;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            width: 100%;
+            z-index: 10;
+            opacity: 0;
+            animation: fadeInUp 1.2s var(--animation-timing) 0.3s forwards;
+        }
+
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+
+        h1 {
+            font-family: 'Playfair Display SC', serif;
+            font-size: clamp(3rem, 8vw, 4.5rem);
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            color: var(--white);
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        nav {
+            margin-top: 1.2rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            padding-top: 1rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--white);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        /* --- Refined Hero Slider (110vh) --- */
+        .hero-slider {
+            width: 100%;
+            max-width: 1400px; 
+            height: 110vh; /* Reduced height for better balance */
+            margin: 0 auto 5rem;
+            position: relative;
+            overflow: hidden;
+            border-radius: 30px;
+            box-shadow: 0 35px 90px rgba(0,0,0,0.4);
+            opacity: 0;
+            animation: fadeInUp 1.5s var(--animation-timing) 0.6s forwards;
+        }
+
+        .slider-container { width: 100%; height: 100%; position: relative; }
+
+        .slide {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+            background-size: cover;
+            background-position: center 15%;
+        }
+
+        .slide.active { opacity: 1; }
+
+        /* --- Tappable Content Box --- */
+        .hero-content-box {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2rem 3rem; 
+            min-width: 340px;
+            border-radius: 15px;
+            text-align: center;
+            z-index: 5;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-content-box h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.4rem;
+            margin-bottom: 1rem;
+            color: var(--dark-brown);
+            font-weight: 500;
+        }
+
+        .hero-shop-link {
+            display: inline-block;
+            text-decoration: none;
+            color: var(--white);
+            background: var(--dark-brown);
+            padding: 1rem 2.2rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .hero-shop-link:hover {
+            background: var(--medium-brown);
+            transform: translateY(-2px);
+        }
+
+        .brand-description {
+            max-width: 800px;
+            text-align: center;
+            margin: 3.5rem auto;
+            font-size: 1.4rem;
+            color: var(--white);
+            font-style: italic;
+            line-height: 1.8;
+            opacity: 0;
+            animation: fadeInUp 1.6s var(--animation-timing) 1s forwards;
+        }
+
+        /* --- Product Grid --- */
+        .products-section { width: 100%; max-width: 1200px; }
+        .section-title { text-align: center; font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; margin-bottom: 3.5rem; color: var(--dark-brown); }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2.5rem; }
+        .product-card { background: var(--white); border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); opacity: 0; transform: translateY(40px); transition: var(--transition); text-decoration: none; color: inherit; }
+        .product-card.appear { opacity: 1; transform: translateY(0); }
+        .product-image { width: 100%; aspect-ratio: 3/4; object-fit: cover; }
+        .product-info { padding: 2rem; text-align: center; }
+
+        footer { margin-top: 6rem; padding: 3rem; text-align: center; border-top: 1px solid var(--light-brown); color: var(--dark-brown); }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .hero-slider { height: 85vh; border-radius: 20px; } 
+            .hero-content-box { width: 85%; min-width: auto; padding: 1.5rem; bottom: 30px; }
+            .hero-content-box h3 { font-size: 1.8rem; }
+            h1 { font-size: 3.2rem; }
+            nav { gap: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Satr</h1>
+        <nav>
+            <a href="satrindex.html">Home</a>
+            <a href="productsatr.html">Products</a>
+            <a href="aboutme.html">About</a>
+            <a href="moodboard.html">Moods</a>
+        </nav>
+    </header>
+
+    <section class="hero-slider">
+        <div class="slider-container" id="hero-slider"></div>
+        <div class="hero-content-box">
+            <h3 id="hero-abaya-name">Sereen</h3>
+            <a href="sereen.html" id="hero-abaya-link" class="hero-shop-link">Shop Piece</a>
+        </div>
+    </section>
+
+    <main>
+        <p class="brand-description">
+            Satr was born from a personal journey, to create abayas that reflect identity while embracing modern elegance.
+        </p>
+
+        <section class="products-section">
+            <h2 class="section-title">The Signature Pieces</h2>
+            <div class="products-grid">
+                <a href="flora.html" class="product-card scroll-animate">
+                    <img src="flora1.JPEG" alt="Flora" class="product-image">
+                    <div class="product-info"><h2>The Flora</h2><p>Botanical elegance and structure.</p></div>
+                </a>
+                <a href="noor.html" class="product-card scroll-animate">
+                    <img src="noor1.JPEG" alt="Noor" class="product-image">
+                    <div class="product-info"><h2>The Noor</h2><p>Radiant simplicity catching the light.</p></div>
+                </a>
+                <a href="sahara.html" class="product-card scroll-animate">
+                    <img src="sahara1.JPEG" alt="Sahara" class="product-image">
+                    <div class="product-info"><h2>The Sahara</h2><p>Inspired by the warmth of the dunes.</p></div>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Satr. Handcrafted with love.</p>
+    </footer>
+
+    <script>
+        const heroData = [
+            { name: 'Sereen', file: 'sareen3.JPEG', link: 'sereen.html' },
+            { name: 'Flora', file: 'flora1.JPEG', link: 'flora.html' },
+            { name: 'Nila', file: 'nila6.JPEG', link: 'nila.html' },
+            { name: 'Noor', file: 'noor5.JPEG', link: 'noor.html' }
+        ];
+
+        const sliderContainer = document.getElementById('hero-slider');
+        const abayaNameDisplay = document.getElementById('hero-abaya-name');
+        const abayaLinkDisplay = document.getElementById('hero-abaya-link');
+
+        heroData.forEach((item, index) => {
+            const slide = document.createElement('div');
+            slide.className = `slide ${index === 0 ? 'active' : ''}`;
+            slide.style.backgroundImage = `url('${item.file}')`;
+            sliderContainer.appendChild(slide);
+        });
+
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+            abayaNameDisplay.textContent = heroData[currentSlide].name;
+            abayaLinkDisplay.href = heroData[currentSlide].link;
+        }
+
+        setInterval(nextSlide, 2000); 
+
+        document.addEventListener('DOMContentLoaded', function() {
+            if (document.fonts) document.fonts.ready.then(() => document.body.classList.add('fonts-loaded'));
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('appear'); });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.scroll-animate').forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>
