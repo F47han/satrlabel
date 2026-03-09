@@ -1,8 +1,0 @@
-{
-  "name": "satr-backend",
-  "version": "1.0.0",
-  "description": "SATR serverless checkout function",
-  "dependencies": {
-    "stripe": "^14.0.0"
-  }
-}
