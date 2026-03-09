@@ -5,23 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Satr | Timeless Abayas</title>
     <style>
-        /* Background & Font Loading */
-        html { background-color: #4a3326; min-height: 100%; }
+        /* Immediate background application to prevent white flash */
+        html {
+            background-color: #4a3326;
+            min-height: 100%;
+        }
         body {
             background: linear-gradient(to bottom, #4a3326 0%, #4a3326 55%, #ffffff 100%);
             margin: 0;
             min-height: 100vh;
         }
-        body:not(.fonts-loaded) * { opacity: 0; }
+        /* Hide content until fonts load to prevent layout shift */
+        body:not(.fonts-loaded) * {
+            opacity: 0;
+        }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500&family=Playfair+Display+SC:wght@400;700;900&display=swap" rel="stylesheet" onload="document.body.classList.add('fonts-loaded')">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         :root {
             --dark-brown: #4a3326;
             --medium-brown: #7a6855;
             --light-brown: #a89a89;
+            --off-white: #f9f7f5;
             --white: #ffffff;
             --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             --animation-timing: cubic-bezier(0.16, 1, 0.3, 1);
@@ -30,152 +41,190 @@
         body {
             font-family: 'Montserrat', sans-serif;
             color: var(--dark-brown);
+            line-height: 1.6;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 1rem;
+            padding: 1.5rem;
+            position: relative;
             overflow-x: hidden;
             background: linear-gradient(to bottom, var(--dark-brown) 0%, var(--dark-brown) 55%, var(--white) 100%) !important;
         }
 
         header {
             text-align: center;
-            margin-bottom: 2.5rem;
+            margin-bottom: 2rem;
             width: 100%;
+            max-width: 900px;
+            padding-top: 1rem;
             z-index: 10;
             opacity: 0;
+            transform: translateY(20px);
             animation: fadeInUp 1.2s var(--animation-timing) 0.3s forwards;
         }
 
-        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
 
         h1 {
             font-family: 'Playfair Display SC', serif;
-            font-size: clamp(3rem, 8vw, 4.5rem);
-            font-weight: 400;
+            font-size: 4.8rem;
+            font-weight: 400; /* Thinner, more elegant weight */
+            margin-bottom: 0.5rem;
             letter-spacing: 0.1em;
             color: var(--white);
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
         }
 
         nav {
-            margin-top: 1.2rem;
+            margin-top: 1.5rem;
             display: flex;
             justify-content: center;
             gap: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            flex-wrap: wrap;
             padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.35);
         }
 
         nav a {
             text-decoration: none;
             color: var(--white);
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
             font-weight: 500;
-        }
-
-        /* --- Refined Hero Slider (110vh) --- */
-        .hero-slider {
-            width: 100%;
-            max-width: 1400px; 
-            height: 110vh; /* Reduced height for better balance */
-            margin: 0 auto 5rem;
+            font-size: 1rem;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            padding: 0.6rem 0.4rem;
+            transition: var(--transition);
             position: relative;
-            overflow: hidden;
-            border-radius: 30px;
-            box-shadow: 0 35px 90px rgba(0,0,0,0.4);
-            opacity: 0;
-            animation: fadeInUp 1.5s var(--animation-timing) 0.6s forwards;
         }
 
-        .slider-container { width: 100%; height: 100%; position: relative; }
-
-        .slide {
+        nav a.active::after, nav a:hover::after {
+            content: "";
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            opacity: 0;
-            transition: opacity 0.8s ease-in-out;
-            background-size: cover;
-            background-position: center 15%;
-        }
-
-        .slide.active { opacity: 1; }
-
-        /* --- Tappable Content Box --- */
-        .hero-content-box {
-            position: absolute;
-            bottom: 50px;
+            bottom: -5px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.9);
-            padding: 2rem 3rem; 
-            min-width: 340px;
-            border-radius: 15px;
-            text-align: center;
-            z-index: 5;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-            backdrop-filter: blur(10px);
-        }
-
-        .hero-content-box h3 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2.4rem;
-            margin-bottom: 1rem;
-            color: var(--dark-brown);
-            font-weight: 500;
-        }
-
-        .hero-shop-link {
-            display: inline-block;
-            text-decoration: none;
-            color: var(--white);
-            background: var(--dark-brown);
-            padding: 1rem 2.2rem;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 600;
-            border-radius: 4px;
-            transition: var(--transition);
-        }
-
-        .hero-shop-link:hover {
-            background: var(--medium-brown);
-            transform: translateY(-2px);
+            width: 60%;
+            height: 1.5px;
+            background-color: var(--white);
         }
 
         .brand-description {
-            max-width: 800px;
+            max-width: 750px;
             text-align: center;
-            margin: 3.5rem auto;
+            margin: 2.5rem auto 3.5rem;
             font-size: 1.4rem;
+            font-weight: 300;
             color: var(--white);
+            line-height: 1.85;
+            padding: 0 1.5rem;
             font-style: italic;
-            line-height: 1.8;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
             opacity: 0;
+            transform: translateY(25px);
             animation: fadeInUp 1.6s var(--animation-timing) 1s forwards;
         }
 
-        /* --- Product Grid --- */
-        .products-section { width: 100%; max-width: 1200px; }
-        .section-title { text-align: center; font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; margin-bottom: 3.5rem; color: var(--dark-brown); }
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2.5rem; }
-        .product-card { background: var(--white); border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); opacity: 0; transform: translateY(40px); transition: var(--transition); text-decoration: none; color: inherit; }
-        .product-card.appear { opacity: 1; transform: translateY(0); }
-        .product-image { width: 100%; aspect-ratio: 3/4; object-fit: cover; }
-        .product-info { padding: 2rem; text-align: center; }
+        .products-section {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-        footer { margin-top: 6rem; padding: 3rem; text-align: center; border-top: 1px solid var(--light-brown); color: var(--dark-brown); }
+        .section-title {
+            text-align: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.3rem;
+            margin-bottom: 3rem;
+            color: var(--dark-brown);
+        }
 
-        /* Mobile */
-        @media (max-width: 768px) {
-            .hero-slider { height: 85vh; border-radius: 20px; } 
-            .hero-content-box { width: 85%; min-width: auto; padding: 1.5rem; bottom: 30px; }
-            .hero-content-box h3 { font-size: 1.8rem; }
-            h1 { font-size: 3.2rem; }
-            nav { gap: 1rem; }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            width: 100%;
+        }
+
+        .product-card {
+            display: block;
+            background: var(--white);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .product-card.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 1.8rem;
+            text-align: center;
+        }
+
+        .product-info h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.9rem;
+            color: var(--dark-brown);
+            margin-bottom: 0.6rem;
+            font-weight: 500;
+        }
+
+        .product-info p {
+            font-size: 0.95rem;
+            color: var(--medium-brown);
+            line-height: 1.6;
+        }
+
+        footer {
+            margin-top: 5rem;
+            padding: 2.5rem;
+            text-align: center;
+            width: 100%;
+            border-top: 1px solid var(--light-brown);
+            color: var(--dark-brown);
+            font-size: 0.9rem;
+        }
+
+
+        .cart-link { position: relative; }
+        #cart-badge {
+            display: none;
+            position: absolute;
+            top: -2px; right: -14px;
+            background: var(--white);
+            color: var(--dark-brown);
+            font-size: 0.6rem;
+            font-weight: 700;
+            width: 16px; height: 16px;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+            @media (max-width: 767px) {
+            h1 { font-size: 3.8rem; }
+            nav { gap: 1.2rem; }
+            .brand-description { font-size: 1.2rem; }
         }
     </style>
 </head>
@@ -184,41 +233,45 @@
     <header>
         <h1>Satr</h1>
         <nav>
-            <a href="satrindex.html">Home</a>
+            <a href="satrindex.html" class="active">Home</a>
             <a href="productsatr.html">Products</a>
             <a href="aboutme.html">About</a>
-            <a href="moodboard.html">Moods</a>
         </nav>
     </header>
 
-    <section class="hero-slider">
-        <div class="slider-container" id="hero-slider"></div>
-        <div class="hero-content-box">
-            <h3 id="hero-abaya-name">Sereen</h3>
-            <a href="sereen.html" id="hero-abaya-link" class="hero-shop-link">Shop Piece</a>
-        </div>
-    </section>
-
     <main>
         <p class="brand-description">
-            Satr was born from a personal journey, to create abayas that reflect identity while embracing modern elegance.
+            Satr was born from a personal journey, to create abayas that reflect identity while embracing modern elegance. Each piece is carefully crafted with intention and care, designed for women who move through the world with confidence and grace.
         </p>
 
         <section class="products-section">
             <h2 class="section-title">The Signature Pieces</h2>
             <div class="products-grid">
+                
                 <a href="flora.html" class="product-card scroll-animate">
-                    <img src="flora1.jpeg" alt="Flora" class="product-image">
-                    <div class="product-info"><h2>The Flora</h2><p>Botanical elegance and structure.</p></div>
+                    <img src="flora1.JPEG" alt="Flora Abaya" class="product-image">
+                    <div class="product-info">
+                        <h2>The Flora</h2>
+                        <p>A delicate balance of botanical elegance and modest structure.</p>
+                    </div>
                 </a>
+
                 <a href="noor.html" class="product-card scroll-animate">
-                    <img src="noor1.jpeg" alt="Noor" class="product-image">
-                    <div class="product-info"><h2>The Noor</h2><p>Radiant simplicity catching the light.</p></div>
+                    <img src="noor1.JPEG" alt="Noor Abaya" class="product-image">
+                    <div class="product-info">
+                        <h2>The Noor</h2>
+                        <p>Radiant simplicity designed to catch the light and embody sophistication.</p>
+                    </div>
                 </a>
+
                 <a href="sahara.html" class="product-card scroll-animate">
-                    <img src="sahara1.jpeg" alt="Sahara" class="product-image">
-                    <div class="product-info"><h2>The Sahara</h2><p>Inspired by the warmth of the dunes.</p></div>
+                    <img src="sahara1.JPEG" alt="Sahara Abaya" class="product-image">
+                    <div class="product-info">
+                        <h2>The Sahara</h2>
+                        <p>Inspired by the warmth of the dunes, offering a flowing, earthy aesthetic.</p>
+                    </div>
                 </a>
+
             </div>
         </section>
     </main>
@@ -228,46 +281,27 @@
     </footer>
 
     <script>
-        const heroData = [
-            { name: 'Sereen', file: 'sareen3.jpeg', link: 'sereen.html' },
-            { name: 'Flora', file: 'flora1.jpeg', link: 'flora.html' },
-            { name: 'Nila', file: 'nila6.jpeg', link: 'nila.html' },
-            { name: 'Noor', file: 'noor5.jpeg', link: 'noor.html' }
-        ];
-
-        const sliderContainer = document.getElementById('hero-slider');
-        const abayaNameDisplay = document.getElementById('hero-abaya-name');
-        const abayaLinkDisplay = document.getElementById('hero-abaya-link');
-
-        heroData.forEach((item, index) => {
-            const slide = document.createElement('div');
-            slide.className = `slide ${index === 0 ? 'active' : ''}`;
-            slide.style.backgroundImage = `url('${item.file}')`;
-            sliderContainer.appendChild(slide);
-        });
-
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.slide');
-
-        function nextSlide() {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + 1) % slides.length;
-            slides[currentSlide].classList.add('active');
-            abayaNameDisplay.textContent = heroData[currentSlide].name;
-            abayaLinkDisplay.href = heroData[currentSlide].link;
-        }
-
-        setInterval(nextSlide, 2000); 
-
         document.addEventListener('DOMContentLoaded', function() {
-            if (document.fonts) document.fonts.ready.then(() => document.body.classList.add('fonts-loaded'));
+            // Reveal content after fonts load
+            if (document.fonts) {
+                document.fonts.ready.then(() => document.body.classList.add('fonts-loaded'));
+            } else {
+                setTimeout(() => document.body.classList.add('fonts-loaded'), 300);
+            }
+
+            // Scroll trigger for product cards
+            const observerOptions = { threshold: 0.1 };
             const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('appear'); });
-            }, { threshold: 0.1 });
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('appear');
+                    }
+                });
+            }, observerOptions);
+
             document.querySelectorAll('.scroll-animate').forEach(el => observer.observe(el));
         });
     </script>
+    <script src="cart.js"></script>
 </body>
-
 </html>
-
