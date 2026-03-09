@@ -46,7 +46,7 @@
             padding: 1.5rem;
         }
 
-        /* --- Header & Nav --- */
+        /* --- Header & Nav (Refined Thinner Logo) --- */
         header {
             text-align: center;
             margin-bottom: 4rem;
@@ -56,7 +56,6 @@
             opacity: 0;
             transform: translateY(20px);
             animation: fadeInUp 1.2s var(--animation-timing) 0.3s forwards;
-            position: relative;
         }
 
         @keyframes fadeInUp {
@@ -72,17 +71,17 @@
             text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
         }
 
-        /* Desktop Nav */
-        nav.desktop-nav {
+        nav {
             margin-top: 1.5rem;
             display: flex;
             justify-content: center;
             gap: 2rem;
+            flex-wrap: wrap;
             padding-top: 1rem;
             border-top: 1px solid rgba(255, 255, 255, 0.35);
         }
 
-        nav.desktop-nav a {
+        nav a {
             text-decoration: none;
             color: var(--white);
             font-weight: 500;
@@ -94,7 +93,7 @@
             position: relative;
         }
 
-        nav.desktop-nav a.active::after, nav.desktop-nav a:hover::after {
+        nav a.active::after, nav a:hover::after {
             content: "";
             position: absolute;
             bottom: -5px;
@@ -103,78 +102,6 @@
             width: 60%;
             height: 1.5px;
             background-color: var(--white);
-        }
-
-        /* --- Hamburger Menu Icon --- */
-        .menu-toggle {
-            display: none; 
-            position: fixed;
-            top: 25px;
-            right: 25px;
-            z-index: 2000;
-            cursor: pointer;
-            padding: 10px;
-        }
-
-        .hamburger {
-            width: 30px;
-            height: 2px;
-            background: var(--white);
-            position: relative;
-            transition: var(--transition);
-        }
-
-        .hamburger::before, .hamburger::after {
-            content: '';
-            width: 30px;
-            height: 2px;
-            background: var(--white);
-            position: absolute;
-            left: 0;
-            transition: var(--transition);
-        }
-
-        .hamburger::before { top: -8px; }
-        .hamburger::after { bottom: -8px; }
-
-        .menu-toggle.open .hamburger { background: transparent; }
-        .menu-toggle.open .hamburger::before { transform: rotate(45deg); top: 0; background: var(--dark-brown); }
-        .menu-toggle.open .hamburger::after { transform: rotate(-45deg); bottom: 0; background: var(--dark-brown); }
-
-        /* --- Mobile Overlay Menu --- */
-        .mobile-overlay {
-            position: fixed;
-            top: 0;
-            right: -100%;
-            width: 100%;
-            height: 100vh;
-            background: var(--off-white);
-            z-index: 1500;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .mobile-overlay.open { right: 0; }
-
-        .mobile-overlay a {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2.5rem;
-            color: var(--dark-brown);
-            text-decoration: none;
-            margin: 1.5rem 0;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: 0.4s;
-        }
-
-        .mobile-overlay.open a {
-            opacity: 1;
-            transform: translateY(0);
         }
 
         /* --- Product Grid Styling --- */
@@ -201,7 +128,10 @@
             transition: var(--transition);
         }
 
-        .product-card.appear { opacity: 1; transform: translateY(0); }
+        .product-card.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
         .product-card:hover {
             transform: translateY(-10px);
@@ -233,7 +163,7 @@
             font-weight: 400;
         }
 
-        /* --- Controls --- */
+        /* --- Controls Wrapper --- */
         .controls-wrapper {
             width: 85%;
             margin: 0 auto;
@@ -264,6 +194,7 @@
             border-radius: 4px;
             cursor: pointer;
             outline: none;
+            box-sizing: border-box;
         }
 
         .shop-btn {
@@ -281,6 +212,7 @@
             transition: var(--transition);
             opacity: 0.4;
             pointer-events: none;
+            box-sizing: border-box;
         }
 
         .shop-btn.active {
@@ -289,46 +221,53 @@
             background: var(--dark-brown);
         }
 
+        .shop-btn:hover {
+            background: var(--medium-brown);
+            letter-spacing: 3px;
+        }
+
         footer {
             margin-top: 4rem;
             padding: 2rem;
             border-top: 1px solid var(--light-brown);
             color: var(--dark-brown);
             font-size: 0.9rem;
+            opacity: 0.8;
             width: 100%;
             text-align: center;
         }
 
-        /* --- MOBILE MEDIA QUERY --- */
-        @media (max-width: 767px) {
-            h1 { font-size: 3.2rem; }
-            nav.desktop-nav { display: none; } 
-            .menu-toggle { display: block; }  
-            .products-grid { gap: 1.5rem; }
-            .product-card { padding: 1.5rem 1rem; }
+
+        .cart-link { position: relative; }
+        #cart-badge {
+            display: none;
+            position: absolute;
+            top: -2px; right: -14px;
+            background: var(--white);
+            color: var(--dark-brown);
+            font-size: 0.6rem;
+            font-weight: 700;
+            width: 16px; height: 16px;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+            @media (max-width: 767px) {
+            h1 { font-size: 3.5rem; }
+            nav { gap: 1rem; }
         }
     </style>
 </head>
 <body>
 
-    <div class="menu-toggle" id="menuToggle" onclick="toggleMenu()">
-        <div class="hamburger"></div>
-    </div>
-
-    <div class="mobile-overlay" id="mobileMenu">
-        <a href="satrindex.html" onclick="toggleMenu()">Home</a>
-        <a href="productsatr.html" onclick="toggleMenu()">Products</a>
-        <a href="aboutme.html" onclick="toggleMenu()">About</a>
-        <a href="moodboard.html" onclick="toggleMenu()">Moods</a>
-    </div>
-
     <header>
         <h1>Satr</h1>
-        <nav class="desktop-nav">
-            <a href="satrindex.html">Home</a>
+        <nav>
+            <a href="index.html">Home</a>
             <a href="productsatr.html" class="active">Products</a>
             <a href="aboutme.html">About</a>
-            <a href="moodboard.html">Moods</a>
+            <a href="cart.html" class="cart-link">Cart <span id="cart-badge"></span></a>
         </nav>
     </header>
 
@@ -336,7 +275,7 @@
         <div class="products-grid">
             
             <div class="product-card scroll-animate">
-                <img src="flora1.jpeg" alt="Flora" class="card-image">
+                <img src="flora1.JPEG" alt="Flora" class="card-image">
                 <h2 class="card-name">Flora</h2>
                 <div class="card-price">£45.00</div>
                 <div class="controls-wrapper">
@@ -354,7 +293,7 @@
             </div>
 
             <div class="product-card scroll-animate">
-                <img src="noor1.jpeg" alt="Noor" class="card-image">
+                <img src="noor1.JPEG" alt="Noor" class="card-image">
                 <h2 class="card-name">Noor</h2>
                 <div class="card-price">£45.00</div>
                 <div class="controls-wrapper">
@@ -372,7 +311,7 @@
             </div>
 
             <div class="product-card scroll-animate">
-                <img src="sahara1.jpeg" alt="Sahara" class="card-image">
+                <img src="sahara1.JPEG" alt="Sahara" class="card-image">
                 <h2 class="card-name">Sahara</h2>
                 <div class="card-price">£45.00</div>
                 <div class="controls-wrapper">
@@ -390,7 +329,7 @@
             </div>
 
             <div class="product-card scroll-animate">
-                <img src="azra1.jpeg" alt="Azra" class="card-image">
+                <img src="azra1.JPEG" alt="Azra" class="card-image">
                 <h2 class="card-name">Azra</h2>
                 <div class="card-price">£45.00</div>
                 <div class="controls-wrapper">
@@ -408,7 +347,7 @@
             </div>
 
             <div class="product-card scroll-animate">
-                <img src="sareen1.jpeg" alt="Sereen" class="card-image">
+                <img src="sareen1.JPEG" alt="Sereen" class="card-image">
                 <h2 class="card-name">Sereen</h2>
                 <div class="card-price">£45.00</div>
                 <div class="controls-wrapper">
@@ -426,7 +365,7 @@
             </div>
 
             <div class="product-card scroll-animate">
-                <img src="layla1.jpeg" alt="Layla" class="card-image">
+                <img src="layla1.JPEG" alt="Layla" class="card-image">
                 <h2 class="card-name">Layla</h2>
                 <div class="card-price">£45.00</div>
                 <div class="controls-wrapper">
@@ -444,7 +383,7 @@
             </div>
 
             <div class="product-card scroll-animate">
-                <img src="nila1.jpeg" alt="Nila" class="card-image">
+                <img src="nila1.JPEG" alt="Nila" class="card-image">
                 <h2 class="card-name">Nila</h2>
                 <div class="card-price">£45.00</div>
                 <div class="controls-wrapper">
@@ -462,7 +401,7 @@
             </div>
 
             <div class="product-card scroll-animate">
-                <img src="sama4.jpeg" alt="Sama" class="card-image">
+                <img src="sama4.JPEG" alt="Sama" class="card-image">
                 <h2 class="card-name">Sama</h2>
                 <div class="card-price">£45.00</div>
                 <div class="controls-wrapper">
@@ -483,25 +422,23 @@
     </main>
 
     <footer>
-        <p>&copy; 2026 Satr. Handcrafted with love.</p>
+        <p>&copy; 2026 Satr. Handcrafted with love for the modern Muslimah.</p>
     </footer>
 
     <script>
-        function toggleMenu() {
-            document.getElementById('mobileMenu').classList.toggle('open');
-            document.getElementById('menuToggle').classList.toggle('open');
-            document.body.style.overflow = document.getElementById('mobileMenu').classList.contains('open') ? 'hidden' : 'auto';
-        }
-
         window.addEventListener('load', () => {
             document.body.classList.add('fonts-loaded');
-            document.querySelectorAll('.scroll-animate').forEach(card => card.classList.add('appear'));
+            const cards = document.querySelectorAll('.scroll-animate');
+            cards.forEach(card => card.classList.add('appear'));
         });
 
         function unlockButton(select, btnId) {
             const btn = document.getElementById(btnId);
-            if(select.value !== "") btn.classList.add('active');
+            if(select.value !== "") {
+                btn.classList.add('active');
+            }
         }
     </script>
+    <script src="cart.js"></script>
 </body>
 </html>
