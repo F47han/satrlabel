@@ -4,442 +4,516 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products | Satr</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@300;400;600;700&family=Playfair+Display+SC:wght@400&display=swap" rel="stylesheet">
     <style>
-        /* Exact background logic from home page */
-        html {
-            background-color: #4a3326;
-            min-height: 100%;
-        }
-        body {
-            background: linear-gradient(to bottom, #4a3326 0%, #4a3326 55%, #ffffff 100%);
-            margin: 0;
-            min-height: 100vh;
-        }
-        body:not(.fonts-loaded) * {
-            opacity: 0;
-        }
-    </style>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500&family=Playfair+Display+SC:wght@400;700;900&display=swap" rel="stylesheet" onload="document.body.classList.add('fonts-loaded')">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         :root {
             --dark-brown: #4a3326;
             --medium-brown: #7a6855;
             --light-brown: #a89a89;
             --off-white: #f9f7f5;
             --white: #ffffff;
-            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            --animation-timing: cubic-bezier(0.16, 1, 0.3, 1);
+            --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Montserrat', sans-serif;
-            color: var(--dark-brown);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 1.5rem;
+            color: var(--white);
+            background-color: #2a1d15;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* --- Header & Nav (Refined Thinner Logo) --- */
-        header {
-            text-align: center;
-            margin-bottom: 4rem;
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('background.jpeg');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+        }
+
+        .announcement-bar {
             width: 100%;
-            max-width: 900px;
-            padding-top: 1rem;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 1.2s var(--animation-timing) 0.3s forwards;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            padding: 12px 10px;
+            text-align: center;
+            font-size: 0.65rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            position: sticky;
+            top: 0;
+            z-index: 3000;
+            line-height: 1.4;
         }
+        .announcement-bar a { color: var(--white); text-decoration: underline; font-weight: 700; }
 
-        @keyframes fadeInUp {
-            to { opacity: 1; transform: translateY(0); }
-        }
+        header { text-align: center; padding: 2.5rem 1rem 1.5rem; }
 
         h1 {
             font-family: 'Playfair Display SC', serif;
-            font-size: 4.8rem;
-            font-weight: 400; 
-            letter-spacing: 0.1em;
-            color: var(--white);
-            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+            font-size: clamp(2.2rem, 8vw, 4rem);
+            letter-spacing: 0.3em;
+            font-weight: 300;
+            text-transform: uppercase;
         }
 
         nav {
-            margin-top: 1.5rem;
             display: flex;
             justify-content: center;
-            gap: 2rem;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
             flex-wrap: wrap;
-            padding-top: 1rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.35);
         }
 
         nav a {
             text-decoration: none;
             color: var(--white);
-            font-weight: 500;
-            font-size: 1rem;
-            letter-spacing: 0.8px;
             text-transform: uppercase;
-            padding: 0.6rem 0.4rem;
-            transition: var(--transition);
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            font-weight: 700;
+            padding-bottom: 4px;
             position: relative;
+            transition: var(--transition);
         }
 
         nav a.active::after, nav a:hover::after {
             content: "";
             position: absolute;
-            bottom: -5px;
-            left: 50%;
+            bottom: -4px; left: 50%;
             transform: translateX(-50%);
-            width: 60%;
-            height: 1.5px;
-            background-color: var(--white);
+            width: 60%; height: 1.5px;
+            background: var(--white);
         }
 
-        /* --- Product Grid Styling --- */
         .products-section {
             width: 100%;
             max-width: 1200px;
-            margin-bottom: 5rem;
+            margin: 2rem auto 0;
+            padding: 0 1.5rem;
         }
 
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 3rem;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 3rem 1.5rem;
+            margin-bottom: 8rem;
         }
 
         .product-card {
-            background: var(--white);
-            border-radius: 14px;
-            padding: 2.5rem 1.5rem;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-            opacity: 0;
-            transform: translateY(30px);
+            grid-column: span 12;
+            justify-self: center;
+            width: 100%;
+            max-width: 340px;
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
             transition: var(--transition);
-        }
-
-        .product-card.appear {
-            opacity: 1;
-            transform: translateY(0);
+            color: var(--dark-brown);
         }
 
         .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
         }
 
-        .card-image {
-            width: 85%;
-            aspect-ratio: 3/4;
+        @media (min-width: 769px) {
+            .product-card { grid-column: span 6; max-width: 420px; }
+            .product-card:nth-child(even) { margin-top: 100px; }
+        }
+
+        @media (min-width: 1100px) {
+            .product-card { grid-column: span 4; max-width: 360px; }
+            .product-card:nth-child(even) { margin-top: 0; }
+            .product-card:nth-child(3n+2) { margin-top: 60px; }
+        }
+
+        .img-container {
+            width: 100%;
+            aspect-ratio: 4/5;
+            overflow: hidden;
+            position: relative;
+            cursor: zoom-in;
+        }
+
+        .img-container img {
+            width: 100%; height: 100%;
             object-fit: cover;
-            border-radius: 4px;
-            margin: 0 auto 1.5rem;
+            transition: transform 0.6s ease;
             display: block;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            pointer-events: none;
         }
 
-        .card-name {
+        .img-container:hover img { transform: scale(1.04); }
+
+        .zoom-hint {
+            position: absolute;
+            bottom: 12px; right: 12px;
+            background: rgba(255,255,255,0.85);
+            border-radius: 50%;
+            width: 34px; height: 34px;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .img-container:hover .zoom-hint { opacity: 1; }
+        .zoom-hint svg { width: 16px; height: 16px; fill: var(--dark-brown); }
+
+        .product-info {
+            padding: 1.5rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .product-info h2 {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 2.2rem;
+            font-size: 1.8rem;
+            font-weight: 600;
             color: var(--dark-brown);
-            margin-bottom: 0.5rem;
-            font-weight: 500;
         }
 
         .card-price {
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: var(--medium-brown);
-            margin-bottom: 2rem;
-            font-weight: 400;
+            margin-bottom: 0.8rem;
         }
 
-        /* --- Controls Wrapper --- */
-        .controls-wrapper {
-            width: 85%;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .input-group { text-align: left; }
-
-        label {
-            display: block;
+        .shop-btn-text {
+            display: inline-block;
+            text-decoration: none;
+            color: var(--white);
+            background: var(--dark-brown);
+            padding: 0.7rem 1.5rem;
             font-size: 0.65rem;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 6px;
-            color: var(--medium-brown);
-        }
-
-        select.size-select {
-            width: 100%;
-            background-color: var(--off-white);
-            color: var(--dark-brown);
-            border: 1px solid var(--light-brown);
-            padding: 0.8rem;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.85rem;
-            border-radius: 4px;
-            cursor: pointer;
-            outline: none;
-            box-sizing: border-box;
-        }
-
-        .shop-btn {
-            display: block;
-            width: 100%;
-            background: var(--light-brown);
-            color: var(--white);
-            text-decoration: none;
-            padding: 1rem;
-            text-transform: uppercase;
-            font-weight: 600;
-            font-size: 0.8rem;
             letter-spacing: 2px;
-            border-radius: 4px;
+            font-weight: 700;
+            border-radius: 3px;
             transition: var(--transition);
-            opacity: 0.4;
-            pointer-events: none;
-            box-sizing: border-box;
+            margin: 0 auto;
         }
 
-        .shop-btn.active {
-            opacity: 1;
-            pointer-events: auto;
-            background: var(--dark-brown);
+        .shop-btn-text:hover { background: var(--medium-brown); letter-spacing: 3px; }
+
+        /* ── LIGHTBOX ── */
+        .lightbox-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.93);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .lightbox-overlay.open { display: flex; }
+
+        .lightbox-inner {
+            position: relative;
+            width: 100%;
+            max-width: 560px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 64px;
         }
 
-        .shop-btn:hover {
-            background: var(--medium-brown);
-            letter-spacing: 3px;
+        .lightbox-img {
+            max-width: 100%;
+            max-height: 78vh;
+            border-radius: 10px;
+            object-fit: contain;
+            user-select: none;
+            transition: opacity 0.25s ease;
+        }
+
+        .lb-arrow {
+            position: absolute;
+            top: 50%; transform: translateY(-50%);
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: var(--white);
+            font-size: 1.6rem;
+            width: 46px; height: 46px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.3s ease;
+            user-select: none;
+            line-height: 1;
+        }
+        .lb-arrow:hover { background: rgba(255,255,255,0.28); }
+        .lb-arrow.prev { left: 0; }
+        .lb-arrow.next { right: 0; }
+
+        @media (max-width: 600px) {
+            .lb-arrow { display: none; }
+            .lightbox-inner { padding: 0 16px; }
+        }
+
+        .lb-close {
+            position: fixed;
+            top: 20px; right: 20px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.25);
+            color: var(--white);
+            font-size: 1.3rem;
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.2s;
+            z-index: 10001;
+        }
+        .lb-close:hover { background: rgba(255,255,255,0.25); }
+
+        .lb-name {
+            color: var(--white);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            margin-top: 1rem;
+            letter-spacing: 0.05em;
+        }
+
+        .lb-counter {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            margin-top: 0.4rem;
         }
 
         footer {
-            margin-top: 4rem;
-            padding: 2rem;
-            border-top: 1px solid var(--light-brown);
-            color: var(--dark-brown);
-            font-size: 0.9rem;
-            opacity: 0.8;
-            width: 100%;
             text-align: center;
+            padding: 4rem 1rem;
+            background: rgba(0,0,0,0.5);
         }
+        footer p { font-size: 0.75rem; letter-spacing: 1px; line-height: 1.8; }
 
-
-        .cart-link { position: relative; }
-        #cart-badge {
-            display: none;
-            position: absolute;
-            top: -2px; right: -14px;
-            background: var(--white);
-            color: var(--dark-brown);
-            font-size: 0.6rem;
-            font-weight: 700;
-            width: 16px; height: 16px;
-            border-radius: 50%;
-            align-items: center;
-            justify-content: center;
-            line-height: 1;
-        }
-            @media (max-width: 767px) {
-            h1 { font-size: 3.5rem; }
-            nav { gap: 1rem; }
-        }
+        .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Satr</h1>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="productsatr.html" class="active">Products</a>
-            <a href="aboutme.html">About</a>
-            <a href="cart.html" class="cart-link">Cart <span id="cart-badge"></span></a>
-        </nav>
-    </header>
+<div class="announcement-bar">
+    Free shipping for UK | International shipping please <a href="https://www.instagram.com/satr.labell/" target="_blank">message satr.labell</a>
+</div>
 
-    <main class="products-section">
-        <div class="products-grid">
-            
-            <div class="product-card scroll-animate">
-                <img src="flora1.jpeg" alt="Flora" class="card-image">
-                <h2 class="card-name">Flora</h2>
-                <div class="card-price">£45.00</div>
-                <div class="controls-wrapper">
-                    <div class="input-group">
-                        <label>Select Size</label>
-                        <select class="size-select" onchange="unlockButton(this, 'btn-flora')">
-                            <option value="" selected disabled>—</option>
-                            <option value="flora.html">Small (52)</option>
-                            <option value="flora.html">Medium (54)</option>
-                            <option value="flora.html">Large (56)</option>
-                        </select>
-                    </div>
-                    <a href="flora.html" class="shop-btn" id="btn-flora">Details</a>
-                </div>
+<header>
+    <h1>Satr</h1>
+    <nav>
+        <a href="satrindex.html">Home</a>
+        <a href="productsatr.html" class="active">Products</a>
+        <a href="aboutme.html">About</a>
+        <a href="moodboard.html">Moods</a>
+        <a href="cart.html">Cart</a>
+    </nav>
+</header>
+
+<main class="products-section">
+    <div class="products-grid">
+
+        <div class="product-card reveal">
+            <div class="img-container" onclick="openLightbox('flora',0)">
+                <img src="flora1.JPEG" alt="Flora">
+                <div class="zoom-hint"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14zM12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/></svg></div>
             </div>
-
-            <div class="product-card scroll-animate">
-                <img src="noor1.jpeg" alt="Noor" class="card-image">
-                <h2 class="card-name">Noor</h2>
-                <div class="card-price">£45.00</div>
-                <div class="controls-wrapper">
-                    <div class="input-group">
-                        <label>Select Size</label>
-                        <select class="size-select" onchange="unlockButton(this, 'btn-noor')">
-                            <option value="" selected disabled>—</option>
-                            <option value="noor.html">Small (52)</option>
-                            <option value="noor.html">Medium (54)</option>
-                            <option value="noor.html">Large (56)</option>
-                        </select>
-                    </div>
-                    <a href="noor.html" class="shop-btn" id="btn-noor">Details</a>
-                </div>
+            <div class="product-info">
+                <h2>Flora</h2>
+                <div class="card-price">£50.00</div>
+                <a href="flora.html" class="shop-btn-text">View Details</a>
             </div>
-
-            <div class="product-card scroll-animate">
-                <img src="sahara1.jpeg" alt="Sahara" class="card-image">
-                <h2 class="card-name">Sahara</h2>
-                <div class="card-price">£45.00</div>
-                <div class="controls-wrapper">
-                    <div class="input-group">
-                        <label>Select Size</label>
-                        <select class="size-select" onchange="unlockButton(this, 'btn-sahara')">
-                            <option value="" selected disabled>—</option>
-                            <option value="sahara.html">Small (52)</option>
-                            <option value="sahara.html">Medium (54)</option>
-                            <option value="sahara.html">Large (56)</option>
-                        </select>
-                    </div>
-                    <a href="sahara.html" class="shop-btn" id="btn-sahara">Details</a>
-                </div>
-            </div>
-
-            <div class="product-card scroll-animate">
-                <img src="azra1.jpeg" alt="Azra" class="card-image">
-                <h2 class="card-name">Azra</h2>
-                <div class="card-price">£45.00</div>
-                <div class="controls-wrapper">
-                    <div class="input-group">
-                        <label>Select Size</label>
-                        <select class="size-select" onchange="unlockButton(this, 'btn-azra')">
-                            <option value="" selected disabled>—</option>
-                            <option value="azra.html">Small (52)</option>
-                            <option value="azra.html">Medium (54)</option>
-                            <option value="azra.html">Large (56)</option>
-                        </select>
-                    </div>
-                    <a href="azra.html" class="shop-btn" id="btn-azra">Details</a>
-                </div>
-            </div>
-
-            <div class="product-card scroll-animate">
-                <img src="sareen1.jpeg" alt="Sereen" class="card-image">
-                <h2 class="card-name">Sereen</h2>
-                <div class="card-price">£45.00</div>
-                <div class="controls-wrapper">
-                    <div class="input-group">
-                        <label>Select Size</label>
-                        <select class="size-select" onchange="unlockButton(this, 'btn-sereen')">
-                            <option value="" selected disabled>—</option>
-                            <option value="sereen.html">Small (52)</option>
-                            <option value="sereen.html">Medium (54)</option>
-                            <option value="sereen.html">Large (56)</option>
-                        </select>
-                    </div>
-                    <a href="sereen.html" class="shop-btn" id="btn-sereen">Details</a>
-                </div>
-            </div>
-
-            <div class="product-card scroll-animate">
-                <img src="layla1.jpeg" alt="Layla" class="card-image">
-                <h2 class="card-name">Layla</h2>
-                <div class="card-price">£45.00</div>
-                <div class="controls-wrapper">
-                    <div class="input-group">
-                        <label>Select Size</label>
-                        <select class="size-select" onchange="unlockButton(this, 'btn-layla')">
-                            <option value="" selected disabled>—</option>
-                            <option value="layla.html">Small (52)</option>
-                            <option value="layla.html">Medium (54)</option>
-                            <option value="layla.html">Large (56)</option>
-                        </select>
-                    </div>
-                    <a href="layla.html" class="shop-btn" id="btn-layla">Details</a>
-                </div>
-            </div>
-
-            <div class="product-card scroll-animate">
-                <img src="nila1.jpeg" alt="Nila" class="card-image">
-                <h2 class="card-name">Nila</h2>
-                <div class="card-price">£45.00</div>
-                <div class="controls-wrapper">
-                    <div class="input-group">
-                        <label>Select Size</label>
-                        <select class="size-select" onchange="unlockButton(this, 'btn-nila')">
-                            <option value="" selected disabled>—</option>
-                            <option value="nila.html">Small (52)</option>
-                            <option value="nila.html">Medium (54)</option>
-                            <option value="nila.html">Large (56)</option>
-                        </select>
-                    </div>
-                    <a href="nila.html" class="shop-btn" id="btn-nila">Details</a>
-                </div>
-            </div>
-
-            <div class="product-card scroll-animate">
-                <img src="sama4.jpeg" alt="Sama" class="card-image">
-                <h2 class="card-name">Sama</h2>
-                <div class="card-price">£45.00</div>
-                <div class="controls-wrapper">
-                    <div class="input-group">
-                        <label>Select Size</label>
-                        <select class="size-select" onchange="unlockButton(this, 'btn-sama')">
-                            <option value="" selected disabled>—</option>
-                            <option value="sama.html">Small (52)</option>
-                            <option value="sama.html">Medium (54)</option>
-                            <option value="sama.html">Large (56)</option>
-                        </select>
-                    </div>
-                    <a href="sama.html" class="shop-btn" id="btn-sama">Details</a>
-                </div>
-            </div>
-
         </div>
-    </main>
 
-    <footer>
-        <p>&copy; 2026 Satr. Handcrafted with love for the modern Muslimah.</p>
-    </footer>
+        <div class="product-card reveal">
+            <div class="img-container" onclick="openLightbox('noor',0)">
+                <img src="noor1.JPEG" alt="Noor">
+                <div class="zoom-hint"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14zM12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/></svg></div>
+            </div>
+            <div class="product-info">
+                <h2>Noor</h2>
+                <div class="card-price">£50.00</div>
+                <a href="noor.html" class="shop-btn-text">View Details</a>
+            </div>
+        </div>
 
-    <script>
-        window.addEventListener('load', () => {
-            document.body.classList.add('fonts-loaded');
-            const cards = document.querySelectorAll('.scroll-animate');
-            cards.forEach(card => card.classList.add('appear'));
-        });
+        <div class="product-card reveal">
+            <div class="img-container" onclick="openLightbox('sahara',0)">
+                <img src="sahara1.JPEG" alt="Sahara">
+                <div class="zoom-hint"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14zM12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/></svg></div>
+            </div>
+            <div class="product-info">
+                <h2>Sahara</h2>
+                <div class="card-price">£50.00</div>
+                <a href="sahara.html" class="shop-btn-text">View Details</a>
+            </div>
+        </div>
 
-        function unlockButton(select, btnId) {
-            const btn = document.getElementById(btnId);
-            if(select.value !== "") {
-                btn.classList.add('active');
-            }
+        <div class="product-card reveal">
+            <div class="img-container" onclick="openLightbox('azra',0)">
+                <img src="azra1.JPEG" alt="Azra">
+                <div class="zoom-hint"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14zM12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/></svg></div>
+            </div>
+            <div class="product-info">
+                <h2>Azra</h2>
+                <div class="card-price">£50.00</div>
+                <a href="azra.html" class="shop-btn-text">View Details</a>
+            </div>
+        </div>
+
+        <div class="product-card reveal">
+            <div class="img-container" onclick="openLightbox('sereen',0)">
+                <img src="sareen1.JPEG" alt="Sereen">
+                <div class="zoom-hint"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14zM12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/></svg></div>
+            </div>
+            <div class="product-info">
+                <h2>Sereen</h2>
+                <div class="card-price">£50.00</div>
+                <a href="sereen.html" class="shop-btn-text">View Details</a>
+            </div>
+        </div>
+
+        <div class="product-card reveal">
+            <div class="img-container" onclick="openLightbox('layla',0)">
+                <img src="layla1.JPEG" alt="Layla">
+                <div class="zoom-hint"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14zM12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/></svg></div>
+            </div>
+            <div class="product-info">
+                <h2>Layla</h2>
+                <div class="card-price">£50.00</div>
+                <a href="layla.html" class="shop-btn-text">View Details</a>
+            </div>
+        </div>
+
+        <div class="product-card reveal">
+            <div class="img-container" onclick="openLightbox('nila',0)">
+                <img src="nila1.JPEG" alt="Nila">
+                <div class="zoom-hint"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14zM12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/></svg></div>
+            </div>
+            <div class="product-info">
+                <h2>Nila</h2>
+                <div class="card-price">£50.00</div>
+                <a href="nila.html" class="shop-btn-text">View Details</a>
+            </div>
+        </div>
+
+        <div class="product-card reveal">
+            <div class="img-container" onclick="openLightbox('sama',0)">
+                <img src="sama4.JPEG" alt="Sama">
+                <div class="zoom-hint"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14zM12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/></svg></div>
+            </div>
+            <div class="product-info">
+                <h2>Sama</h2>
+                <div class="card-price">£50.00</div>
+                <a href="sama.html" class="shop-btn-text">View Details</a>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<!-- LIGHTBOX -->
+<div class="lightbox-overlay" id="lightbox" onclick="handleOverlayClick(event)">
+    <button class="lb-close" onclick="closeLightbox()">&#10005;</button>
+    <div class="lightbox-inner" id="lb-inner">
+        <button class="lb-arrow prev" onclick="lbNav(-1)">&#8249;</button>
+        <img class="lightbox-img" id="lb-img" src="" alt="">
+        <button class="lb-arrow next" onclick="lbNav(1)">&#8250;</button>
+    </div>
+    <div class="lb-name" id="lb-name"></div>
+    <div class="lb-counter" id="lb-counter"></div>
+</div>
+
+<footer>
+    <p>&copy; 2026 Satr.<br>Handcrafted with love for the modern Muslimah.</p>
+</footer>
+
+<script>
+    const PRODUCTS = {
+        flora:  { name: 'Flora',  images: ['flora4.JPEG','flora1.JPEG','flora2.JPEG','flora3.JPEG','flora5.JPEG','flora6.JPEG'] },
+        noor:   { name: 'Noor',   images: ['noor4.JPEG','noor1.JPEG','noor2.JPEG','noor3.JPEG','noor5.JPEG'] },
+        sahara: { name: 'Sahara', images: ['sahara4.JPEG','sahara1.JPEG','sahara2.JPEG','sahara3.JPEG','sahara5.JPEG','sahara6.JPEG'] },
+        azra:   { name: 'Azra',   images: ['azra4.JPEG','azra1.JPEG','azra2.JPEG','azra3.JPEG','azra5.JPEG'] },
+        sereen: { name: 'Sereen', images: ['sareen4.JPEG','sareen1.JPEG','sareen2.JPEG','sareen3.JPEG','sareen5.JPEG','sareen6.JPEG'] },
+        layla:  { name: 'Layla',  images: ['layla4.JPEG','layla1.JPEG','layla2.JPEG','layla3.JPEG','layla5.JPEG','layla6.JPEG'] },
+        nila:   { name: 'Nila',   images: ['nila4.JPEG','nila1.JPEG','nila2.JPEG','nila3.JPEG','nila5.JPEG','nila6.JPEG'] },
+        sama:   { name: 'Sama',   images: ['sama4.JPEG','sama1.JPEG','sama2.JPEG','sama3.JPEG','sama5.JPEG','sama6.JPEG'] },
+    };
+
+    let currentProduct = null;
+    let currentIndex = 0;
+    let touchStartX = 0;
+
+    function openLightbox(key, idx) {
+        currentProduct = key;
+        currentIndex = idx;
+        updateLightbox(false);
+        document.getElementById('lightbox').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+        document.getElementById('lightbox').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    function handleOverlayClick(e) {
+        if (e.target === document.getElementById('lightbox')) closeLightbox();
+    }
+
+    function lbNav(dir) {
+        const imgs = PRODUCTS[currentProduct].images;
+        currentIndex = (currentIndex + dir + imgs.length) % imgs.length;
+        updateLightbox(true);
+    }
+
+    function updateLightbox(animate) {
+        const p = PRODUCTS[currentProduct];
+        const img = document.getElementById('lb-img');
+        if (animate) {
+            img.style.opacity = '0';
+            setTimeout(() => { img.src = p.images[currentIndex]; img.style.opacity = '1'; }, 150);
+        } else {
+            img.src = p.images[currentIndex];
+            img.style.opacity = '1';
         }
-    </script>
-    <script src="cart.js"></script>
+        document.getElementById('lb-name').textContent = p.name;
+        document.getElementById('lb-counter').textContent = (currentIndex + 1) + ' / ' + p.images.length;
+    }
+
+    document.addEventListener('keydown', e => {
+        if (!document.getElementById('lightbox').classList.contains('open')) return;
+        if (e.key === 'ArrowRight') lbNav(1);
+        if (e.key === 'ArrowLeft') lbNav(-1);
+        if (e.key === 'Escape') closeLightbox();
+    });
+
+    // Touch swipe
+    document.getElementById('lb-inner').addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+    document.getElementById('lb-inner').addEventListener('touchend', e => {
+        const diff = touchStartX - e.changedTouches[0].screenX;
+        if (Math.abs(diff) > 50) lbNav(diff > 0 ? 1 : -1);
+    });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('active'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
-
