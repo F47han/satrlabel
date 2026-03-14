@@ -22,7 +22,7 @@
         }
 
         body {
-            background: linear-gradient(to bottom, var(--dark-brown) 0%, var(--dark-brown) 55%, var(--white) 100%);
+            background-color: #2a1d15;
             font-family: 'Montserrat', sans-serif;
             color: var(--dark-brown);
             line-height: 1.6;
@@ -32,6 +32,16 @@
             align-items: center;
             padding: 1.5rem;
             position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('background.jpeg');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
         }
 
         header {
@@ -67,7 +77,6 @@
             background-color: var(--white);
         }
 
-        /* Mobile Menu Toggle */
         .menu-toggle {
             display: none;
             background: none;
@@ -109,10 +118,7 @@
             text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
         }
 
-        nav a:hover, 
-        nav a.active {
-            color: var(--white);
-        }
+        nav a:hover, nav a.active { color: var(--white); }
 
         nav a::after {
             content: "";
@@ -127,8 +133,7 @@
             transform-origin: center;
         }
 
-        nav a:hover::after,
-        nav a.active::after {
+        nav a:hover::after, nav a.active::after {
             transform: translateX(-50%) scaleX(1);
         }
 
@@ -152,10 +157,8 @@
         .about-section::before {
             content: "";
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 7px;
-            height: 100%;
+            top: 0; left: 0;
+            width: 7px; height: 100%;
             background-color: var(--medium-brown);
         }
 
@@ -172,10 +175,8 @@
         .about-section h2::after {
             content: "";
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 75px;
-            height: 2.2px;
+            bottom: 0; left: 0;
+            width: 75px; height: 2.2px;
             background-color: var(--medium-brown);
         }
 
@@ -187,15 +188,21 @@
             font-size: 1.08rem;
         }
 
-        .about-section p:last-child {
-            margin-bottom: 0;
-        }
+        .about-section p:last-child { margin-bottom: 0; }
 
         .about-section strong {
             color: var(--dark-brown);
             font-weight: 600;
             font-family: 'Cormorant Garamond', serif;
         }
+
+        /* Contact link styling */
+        .about-section a.contact-link {
+            color: var(--dark-brown);
+            text-decoration: underline;
+            transition: var(--transition);
+        }
+        .about-section a.contact-link:hover { color: var(--medium-brown); }
 
         .policies-container {
             display: grid;
@@ -232,10 +239,8 @@
         .policy-card h3::after {
             content: "";
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 55px;
-            height: 2px;
+            bottom: 0; left: 0;
+            width: 55px; height: 2px;
             background-color: var(--light-brown);
         }
 
@@ -247,8 +252,25 @@
             font-size: 1.05rem;
         }
 
-        .policy-card p:last-child {
-            margin-bottom: 0;
+        .policy-card p:last-child { margin-bottom: 0; }
+
+        /* International notice inside shipping card */
+        .intl-notice {
+            margin-top: 1.1rem;
+            padding: 1rem 1.2rem;
+            background: var(--off-white);
+            border-left: 3px solid var(--light-brown);
+            border-radius: 0 6px 6px 0;
+            font-size: 1.02rem;
+            line-height: 1.85;
+            color: var(--dark-brown);
+            opacity: 0.9;
+        }
+
+        .intl-notice a {
+            color: var(--dark-brown);
+            font-weight: 500;
+            text-decoration: underline;
         }
 
         .our-story {
@@ -258,14 +280,17 @@
         }
 
         .our-story h2 {
+            font-family: 'Cormorant Garamond', serif;
             font-size: 2.6rem;
+            color: var(--white);
             margin-bottom: 1.7rem;
+            letter-spacing: -0.02em;
         }
 
         .our-story p {
             font-size: 1.35rem;
             font-style: italic;
-            color: var(--dark-brown);
+            color: var(--white);
             opacity: 0.96;
             line-height: 1.95;
             position: relative;
@@ -274,25 +299,38 @@
 
         .our-story p::before,
         .our-story p::after {
-            content: "“";
+            content: "\201C";
             font-family: 'Cormorant Garamond', serif;
             font-size: 4.3rem;
-            color: rgba(74, 51, 38, 0.09);
+            color: rgba(255, 255, 255, 0.2);
             position: absolute;
             line-height: 1;
         }
 
-        .our-story p::before {
-            top: -2rem;
-            left: -1.1rem;
-        }
-
+        .our-story p::before { top: -2rem; left: -1.1rem; }
         .our-story p::after {
-            content: "”";
+            content: "\201D";
             bottom: -2.6rem;
             right: -1.1rem;
-            transform: rotate(180deg);
         }
+
+        .announcement-bar {
+            width: calc(100% + 3rem);
+            margin: -1.5rem -1.5rem 0;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            padding: 12px 10px;
+            text-align: center;
+            font-size: 0.65rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            position: sticky;
+            top: 0;
+            z-index: 3000;
+            line-height: 1.4;
+            color: var(--white);
+        }
+        .announcement-bar a { color: var(--white); text-decoration: underline; font-weight: 700; }
 
         footer {
             margin-top: 4rem;
@@ -300,89 +338,39 @@
             text-align: center;
             width: 100%;
             max-width: 800px;
-            border-top: 1px solid var(--light-brown);
+            border-top: 1px solid rgba(255,255,255,0.25);
             margin-bottom: 1.5rem;
             z-index: 5;
         }
 
         footer p {
             font-size: 0.92rem;
-            color: var(--dark-brown);
+            color: rgba(255,255,255,0.6);
             letter-spacing: 0.5px;
             line-height: 1.6;
         }
 
-        /* Tablet Optimization */
         @media (min-width: 768px) {
-            body {
-                padding: 2rem;
-            }
-            
-            h1 {
-                font-size: 5.1rem;
-            }
-            
-            nav {
-                gap: 2.6rem;
-                padding-top: 1.3rem;
-            }
-            
-            nav a {
-                font-size: 1.08rem;
-                letter-spacing: 1px;
-                padding: 0.65rem 0.55rem;
-            }
-            
-            .about-section {
-                padding: 3.3rem;
-            }
-            
-            .policy-card {
-                padding: 2.8rem;
-            }
-            
-            footer {
-                margin-top: 4.5rem;
-                padding: 2rem;
-            }
+            body { padding: 2rem; }
+            h1 { font-size: 5.1rem; }
+            nav { gap: 2.6rem; padding-top: 1.3rem; }
+            nav a { font-size: 1.08rem; letter-spacing: 1px; padding: 0.65rem 0.55rem; }
+            .about-section { padding: 3.3rem; }
+            .policy-card { padding: 2.8rem; }
+            footer { margin-top: 4.5rem; padding: 2rem; }
         }
 
-        /* Desktop Optimization */
         @media (min-width: 1024px) {
-            h1 {
-                font-size: 5rem;
-            }
-            
-            nav {
-                gap: 3.2rem;
-            }
-            
-            nav a {
-                font-size: 1.15rem;
-                letter-spacing: 1.3px;
-                padding: 0.75rem 0.65rem;
-            }
-            
-            .about-section h2 {
-                font-size: 2.7rem;
-            }
-            
-            .policy-card h3 {
-                font-size: 2.3rem;
-            }
-            
-            footer {
-                margin-top: 5rem;
-                padding: 2.2rem;
-            }
+            h1 { font-size: 5rem; }
+            nav { gap: 3.2rem; }
+            nav a { font-size: 1.15rem; letter-spacing: 1.3px; padding: 0.75rem 0.65rem; }
+            .about-section h2 { font-size: 2.7rem; }
+            .policy-card h3 { font-size: 2.3rem; }
+            footer { margin-top: 5rem; padding: 2.2rem; }
         }
 
-        /* Mobile Menu for Small Screens */
         @media (max-width: 767px) {
-            .menu-toggle {
-                display: block;
-            }
-            
+            .menu-toggle { display: block; }
             nav {
                 display: none;
                 flex-direction: column;
@@ -394,91 +382,32 @@
                 margin-top: 1.2rem;
                 backdrop-filter: blur(5px);
             }
-            
-            nav.show {
-                display: flex;
-            }
-            
-            nav a {
-                font-size: 1.2rem;
-                padding: 0.9rem 0;
-                letter-spacing: 1.2px;
-                min-width: auto;
-                width: 100%;
-            }
-            
-            nav a::after {
-                display: none;
-            }
-            
-            nav a:hover {
-                background: rgba(255, 255, 255, 0.15);
-            }
-            
-            h1 {
-                font-size: 4rem;
-            }
-            
-            h1::after {
-                width: 48px;
-                bottom: -9px;
-            }
-            
-            .about-section {
-                padding: 2.2rem;
-            }
-            
-            .about-section h2 {
-                font-size: 2.2rem;
-            }
-            
-            .about-section p {
-                font-size: 1.02rem;
-            }
-            
-            .policies-container {
-                grid-template-columns: 1fr;
-                gap: 1.8rem;
-            }
-            
-            .policy-card {
-                padding: 2rem;
-            }
-            
-            .policy-card h3 {
-                font-size: 1.95rem;
-            }
-            
-            .policy-card p {
-                font-size: 1.02rem;
-            }
-            
-            .our-story p {
-                font-size: 1.22rem;
-                padding: 0 1.2rem;
-                line-height: 1.85;
-            }
-            
-            .our-story p::before {
-                font-size: 3.7rem;
-                top: -1.7rem;
-                left: -0.9rem;
-            }
-            
-            .our-story p::after {
-                font-size: 3.7rem;
-                bottom: -2.3rem;
-                right: -0.9rem;
-            }
-            
-            footer {
-                margin-top: 3.5rem;
-                padding: 1.6rem 1rem;
-            }
+            nav.show { display: flex; }
+            nav a { font-size: 1.2rem; padding: 0.9rem 0; letter-spacing: 1.2px; min-width: auto; width: 100%; }
+            nav a::after { display: none; }
+            nav a:hover { background: rgba(255, 255, 255, 0.15); }
+            h1 { font-size: 4rem; }
+            h1::after { width: 48px; bottom: -9px; }
+            .about-section { padding: 2.2rem; }
+            .about-section h2 { font-size: 2.2rem; }
+            .about-section p { font-size: 1.02rem; }
+            .policies-container { grid-template-columns: 1fr; gap: 1.8rem; }
+            .policy-card { padding: 2rem; }
+            .policy-card h3 { font-size: 1.95rem; }
+            .policy-card p { font-size: 1.02rem; }
+            .our-story p { font-size: 1.22rem; padding: 0 1.2rem; line-height: 1.85; }
+            .our-story p::before { font-size: 3.7rem; top: -1.7rem; left: -0.9rem; }
+            .our-story p::after { font-size: 3.7rem; bottom: -2.3rem; right: -0.9rem; }
+            footer { margin-top: 3.5rem; padding: 1.6rem 1rem; }
         }
     </style>
 </head>
 <body>
+
+<div class="announcement-bar">
+    Free UK shipping · International orders: <a href="https://www.instagram.com/satr.labell/" target="_blank">message us on Instagram</a>
+</div>
+
     <header>
         <button class="menu-toggle" id="menuToggle">☰</button>
         <h1>Satr</h1>
@@ -486,103 +415,96 @@
             <a href="satrindex.html">Home</a>
             <a href="productsatr.html">Products</a>
             <a href="aboutme.html" class="active">About</a>
-            <a href="moodboard.html">Moods</a>
+            <a href="cart.html">Cart</a>
         </nav>
     </header>
-    
+
     <main class="about-content">
+
         <section class="our-story">
             <h2>Our Story</h2>
-            <p>As the founder of Satr, I created this brand from a deeply personal need—to find abayas that honor my identity while embracing modern elegance. Each piece is crafted with the care I'd want for my own daughters, sisters, and friends. This isn't just clothing; it's a celebration of the confident, graceful woman you are.</p>
+            <p>Satr was born from a deeply personal place — a desire to create abayas that honour identity while embracing modern elegance. Each piece is crafted with the care you'd want for yourself and the women you love. This isn't just clothing; it's a celebration of the confident, graceful woman you are.</p>
         </section>
 
         <section class="about-section">
             <h2>Our Commitment</h2>
-            <p>At Satr, we believe that modest fashion should be both beautiful and meaningful. Every abaya is thoughtfully designed and meticulously crafted to honor tradition while embracing contemporary elegance. We work with skilled artisans who share our passion for quality and attention to detail.</p>
-            <p>Our fabrics are carefully selected for their drape, comfort, and durability—because you deserve pieces that feel as beautiful as they look. When you wear Satr, you're not just wearing an abaya; you're carrying a piece of artistry and intention.</p>
+            <p>At Satr, we believe modest fashion should be both beautiful and meaningful. Every abaya is thoughtfully designed and meticulously crafted to honour tradition while embracing contemporary elegance. The name <em>Satr</em> — meaning modesty and covering in Arabic — sits at the heart of everything we create.</p>
+            <p>Our fabrics are carefully selected for their drape, comfort, and durability, because you deserve pieces that feel as beautiful as they look. From the hand-applied lace on the Flora to the flowing silhouette of the Sahara, every detail is considered and finished with care. When you wear Satr, you carry a piece of artistry and intention.</p>
         </section>
 
         <section class="about-section">
             <h2>Our Policies</h2>
             <div class="policies-container">
+
                 <div class="policy-card">
                     <h3>Privacy Policy</h3>
-                    <p>Your privacy matters to us.</p>
-                    <p>We only collect the information needed to process your order and provide a smooth shopping experience.</p>
+                    <p>Your privacy matters to us. We only collect the information needed to process your order and provide a smooth shopping experience.</p>
                     <p>Your details are kept secure and never shared with anyone except trusted partners such as payment providers and delivery services.</p>
                 </div>
 
                 <div class="policy-card">
-                    <h3>Refund & Return Policy</h3>
-                    <p>If your SATR piece isn't right, you can request a return or exchange within 14 days of receiving it.</p>
-                    <p>Items must be unworn, unwashed, and returned with all original tags.</p>
-                    <p>Once we receive and inspect the item, your refund will be processed.</p>
-                    <p>We cannot accept returns for items that show signs of wear, damage, or perfume.</p>
+                    <h3>Refund & Returns</h3>
+                    <p>If your Satr piece isn't right, you may request a return or exchange within 14 days of receiving your order.</p>
+                    <p>Items must be unworn, unwashed, and returned with all original tags intact. Once received and inspected, your refund will be processed promptly.</p>
+                    <p>We are unable to accept returns for items showing signs of wear, damage, or fragrance.</p>
                 </div>
 
                 <div class="policy-card">
-                    <h3>Shipping Policy</h3>
-                    <p>Orders are prepared within 1–3 working days.</p>
-                    <p>Delivery times depend on your location and chosen shipping method.</p>
-                    <p>You'll receive tracking details once your order is on its way.</p>
-                    <p>We are not responsible for courier delays or customs clearance issues beyond our control.</p>
+                    <h3>Shipping</h3>
+                    <p>Orders are prepared within 1–3 working days. You will receive tracking details once your order is on its way.</p>
+                    <p>We offer free shipping on all UK orders. We are not responsible for courier delays beyond our control.</p>
+                    <div class="intl-notice">
+                        <strong>International Orders —</strong> We are currently unable to process international orders directly through our website. If you are based outside the UK and would like to purchase an abaya, please reach out to us via <a href="https://www.instagram.com/satr.labell/" target="_blank">Instagram</a> or <a href="mailto:khanjannat2005@gmail.com">email</a> and we will be happy to assist you personally.
+                    </div>
                 </div>
+
             </div>
         </section>
 
         <section class="about-section">
             <h2>Contact Us</h2>
-            <p>We'd be honored to hear from you. Whether you have questions about our collections, need styling advice, or wish to share your SATR story, our team is here to serve you with warmth and care.</p>
-            <p><strong>Email:</strong> care@satr.com</p>
-            <p><strong>Response Time:</strong> Within 24 business hours</p>
-            <p><strong>Hours:</strong> Monday–Friday, 9am–5pm GST</p>
+            <p>We would be honoured to hear from you. Whether you have a question about sizing, an order enquiry, or simply want to say hello — we are always happy to help.</p>
+            <p><strong>Email:</strong> <a href="mailto:khanjannat2005@gmail.com" class="contact-link">khanjannat2005@gmail.com</a></p>
+            <p><strong>Instagram:</strong> <a href="https://www.instagram.com/satr.labell/" target="_blank" class="contact-link">@satr.labell</a></p>
+            <p><strong>Response Time:</strong> Within 24 hours on business days</p>
         </section>
+
     </main>
-    
+
     <footer>
         <p>&copy; 2026 Satr. Handcrafted with love for the modern Muslimah.</p>
     </footer>
 
     <script>
-        // Mobile menu toggle
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const menuToggle = document.getElementById('menuToggle');
             const nav = document.getElementById('mainNav');
-            
-            menuToggle.addEventListener('click', function() {
+
+            menuToggle.addEventListener('click', function () {
                 nav.classList.toggle('show');
-                // Change icon based on state
-                if (nav.classList.contains('show')) {
-                    menuToggle.textContent = '✕';
-                } else {
-                    menuToggle.textContent = '☰';
-                }
+                menuToggle.textContent = nav.classList.contains('show') ? '✕' : '☰';
             });
-            
-            // Close menu when clicking a link on mobile
-            const navLinks = nav.querySelectorAll('a');
-            navLinks.forEach(link => {
-                link.addEventListener('click', function() {
+
+            nav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', function () {
                     if (window.innerWidth <= 767) {
                         nav.classList.remove('show');
                         menuToggle.textContent = '☰';
                     }
                 });
             });
-            
-            // Close menu when clicking outside on mobile
-            document.addEventListener('click', function(event) {
-                if (window.innerWidth <= 767 && 
-                    !nav.contains(event.target) && 
-                    !menuToggle.contains(event.target) && 
+
+            document.addEventListener('click', function (e) {
+                if (window.innerWidth <= 767 &&
+                    !nav.contains(e.target) &&
+                    !menuToggle.contains(e.target) &&
                     nav.classList.contains('show')) {
                     nav.classList.remove('show');
                     menuToggle.textContent = '☰';
                 }
             });
-            
-            // Handle window resize
-            window.addEventListener('resize', function() {
+
+            window.addEventListener('resize', function () {
                 if (window.innerWidth > 767 && nav.classList.contains('show')) {
                     nav.classList.remove('show');
                     menuToggle.textContent = '☰';
