@@ -3,21 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Satr | Timeless Abayas</title>
+    <title>Layla Abaya | Satr</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@300;400;600;700&family=Playfair+Display+SC:wght@400&display=swap" rel="stylesheet">
-    
     <style>
         :root {
             --dark-brown: #4a3326;
+            --medium-brown: #7a6855;
+            --light-brown: #a89a89;
+            --off-white: #f9f7f5;
             --white: #ffffff;
             --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            --anim: cubic-bezier(0.16, 1, 0.3, 1);
         }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        /* High-Quality Background Fix */
         body {
-            margin: 0;
             font-family: 'Montserrat', sans-serif;
             color: var(--white);
             background-color: #2a1d15;
@@ -33,15 +35,14 @@
             background-size: cover;
             background-position: center;
             z-index: -1;
-            transform: translateZ(0);
         }
 
-        /* Updated Announcement Bar */
+        /* Announcement Bar */
         .announcement-bar {
             width: 100%;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0,0,0,0.5);
             backdrop-filter: blur(10px);
-            padding: 12px 5px;
+            padding: 12px 10px;
             text-align: center;
             font-size: 0.65rem;
             letter-spacing: 1.5px;
@@ -49,227 +50,372 @@
             position: sticky;
             top: 0;
             z-index: 3000;
-            line-height: 1.4;
+        }
+        .announcement-bar a { color: var(--white); text-decoration: underline; font-weight: 700; }
+
+        header {
+            text-align: center;
+            padding: 2.5rem 1rem 1.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 1.2s var(--anim) 0.2s forwards;
         }
 
-        header { text-align: center; padding: 2.5rem 1rem 1.5rem; }
-        
-        h1 { 
-            font-family: 'Playfair Display SC', serif; 
-            font-size: clamp(2.2rem, 8vw, 4rem); 
-            letter-spacing: 0.3em; 
-            margin: 0; 
-            font-weight: 300; 
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+        h1 {
+            font-family: 'Playfair Display SC', serif;
+            font-size: clamp(2.2rem, 8vw, 4rem);
+            letter-spacing: 0.3em;
+            font-weight: 300;
             text-transform: uppercase;
         }
 
-        nav { 
-            display: flex; 
-            justify-content: center; 
-            gap: 1.5rem; 
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
             margin-top: 1.5rem;
             flex-wrap: wrap;
         }
-        nav a { 
-            text-decoration: none; 
-            color: var(--white); 
-            text-transform: uppercase; 
-            font-size: 0.75rem; 
-            letter-spacing: 2px; 
-            font-weight: 700;
-            padding-bottom: 4px;
-            transition: var(--transition);
-        }
 
-        /* Hero Slider */
-        .hero-slider {
-            width: 94%;
-            max-width: 1400px;
-            height: 80vh;
-            margin: 2rem auto 5rem;
-            position: relative;
-            overflow: hidden;
-            border-radius: 30px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
-        }
-
-        .slide {
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            transition: opacity 1.2s ease-in-out;
-            background-size: cover;
-            background-position: center 20%;
-        }
-        .slide.active { opacity: 1; }
-
-        .hero-content-box {
-            position: absolute;
-            bottom: 40px; left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.98);
-            padding: 1.2rem 2rem;
-            border-radius: 10px;
-            text-align: center;
-            min-width: 240px;
-            color: var(--dark-brown);
-        }
-
-        .hero-shop-link {
-            display: inline-block;
+        nav a {
             text-decoration: none;
             color: var(--white);
-            background: var(--dark-brown);
-            padding: 0.7rem 1.5rem;
-            font-size: 0.7rem;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
             font-weight: 700;
-            border-radius: 3px;
-        }
-
-        /* PRODUCT SECTION - FIXED ALIGNMENT */
-        .products-section { 
-            width: 100%; 
-            max-width: 1200px; 
-            margin: 0 auto; 
-            padding: 0 1rem; 
-            box-sizing: border-box;
-        }
-        
-        .products-grid { 
-            display: grid; 
-            grid-template-columns: repeat(12, 1fr); 
-            gap: 3rem 1.5rem; 
-            margin-bottom: 8rem;
-            width: 100%;
-        }
-
-        .product-card { 
-            grid-column: span 12; /* Full width for mobile */
-            justify-self: center; /* PERFECTLY CENTERED */
-            width: 100%;
-            max-width: 340px;
-            text-decoration: none; 
-            color: var(--dark-brown); 
-            background: rgba(255, 255, 255, 0.95); 
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-            display: flex;
-            flex-direction: column;
+            padding-bottom: 4px;
+            position: relative;
             transition: var(--transition);
         }
 
-        /* Desktop Staggered Grid */
-        @media (min-width: 769px) {
-            .product-card { grid-column: span 6; max-width: 420px; }
-            .product-card:nth-child(even) { margin-top: 100px; }
-            .product-card:nth-child(odd) { margin-top: 0; }
+        nav a.active::after, nav a:hover::after {
+            content: "";
+            position: absolute;
+            bottom: -4px; left: 50%;
+            transform: translateX(-50%);
+            width: 60%; height: 1.5px;
+            background: var(--white);
         }
 
-        .img-container { width: 100%; aspect-ratio: 4/5; overflow: hidden; }
-        .product-image { width: 100%; height: 100%; object-fit: cover; }
-        
-        .product-info { padding: 1.5rem; text-align: center; }
-        .product-info h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; margin: 0; font-weight: 600; }
-        
-        .shop-btn-text { 
-            display: inline-block; 
-            margin-top: 10px; 
-            font-size: 0.65rem; 
-            text-transform: uppercase; 
-            letter-spacing: 2px; 
-            font-weight: 700;
-            color: var(--dark-brown); 
-            border-bottom: 2px solid var(--dark-brown);
+        /* Product layout */
+        .product-section {
+            width: 100%;
+            max-width: 1200px;
+            margin: 2rem auto 5rem;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2.5rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 1.2s var(--anim) 0.5s forwards;
         }
 
-        footer { text-align: center; padding: 4rem 1rem; background: rgba(0,0,0,0.5); }
+        @media (min-width: 1024px) {
+            .product-section {
+                grid-template-columns: 1.1fr 0.9fr;
+                gap: 4rem;
+            }
+        }
+
+        /* Image gallery */
+        .product-images { display: flex; flex-direction: column; gap: 1.2rem; }
+
+        /* Main image container with swipe/arrows */
+        .main-image-wrap {
+            position: relative;
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+            background: #1a1008;
+            aspect-ratio: 3/4;
+        }
+
+        @media (min-width: 1024px) {
+            .main-image-wrap { aspect-ratio: unset; height: 88vh; }
+        }
+
+        .main-image-wrap img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: opacity 0.3s ease, transform 0.5s ease;
+        }
+
+        .main-image-wrap:hover img { transform: scale(1.02); }
+
+        /* Desktop arrows */
+        .img-arrow {
+            position: absolute;
+            top: 50%; transform: translateY(-50%);
+            background: rgba(255,255,255,0.18);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: var(--white);
+            font-size: 1.6rem;
+            width: 46px; height: 46px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+            z-index: 10;
+            user-select: none;
+            line-height: 1;
+        }
+
+        .img-arrow:hover { background: rgba(255,255,255,0.3); }
+        .img-arrow.prev { left: 14px; }
+        .img-arrow.next { right: 14px; }
+
+        @media (min-width: 768px) {
+            .img-arrow { display: flex; }
+        }
+
+        .img-counter {
+            position: absolute;
+            bottom: 14px; right: 16px;
+            background: rgba(0,0,0,0.45);
+            color: var(--white);
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        /* Thumbnails */
+        .thumbnails-container {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 0.7rem;
+        }
+
+        @media (max-width: 500px) {
+            .thumbnails-container { grid-template-columns: repeat(4, 1fr); }
+        }
+
+        .thumbnail {
+            aspect-ratio: 3/4;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+
+        .thumbnail:hover { opacity: 0.9; transform: translateY(-2px); }
+        .thumbnail.active {
+            opacity: 1;
+            box-shadow: 0 0 0 2.5px var(--white), 0 4px 14px rgba(0,0,0,0.25);
+            transform: scale(1.04);
+        }
+
+        .thumbnail img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .thumbnail:hover img { transform: scale(1.08); }
+
+        /* Product details panel */
+        .product-details {
+            background: rgba(30, 18, 10, 0.88);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 3rem 2.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 1.2rem;
+        }
+
+        @media (min-width: 1024px) {
+            .product-details { align-self: center; padding: 3.5rem 3rem; }
+        }
+
+        .product-name {
+            font-family: 'Playfair Display SC', serif;
+            font-size: clamp(2.8rem, 6vw, 4.5rem);
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            line-height: 1.1;
+            color: var(--white);
+        }
+
+        .product-price {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.85);
+        }
+
+        .product-description {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: rgba(255,255,255,0.75);
+            font-weight: 300;
+            max-width: 420px;
+        }
+
+        .divider {
+            width: 50px;
+            height: 1px;
+            background: rgba(255,255,255,0.25);
+        }
+
+        .add-to-cart {
+            background: rgba(255,255,255,0.1);
+            color: var(--white);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.8rem;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            padding: 1.2rem 3rem;
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            max-width: 340px;
+        }
+
+        .add-to-cart:hover {
+            background: rgba(255,255,255,0.22);
+            transform: translateY(-2px);
+            letter-spacing: 3px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 4rem 1rem;
+            background: rgba(0,0,0,0.5);
+        }
         footer p { font-size: 0.75rem; letter-spacing: 1px; line-height: 1.8; }
-
-        .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s ease-out; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
     </style>
 </head>
 <body>
 
-    <div class="announcement-bar">
-        Free shipping for UK | International shipping please message satr.labell
-    </div>
+<div class="announcement-bar">
+    Free shipping for UK | International shipping please <a href="https://www.instagram.com/satr.labell/" target="_blank">message satr.labell</a>
+</div>
 
-    <header>
-        <h1>Satr</h1>
-        <nav id="nav-menu">
-            <a href="index.html">Home</a>
-            <a href="productsatr.html">Products</a>
-            <a href="aboutme.html">About</a>
-            <a href="cart.html">Cart</a>
-        </nav>
-    </header>
+<header>
+    <h1>Satr</h1>
+    <nav>
+        <a href="satrindex.html">Home</a>
+        <a href="productsatr.html" class="active">Products</a>
+        <a href="aboutme.html">About</a>
+        <a href="moodboard.html">Moods</a>
+        <a href="cart.html">Cart</a>
+    </nav>
+</header>
 
-    <section class="hero-slider">
-        <div id="hero-slider"></div>
-        <div class="hero-content-box">
-            <h3 id="hero-abaya-name" style="margin:0 0 10px; font-family:'Cormorant Garamond'; font-size: 1.6rem;">Sereen</h3>
-            <a href="sereen.html" id="hero-abaya-link" class="hero-shop-link">Shop Piece</a>
+<main>
+    <section class="product-section">
+        <div class="product-images">
+            <div class="main-image-wrap" id="mainWrap">
+                <img src="layla4.JPEG" alt="Layla Abaya" id="mainImage">
+                <button class="img-arrow prev" onclick="galleryNav(-1)">&#8249;</button>
+                <button class="img-arrow next" onclick="galleryNav(1)">&#8250;</button>
+                <div class="img-counter" id="imgCounter">1 / 6</div>
+            </div>
+            <div class="thumbnails-container">
+                <div class="thumbnail active" data-idx="0">
+                    <img src="layla4.JPEG" alt="Layla view 1">
+                </div>
+                <div class="thumbnail" data-idx="1">
+                    <img src="layla1.JPEG" alt="Layla view 2">
+                </div>
+                <div class="thumbnail" data-idx="2">
+                    <img src="layla2.JPEG" alt="Layla view 3">
+                </div>
+                <div class="thumbnail" data-idx="3">
+                    <img src="layla3.JPEG" alt="Layla view 4">
+                </div>
+                <div class="thumbnail" data-idx="4">
+                    <img src="layla5.JPEG" alt="Layla view 5">
+                </div>
+                <div class="thumbnail" data-idx="5">
+                    <img src="layla6.JPEG" alt="Layla view 6">
+                </div>
+            </div>
+        </div>
+
+        <div class="product-details">
+            <div class="product-name">Layla</div>
+            <div class="product-price">£50</div>
+            <div class="divider"></div>
+            <p class="product-description">A rich maroon open abaya with intricate floral lace detailing. Features lightweight fabric, flowing silhouette and elegant drape for sophisticated everyday elegance.</p>
+            <button class="add-to-cart" id="cartBtn">Add to Cart</button>
         </div>
     </section>
+</main>
 
-    <main class="products-section">
-        <div class="products-grid">
-            <a href="sereen.html" class="product-card reveal">
-                <div class="img-container"><img src="sareen4.jpeg" loading="lazy" class="product-image"></div>
-                <div class="product-info"><h2>The Sereen</h2><span class="shop-btn-text">Shop Now</span></div>
-            </a>
-            <a href="flora.html" class="product-card reveal">
-                <div class="img-container"><img src="flora1.jpeg" loading="lazy" class="product-image"></div>
-                <div class="product-info"><h2>The Flora</h2><span class="shop-btn-text">Shop Now</span></div>
-            </a>
-            <a href="noor.html" class="product-card reveal">
-                <div class="img-container"><img src="noor1.jpeg" loading="lazy" class="product-image"></div>
-                <div class="product-info"><h2>The Noor</h2><span class="shop-btn-text">Shop Now</span></div>
-            </a>
-            <a href="sahara.html" class="product-card reveal">
-                <div class="img-container"><img src="sahara1.jpeg" loading="lazy" class="product-image"></div>
-                <div class="product-info"><h2>The Sahara</h2><span class="shop-btn-text">Shop Now</span></div>
-            </a>
-        </div>
-    </main>
+<footer>
+    <p>&copy; 2026 Satr.<br>Handcrafted with love for the modern Muslimah.</p>
+</footer>
 
-    <footer>
-        <p>&copy; 2026 Satr. <br> Handcrafted with love for the modern Muslimah.</p>
-    </footer>
+<script>
+    const IMAGES = ["layla4.JPEG", "layla1.JPEG", "layla2.JPEG", "layla3.JPEG", "layla5.JPEG", "layla6.JPEG"];
+    let currentIdx = 0;
+    let touchStartX = 0;
 
-    <script>
-        const heroData = [
-            { name: 'Sereen', file: 'sareen3.jpeg', link: 'sereen.html' },
-            { name: 'Flora',  file: 'flora1.jpeg',  link: 'flora.html'  },
-            { name: 'Nila',   file: 'nila6.jpeg',   link: 'nila.html'   }
-        ];
-
-        const sliderContainer = document.getElementById('hero-slider');
-        heroData.forEach((item, index) => {
-            const slide = document.createElement('div');
-            slide.className = 'slide' + (index === 0 ? ' active' : '');
-            slide.style.backgroundImage = `url('${item.file}')`;
-            sliderContainer.appendChild(slide);
+    function setImage(idx, animate) {
+        currentIdx = (idx + IMAGES.length) % IMAGES.length;
+        const img = document.getElementById('mainImage');
+        const counter = document.getElementById('imgCounter');
+        // Update thumbnails
+        document.querySelectorAll('.thumbnail').forEach((t, i) => {
+            t.classList.toggle('active', i === currentIdx);
         });
+        counter.textContent = (currentIdx + 1) + ' / ' + IMAGES.length;
+        if (animate) {
+            img.style.opacity = '0';
+            setTimeout(() => { img.src = IMAGES[currentIdx]; img.style.opacity = '1'; }, 200);
+        } else {
+            img.src = IMAGES[currentIdx];
+        }
+    }
 
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.slide');
-        setInterval(() => {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + 1) % slides.length;
-            slides[currentSlide].classList.add('active');
-            document.getElementById('hero-abaya-name').textContent = heroData[currentSlide].name;
-            document.getElementById('hero-abaya-link').href = heroData[currentSlide].link;
-        }, 4000);
+    function galleryNav(dir) { setImage(currentIdx + dir, true); }
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-    </script>
+    // Thumbnail clicks
+    document.querySelectorAll('.thumbnail').forEach((thumb, i) => {
+        thumb.addEventListener('click', () => setImage(i, true));
+    });
+
+    // Touch swipe on main image
+    const wrap = document.getElementById('mainWrap');
+    wrap.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, {passive: true});
+    wrap.addEventListener('touchend', e => {
+        const diff = touchStartX - e.changedTouches[0].screenX;
+        if (Math.abs(diff) > 50) galleryNav(diff > 0 ? 1 : -1);
+    });
+
+    // Keyboard
+    document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowRight') galleryNav(1);
+        if (e.key === 'ArrowLeft') galleryNav(-1);
+    });
+
+    // Add to cart
+    document.getElementById('cartBtn').addEventListener('click', function() {
+        const orig = this.textContent;
+        this.textContent = 'Added ✓';
+        this.style.background = 'rgba(255,255,255,0.25)';
+        setTimeout(() => { this.textContent = orig; this.style.background = ''; }, 2000);
+    });
+</script>
 </body>
 </html>
