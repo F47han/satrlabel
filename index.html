@@ -36,12 +36,12 @@
             transform: translateZ(0);
         }
 
-        /* Updated Announcement Bar */
+        /* Announcement Bar with Hyperlink */
         .announcement-bar {
             width: 100%;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(10px);
-            padding: 12px 5px;
+            padding: 12px 10px;
             text-align: center;
             font-size: 0.65rem;
             letter-spacing: 1.5px;
@@ -50,7 +50,17 @@
             top: 0;
             z-index: 3000;
             line-height: 1.4;
+            box-sizing: border-box;
         }
+
+        .announcement-bar a {
+            color: var(--white);
+            text-decoration: underline;
+            font-weight: 700;
+            transition: opacity 0.3s ease;
+        }
+        
+        .announcement-bar a:hover { opacity: 0.8; }
 
         header { text-align: center; padding: 2.5rem 1rem 1.5rem; }
         
@@ -128,7 +138,7 @@
             border-radius: 3px;
         }
 
-        /* PRODUCT SECTION - FIXED ALIGNMENT */
+        /* Products Grid */
         .products-section { 
             width: 100%; 
             max-width: 1200px; 
@@ -146,8 +156,8 @@
         }
 
         .product-card { 
-            grid-column: span 12; /* Full width for mobile */
-            justify-self: center; /* PERFECTLY CENTERED */
+            grid-column: span 12; 
+            justify-self: center;
             width: 100%;
             max-width: 340px;
             text-decoration: none; 
@@ -161,7 +171,6 @@
             transition: var(--transition);
         }
 
-        /* Desktop Staggered Grid */
         @media (min-width: 769px) {
             .product-card { grid-column: span 6; max-width: 420px; }
             .product-card:nth-child(even) { margin-top: 100px; }
@@ -195,7 +204,7 @@
 <body>
 
     <div class="announcement-bar">
-        Free shipping for UK | International shipping please message satr.labell
+        Free shipping for UK | International shipping please <a href="https://www.instagram.com/satr.labell/" target="_blank">message satr.labell</a>
     </div>
 
     <header>
