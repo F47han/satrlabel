@@ -4,496 +4,415 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Azra Abaya | Satr</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@300;400;600;700&family=Playfair+Display+SC:wght@400&display=swap" rel="stylesheet">
     <style>
-        html { background-color: #4a3326; min-height: 100%; }
-        body {
-            background: linear-gradient(to bottom, #4a3326 0%, #4f382d 25%, #4a3326 55%, #f1ede6 85%, #ffffff 100%);
-            margin: 0; min-height: 100vh;
-            font-family: 'Montserrat', sans-serif;
-            color: #4a3326; line-height: 1.6;
-            display: flex; flex-direction: column; align-items: center;
-            padding: 1.5rem; overflow-x: hidden;
+        :root {
+            --dark-brown: #4a3326;
+            --medium-brown: #7a6855;
+            --light-brown: #a89a89;
+            --off-white: #f9f7f5;
+            --white: #ffffff;
+            --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            --anim: cubic-bezier(0.16, 1, 0.3, 1);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root {
-            --dark-brown: #4a3326; --medium-brown: #7a6855;
-            --light-brown: #a89a89; --off-white: #f9f7f5;
-            --white: #ffffff; --transition: all 0.3s ease;
-            --animation-timing: cubic-bezier(0.16, 1, 0.3, 1);
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--white);
+            background-color: #2a1d15;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* ── Header ── */
-        header {
-            text-align: center; margin-bottom: 2rem;
-            width: 100%; max-width: 900px; padding-top: 1rem;
-            position: relative; z-index: 10;
-            opacity: 0; transform: translateY(20px);
-            animation: fadeInUp 1.2s var(--animation-timing) 0.3s forwards;
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('background.jpeg');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
         }
-        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeIn { to { opacity: 1; } }
-        @keyframes underlineGrow { to { opacity: 1; transform: translateX(-50%) scaleX(1); } }
-        @keyframes fadeInScale { to { opacity: 1; transform: scale(1); } }
+
+        /* Announcement Bar */
+        .announcement-bar {
+            width: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            padding: 12px 10px;
+            text-align: center;
+            font-size: 0.65rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            position: sticky;
+            top: 0;
+            z-index: 3000;
+        }
+        .announcement-bar a { color: var(--white); text-decoration: underline; font-weight: 700; }
+
+        header {
+            text-align: center;
+            padding: 2.5rem 1rem 1.5rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 1.2s var(--anim) 0.2s forwards;
+        }
+
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 
         h1 {
             font-family: 'Playfair Display SC', serif;
-            font-size: clamp(3rem, 8vw, 4.8rem);
-            font-weight: 400; letter-spacing: 0.1em;
-            color: var(--white); display: inline-block;
-            text-shadow: 0 2px 6px rgba(0,0,0,0.25);
-            opacity: 0; transform: translateY(15px);
-            animation: fadeInUp 1.4s var(--animation-timing) 0.6s forwards;
-        }
-        h1::after {
-            content: ""; position: absolute;
-            bottom: -10px; left: 50%;
-            width: 50px; height: 1.5px;
-            background: var(--white); opacity: 0;
-            transform: translateX(-50%) scaleX(0.8);
-            animation: underlineGrow 1.2s var(--animation-timing) 1.2s forwards;
+            font-size: clamp(2.2rem, 8vw, 4rem);
+            letter-spacing: 0.3em;
+            font-weight: 300;
+            text-transform: uppercase;
         }
 
-        /* ── Mobile menu toggle ── */
-        .menu-toggle {
-            display: none; background: none; border: none;
-            color: var(--white); font-size: 1.8rem; cursor: pointer;
-            position: absolute; top: 1.2rem; right: 1.2rem;
-            z-index: 100; text-shadow: 0 1px 3px rgba(0,0,0,0.3);
-            opacity: 0; animation: fadeIn 1s ease-in 0.8s forwards;
-        }
-
-        /* ── Nav ── */
         nav {
-            margin-top: 1.5rem; display: flex;
-            justify-content: center; align-items: center;
-            gap: 2rem; padding-top: 1rem;
-            border-top: 1px solid rgba(255,255,255,0.35);
-            opacity: 0; transform: translateY(10px);
-            animation: fadeInUp 1.2s var(--animation-timing) 0.9s forwards;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
         }
+
         nav a {
-            text-decoration: none; color: var(--white);
-            font-weight: 500; font-size: 1rem;
-            letter-spacing: 0.8px; text-transform: uppercase;
-            padding: 0.6rem 0.4rem; border-radius: 4px;
-            transition: var(--transition); position: relative;
-            display: inline-block; text-align: center;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.2);
-            opacity: 0; transform: translateY(8px);
-        }
-        nav a:nth-child(1) { animation: fadeInUp 0.9s var(--animation-timing) 1.2s forwards; }
-        nav a:nth-child(2) { animation: fadeInUp 0.9s var(--animation-timing) 1.35s forwards; }
-        nav a:nth-child(3) { animation: fadeInUp 0.9s var(--animation-timing) 1.5s forwards; }
-        nav a:nth-child(4) { animation: fadeInUp 0.9s var(--animation-timing) 1.65s forwards; }
-        nav a::after {
-            content: ""; position: absolute;
-            bottom: -5px; left: 50%;
-            transform: translateX(-50%) scaleX(0);
-            width: 60%; height: 1.5px;
-            background: var(--white); transition: var(--transition);
-            transform-origin: center;
-        }
-        nav a:hover::after, nav a.active::after {
-            transform: translateX(-50%) scaleX(1);
-        }
-
-        /* ── Cart link — always visible ── */
-        .cart-link {
-            display: inline-flex !important;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .cart-count {
-            display: inline-flex;
-            align-items: center; justify-content: center;
-            background: rgba(255,255,255,0.2);
-            color: var(--white); font-size: 0.65rem;
-            font-weight: 700; min-width: 18px; height: 18px;
-            padding: 0 4px; border-radius: 9px;
-            border: 1px solid rgba(255,255,255,0.4);
-            transition: var(--transition); line-height: 1;
-        }
-        .cart-count.has-items {
-            background: var(--white);
-            color: var(--dark-brown);
-            border-color: var(--white);
-        }
-
-        /* ── Product layout ── */
-        .product-section {
-            width: 100%; max-width: 1400px;
-            margin: 0 auto 3rem;
-            display: grid; grid-template-columns: 1fr;
-            gap: 2.5rem;
-            opacity: 0; transform: translateY(30px);
-            animation: fadeInUp 1.4s var(--animation-timing) 2.4s forwards;
-        }
-        .product-images { width: 100%; display: flex; flex-direction: column; gap: 1.2rem; }
-
-        .main-image-container {
-            width: 100%; height: 80vh;
-            border-radius: 16px; overflow: hidden;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.3);
-            background: var(--off-white);
-            display: flex; align-items: center; justify-content: center;
+            text-decoration: none;
+            color: var(--white);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            font-weight: 700;
+            padding-bottom: 4px;
             position: relative;
-            opacity: 0; transform: scale(0.95);
-            animation: fadeInScale 1s var(--animation-timing) 2.8s forwards;
+            transition: var(--transition);
         }
-        .main-image-container img {
-            width: 100%; height: 100%; object-fit: cover;
-            transition: transform 0.5s ease, opacity 0.25s ease;
-        }
-        .main-image-container:hover img { transform: scale(1.03); }
 
+        nav a.active::after, nav a:hover::after {
+            content: "";
+            position: absolute;
+            bottom: -4px; left: 50%;
+            transform: translateX(-50%);
+            width: 60%; height: 1.5px;
+            background: var(--white);
+        }
+
+        /* Product layout */
+        .product-section {
+            width: 100%;
+            max-width: 1200px;
+            margin: 2rem auto 5rem;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2.5rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 1.2s var(--anim) 0.5s forwards;
+        }
+
+        @media (min-width: 1024px) {
+            .product-section {
+                grid-template-columns: 1.1fr 0.9fr;
+                gap: 4rem;
+            }
+        }
+
+        /* Image gallery */
+        .product-images { display: flex; flex-direction: column; gap: 1.2rem; }
+
+        /* Main image container with swipe/arrows */
+        .main-image-wrap {
+            position: relative;
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+            background: #1a1008;
+            aspect-ratio: 3/4;
+        }
+
+        @media (min-width: 1024px) {
+            .main-image-wrap { aspect-ratio: unset; height: 88vh; }
+        }
+
+        .main-image-wrap img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: opacity 0.3s ease, transform 0.5s ease;
+        }
+
+        .main-image-wrap:hover img { transform: scale(1.02); }
+
+        /* Desktop arrows */
+        .img-arrow {
+            position: absolute;
+            top: 50%; transform: translateY(-50%);
+            background: rgba(255,255,255,0.18);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: var(--white);
+            font-size: 1.6rem;
+            width: 46px; height: 46px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+            z-index: 10;
+            user-select: none;
+            line-height: 1;
+        }
+
+        .img-arrow:hover { background: rgba(255,255,255,0.3); }
+        .img-arrow.prev { left: 14px; }
+        .img-arrow.next { right: 14px; }
+
+        @media (min-width: 768px) {
+            .img-arrow { display: flex; }
+        }
+
+        .img-counter {
+            position: absolute;
+            bottom: 14px; right: 16px;
+            background: rgba(0,0,0,0.45);
+            color: var(--white);
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        /* Thumbnails */
         .thumbnails-container {
-            display: grid; grid-template-columns: repeat(5, 1fr);
-            gap: 0.8rem; width: 100%;
-            opacity: 0; transform: translateY(15px);
-            animation: fadeInUp 1s var(--animation-timing) 3.2s forwards;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 0.7rem;
         }
-        .thumbnail {
-            height: 110px; border-radius: 12px; overflow: hidden;
-            cursor: pointer; position: relative;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-            background: var(--off-white);
-            transition: all 0.3s ease; opacity: 0.85;
-        }
-        .thumbnail:hover { opacity: 1; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.18); }
-        .thumbnail.active { opacity: 1; box-shadow: 0 0 0 3px var(--white), 0 6px 16px rgba(0,0,0,0.18); transform: scale(1.03); }
-        .thumbnail img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
-        .thumbnail:hover img { transform: scale(1.1); }
 
-        /* ── Product details ── */
-        .product-details {
-            background: rgba(74, 51, 38, 0.94);
-            color: var(--white); border-radius: 16px;
-            padding: 2.8rem;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.25);
-            opacity: 0; transform: translateY(20px);
-            animation: fadeInUp 1s var(--animation-timing) 3.6s forwards;
+        @media (max-width: 500px) {
+            .thumbnails-container { grid-template-columns: repeat(4, 1fr); }
         }
+
+        .thumbnail {
+            aspect-ratio: 3/4;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+
+        .thumbnail:hover { opacity: 0.9; transform: translateY(-2px); }
+        .thumbnail.active {
+            opacity: 1;
+            box-shadow: 0 0 0 2.5px var(--white), 0 4px 14px rgba(0,0,0,0.25);
+            transform: scale(1.04);
+        }
+
+        .thumbnail img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .thumbnail:hover img { transform: scale(1.08); }
+
+        /* Product details panel */
+        .product-details {
+            background: rgba(30, 18, 10, 0.88);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 3rem 2.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 1.2rem;
+        }
+
+        @media (min-width: 1024px) {
+            .product-details { align-self: center; padding: 3.5rem 3rem; }
+        }
+
         .product-name {
             font-family: 'Playfair Display SC', serif;
-            font-size: clamp(2.8rem, 6vw, 4.2rem);
-            font-weight: 400; letter-spacing: 0.06em;
-            margin-bottom: 0.8rem; text-align: center; line-height: 1.1;
+            font-size: clamp(2.8rem, 6vw, 4.5rem);
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            line-height: 1.1;
+            color: var(--white);
         }
+
         .product-price {
-            font-family: 'Playfair Display SC', serif;
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: 400; text-align: center;
-            margin: 0.8rem 0 2rem; letter-spacing: 1px; opacity: 0.95;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.85);
         }
+
         .product-description {
-            font-size: clamp(1rem, 2.5vw, 1.35rem);
-            line-height: 1.7; text-align: center;
-            margin: 0 auto 2rem; max-width: 650px;
-            opacity: 0.92; font-weight: 300;
+            font-size: 1rem;
+            line-height: 1.8;
+            color: rgba(255,255,255,0.75);
+            font-weight: 300;
+            max-width: 420px;
         }
 
-        /* ── Size selector ── */
-        .size-wrapper { max-width: 380px; margin: 0 auto 1.5rem; width: 100%; }
-        .size-label {
-            display: block; font-size: 0.65rem;
-            text-transform: uppercase; letter-spacing: 1.5px;
-            margin-bottom: 8px; opacity: 0.75; text-align: left;
+        .divider {
+            width: 50px;
+            height: 1px;
+            background: rgba(255,255,255,0.25);
         }
-        .size-select {
-            width: 100%; background: rgba(255,255,255,0.1);
-            color: var(--white); border: 1px solid rgba(255,255,255,0.25);
-            padding: 0.9rem 1rem; font-family: 'Montserrat', sans-serif;
-            font-size: 0.9rem; border-radius: 8px; cursor: pointer;
-            outline: none; appearance: none; -webkit-appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='white' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
-            background-repeat: no-repeat; background-position: right 1rem center;
-        }
-        .size-select option { background: #4a3326; color: var(--white); }
 
-        /* ── Add to cart button ── */
         .add-to-cart {
-            background: rgba(255,255,255,0.12);
-            color: var(--white); font-family: 'Montserrat', sans-serif;
-            font-weight: 500; font-size: clamp(1rem, 2.5vw, 1.3rem);
-            letter-spacing: 1px; text-transform: uppercase;
-            padding: 1.4rem 2.8rem;
-            border: 1px solid rgba(255,255,255,0.25);
-            border-radius: 8px; cursor: pointer;
-            transition: var(--transition);
-            width: 100%; max-width: 380px;
-            display: block; margin: 0 auto;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.18);
-            opacity: 0.45; pointer-events: none;
-        }
-        .add-to-cart.active { opacity: 1; pointer-events: auto; }
-        .add-to-cart:hover { background: rgba(255,255,255,0.22); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.25); }
-        .add-to-cart:active { transform: translateY(0); }
-
-        /* ── Toast ── */
-        .toast {
-            position: fixed; bottom: 2rem; left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: var(--dark-brown); color: var(--white);
-            padding: 1rem 2rem; border-radius: 8px;
-            font-size: 0.85rem; letter-spacing: 1px;
-            transition: transform 0.4s var(--animation-timing);
-            z-index: 1000; box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            background: rgba(255,255,255,0.1);
+            color: var(--white);
             font-family: 'Montserrat', sans-serif;
-            white-space: nowrap;
+            font-weight: 600;
+            font-size: 0.8rem;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            padding: 1.2rem 3rem;
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            max-width: 340px;
         }
-        .toast.show { transform: translateX(-50%) translateY(0); }
+
+        .add-to-cart:hover {
+            background: rgba(255,255,255,0.22);
+            transform: translateY(-2px);
+            letter-spacing: 3px;
+        }
 
         footer {
-            margin-top: 2rem; padding: 1.8rem 1rem;
-            text-align: center; width: 100%; max-width: 800px;
-            border-top: 1px solid var(--light-brown); margin-bottom: 1.5rem;
-            opacity: 0; transform: translateY(15px);
-            animation: fadeInUp 1.2s var(--animation-timing) 4.0s forwards;
+            text-align: center;
+            padding: 4rem 1rem;
+            background: rgba(0,0,0,0.5);
         }
-        footer p { font-size: 0.92rem; color: var(--dark-brown); letter-spacing: 0.5px; }
-
-        /* ── Tablet ── */
-        @media (min-width: 768px) {
-            body { padding: 2rem; }
-            nav { gap: 2.6rem; }
-            .main-image-container { height: 85vh; }
-            .thumbnail { height: 130px; }
-        }
-
-        /* ── Desktop: two column ── */
-        @media (min-width: 1024px) {
-            .product-section { grid-template-columns: 1.1fr 0.9fr; gap: 4rem; }
-            .product-images { grid-column: 1; }
-            .product-details { grid-column: 2; align-self: center; padding: 3.5rem 3rem; }
-            .main-image-container { height: 92vh; }
-            nav { gap: 3.2rem; }
-            .thumbnail { height: 145px; }
-        }
-
-        /* ── Mobile ── */
-        @media (max-width: 767px) {
-            body { padding: 1rem; }
-            .menu-toggle { display: block; }
-
-            nav {
-                display: none; flex-direction: column;
-                gap: 0; padding: 0.5rem 0;
-                border-top: 1px solid rgba(255,255,255,0.4);
-                background: rgba(74, 51, 38, 0.92);
-                border-radius: 12px; margin-top: 1rem;
-                backdrop-filter: blur(8px);
-            }
-            nav.show { display: flex; opacity: 1; transform: translateY(0); }
-            nav a {
-                font-size: 1.1rem; padding: 0.9rem 1.5rem !important;
-                letter-spacing: 1px; min-width: auto; width: 100%;
-                opacity: 1 !important; transform: none !important;
-                animation: none !important; text-align: left !important;
-            }
-            nav a::after { display: none; }
-            nav a:hover { background: rgba(255,255,255,0.12); }
-            nav a + a { border-top: 1px solid rgba(255,255,255,0.1); }
-
-            /* Cart link in mobile menu */
-            .cart-link { justify-content: flex-start !important; }
-
-            .main-image-container { height: 55vw; min-height: 280px; border-radius: 12px; }
-
-            .thumbnails-container {
-                grid-template-columns: repeat(5, 1fr) !important;
-                gap: 0.5rem;
-            }
-            .thumbnail { height: 60px !important; border-radius: 8px; }
-
-            .product-details { padding: 1.8rem 1.2rem !important; }
-
-            .size-wrapper { max-width: 100%; }
-            .add-to-cart { max-width: 100% !important; }
-
-            .toast {
-                width: 88% !important; white-space: normal !important;
-                text-align: center; bottom: 1.5rem;
-            }
-
-            footer { margin-top: 2rem; padding: 1.4rem 1rem; }
-        }
-
-        @media (max-width: 400px) {
-            .thumbnails-container { grid-template-columns: repeat(5, 1fr) !important; }
-            .thumbnail { height: 50px !important; }
-        }
+        footer p { font-size: 0.75rem; letter-spacing: 1px; line-height: 1.8; }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500&family=Playfair+Display+SC:wght@400;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <header>
-        <button class="menu-toggle" id="menuToggle">☰</button>
-        <h1>Satr</h1>
-        <nav id="mainNav">
-            <a href="index.html">Home</a>
-            <a href="productsatr.html" class="active">Products</a>
-            <a href="aboutme.html">About</a>
-            <a href="cart.html" class="cart-link">
-                Cart <span class="cart-count" id="cart-count">0</span>
-            </a>
-        </nav>
-    </header>
+<div class="announcement-bar">
+    Free shipping for UK | International shipping please <a href="https://www.instagram.com/satr.labell/" target="_blank">message satr.labell</a>
+</div>
 
-    <main>
-        <section class="product-section">
-            <div class="product-images">
-                <div class="main-image-container">
-                    <img src="azra4.jpeg" alt="Azra Abaya" id="mainImage">
+<header>
+    <h1>Satr</h1>
+    <nav>
+        <a href="satrindex.html">Home</a>
+        <a href="productsatr.html" class="active">Products</a>
+        <a href="aboutme.html">About</a>
+        <a href="moodboard.html">Moods</a>
+        <a href="cart.html">Cart</a>
+    </nav>
+</header>
+
+<main>
+    <section class="product-section">
+        <div class="product-images">
+            <div class="main-image-wrap" id="mainWrap">
+                <img src="azra4.JPEG" alt="Azra Abaya" id="mainImage">
+                <button class="img-arrow prev" onclick="galleryNav(-1)">&#8249;</button>
+                <button class="img-arrow next" onclick="galleryNav(1)">&#8250;</button>
+                <div class="img-counter" id="imgCounter">1 / 5</div>
+            </div>
+            <div class="thumbnails-container">
+                <div class="thumbnail active" data-idx="0">
+                    <img src="azra4.JPEG" alt="Azra view 1">
                 </div>
-                <div class="thumbnails-container">
-                    <div class="thumbnail active" data-src="azra4.jpeg">
-                        <img src="azra4.jpeg" alt="Azra View 1">
-                    </div>
-                    <div class="thumbnail" data-src="azra1.jpeg">
-                        <img src="azra1.jpeg" alt="Azra View 2">
-                    </div>
-                    <div class="thumbnail" data-src="azra2.jpeg">
-                        <img src="azra2.jpeg" alt="Azra View 3">
-                    </div>
-                    <div class="thumbnail" data-src="azra3.jpeg">
-                        <img src="azra3.jpeg" alt="Azra View 4">
-                    </div>
-                    <div class="thumbnail" data-src="azra5.jpeg">
-                        <img src="azra5.jpeg" alt="Azra View 5">
-                    </div>
+                <div class="thumbnail" data-idx="1">
+                    <img src="azra1.JPEG" alt="Azra view 2">
+                </div>
+                <div class="thumbnail" data-idx="2">
+                    <img src="azra2.JPEG" alt="Azra view 3">
+                </div>
+                <div class="thumbnail" data-idx="3">
+                    <img src="azra3.JPEG" alt="Azra view 4">
+                </div>
+                <div class="thumbnail" data-idx="4">
+                    <img src="azra5.JPEG" alt="Azra view 5">
                 </div>
             </div>
+        </div>
 
-            <div class="product-details">
-                <h2 class="product-name">Azra</h2>
-                <p class="product-price">£45</p>
-                <p class="product-description">A black closed abaya with intricate lace detailing at the top and bottom. Features a modest silhouette, hidden pockets and soft lining for everyday elegance.</p>
+        <div class="product-details">
+            <div class="product-name">Azra</div>
+            <div class="product-price">£50</div>
+            <div class="divider"></div>
+            <p class="product-description">A black closed abaya with intricate lace detailing at the top and bottom. Features a modest silhouette, hidden pockets and soft lining for everyday elegance.</p>
+            <button class="add-to-cart" id="cartBtn">Add to Cart</button>
+        </div>
+    </section>
+</main>
 
-                <div class="size-wrapper">
-                    <label class="size-label" for="size-select">Select Size</label>
-                    <select class="size-select" id="size-select" onchange="onSizeChange(this)">
-                        <option value="" selected disabled>—</option>
-                        <option value="Small (52)">Small (52)</option>
-                        <option value="Medium (54)">Medium (54)</option>
-                        <option value="Large (56)">Large (56)</option>
-                    </select>
-                </div>
+<footer>
+    <p>&copy; 2026 Satr.<br>Handcrafted with love for the modern Muslimah.</p>
+</footer>
 
-                <button class="add-to-cart" id="add-to-cart" data-product-id="azra" onclick="addToCart()">
-                    Add to Cart
-                </button>
-            </div>
-        </section>
-    </main>
+<script>
+    const IMAGES = ["azra4.JPEG", "azra1.JPEG", "azra2.JPEG", "azra3.JPEG", "azra5.JPEG"];
+    let currentIdx = 0;
+    let touchStartX = 0;
 
-    <footer>
-        <p>&copy; 2026 Satr. Handcrafted with love for the modern Muslimah.</p>
-    </footer>
-
-    <div class="toast" id="toast"></div>
-
-    <script src="cart.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.documentElement.style.backgroundColor = '#4a3326';
-            document.body.style.background = 'linear-gradient(to bottom, #4a3326 0%, #4f382d 25%, #4a3326 55%, #f1ede6 85%, #ffffff 100%)';
-            document.body.classList.add('fonts-loaded');
-
-            // Thumbnail switching
-            const thumbnails = document.querySelectorAll('.thumbnail');
-            const mainImage  = document.getElementById('mainImage');
-
-            thumbnails.forEach(thumb => {
-                thumb.addEventListener('click', function() {
-                    thumbnails.forEach(t => t.classList.remove('active'));
-                    this.classList.add('active');
-                    const newSrc = this.getAttribute('data-src');
-                    const preload = new Image();
-                    preload.onload = function() {
-                        mainImage.style.opacity = '0';
-                        setTimeout(() => {
-                            mainImage.src = newSrc;
-                            mainImage.style.opacity = '1';
-                        }, 200);
-                    };
-                    preload.src = newSrc;
-                });
-            });
-
-            // Mobile menu
-            const menuToggle = document.getElementById('menuToggle');
-            const nav        = document.getElementById('mainNav');
-
-            menuToggle.addEventListener('click', function() {
-                nav.classList.toggle('show');
-                menuToggle.textContent = nav.classList.contains('show') ? '✕' : '☰';
-            });
-
-            nav.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', function() {
-                    if (window.innerWidth <= 767) {
-                        nav.classList.remove('show');
-                        menuToggle.textContent = '☰';
-                    }
-                });
-            });
-
-            document.addEventListener('click', function(e) {
-                if (window.innerWidth <= 767 &&
-                    !nav.contains(e.target) &&
-                    !menuToggle.contains(e.target) &&
-                    nav.classList.contains('show')) {
-                    nav.classList.remove('show');
-                    menuToggle.textContent = '☰';
-                }
-            });
-
-            window.addEventListener('resize', function() {
-                if (window.innerWidth > 767 && nav.classList.contains('show')) {
-                    nav.classList.remove('show');
-                    menuToggle.textContent = '☰';
-                }
-            });
-
-            // Cart count
-            updateCartCount();
-            setTimeout(() => {
-                document.documentElement.style.backgroundColor = '#4a3326';
-            }, 100);
+    function setImage(idx, animate) {
+        currentIdx = (idx + IMAGES.length) % IMAGES.length;
+        const img = document.getElementById('mainImage');
+        const counter = document.getElementById('imgCounter');
+        // Update thumbnails
+        document.querySelectorAll('.thumbnail').forEach((t, i) => {
+            t.classList.toggle('active', i === currentIdx);
         });
-
-        // Cart count — always visible
-        function updateCartCount() {
-            const el = document.getElementById('cart-count');
-            if (!el) return;
-            const { itemCount } = SatrCart.getSummary();
-            el.textContent = itemCount;
-            el.classList.toggle('has-items', itemCount > 0);
+        counter.textContent = (currentIdx + 1) + ' / ' + IMAGES.length;
+        if (animate) {
+            img.style.opacity = '0';
+            setTimeout(() => { img.src = IMAGES[currentIdx]; img.style.opacity = '1'; }, 200);
+        } else {
+            img.src = IMAGES[currentIdx];
         }
-        window.addEventListener('satr:cart-updated', updateCartCount);
+    }
 
-        // Size + Add to cart
-        function onSizeChange(select) {
-            document.getElementById('add-to-cart').classList.toggle('active', select.value !== '');
-        }
+    function galleryNav(dir) { setImage(currentIdx + dir, true); }
 
-        function addToCart() {
-            const size = document.getElementById('size-select').value;
-            if (!size) return;
-            SatrCart.addItem('azra', size);
-            const btn = document.getElementById('add-to-cart');
-            btn.textContent = '✓ Added';
-            setTimeout(() => btn.textContent = 'Add to Cart', 2200);
-            showToast('Azra added to cart');
-        }
+    // Thumbnail clicks
+    document.querySelectorAll('.thumbnail').forEach((thumb, i) => {
+        thumb.addEventListener('click', () => setImage(i, true));
+    });
 
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 2500);
-        }
-    </script>
+    // Touch swipe on main image
+    const wrap = document.getElementById('mainWrap');
+    wrap.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, {passive: true});
+    wrap.addEventListener('touchend', e => {
+        const diff = touchStartX - e.changedTouches[0].screenX;
+        if (Math.abs(diff) > 50) galleryNav(diff > 0 ? 1 : -1);
+    });
+
+    // Keyboard
+    document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowRight') galleryNav(1);
+        if (e.key === 'ArrowLeft') galleryNav(-1);
+    });
+
+    // Add to cart
+    document.getElementById('cartBtn').addEventListener('click', function() {
+        const orig = this.textContent;
+        this.textContent = 'Added ✓';
+        this.style.background = 'rgba(255,255,255,0.25)';
+        setTimeout(() => { this.textContent = orig; this.style.background = ''; }, 2000);
+    });
+</script>
 </body>
 </html>
