@@ -4,278 +4,208 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Satr | Timeless Abayas</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500&family=Playfair+Display+SC:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500&family=Playfair+Display+SC:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --dark-brown: #4a3326;
-            --medium-brown: #7a6855;
-            --light-brown: #a89a89;
             --white: #ffffff;
-            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Background Image with elegant overlay */
+        /* Performance: Prevent layout shift */
         body {
             margin: 0;
             font-family: 'Montserrat', sans-serif;
             color: var(--white);
-            background: linear-gradient(rgba(42, 29, 21, 0.75), rgba(42, 29, 21, 0.75)), url('background.jpeg');
+            background: #2a1d15; /* Fallback color while image loads */
+            background-image: linear-gradient(rgba(42, 29, 21, 0.75), rgba(42, 29, 21, 0.75)), url('background.jpeg');
             background-size: cover;
             background-attachment: fixed;
             background-position: center;
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             overflow-x: hidden;
         }
 
-        /* Elegant Announcement Bar */
         .announcement-bar {
             width: 100%;
             background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px);
-            padding: 10px 0;
+            backdrop-filter: blur(10px);
+            padding: 12px 0;
             text-align: center;
-            font-size: 0.75rem;
-            letter-spacing: 1.5px;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
             text-transform: uppercase;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            z-index: 1002;
+            position: sticky;
+            top: 0;
+            z-index: 2000;
         }
 
-        .announcement-bar a {
-            color: var(--white);
-            text-decoration: underline;
-            text-underline-offset: 3px;
-            font-weight: 500;
-        }
+        .announcement-bar a { color: var(--white); font-weight: 600; }
 
-        header {
-            text-align: center;
-            padding: 3rem 1rem 2rem;
-            width: 100%;
-            z-index: 100;
-        }
+        header { text-align: center; padding: 4rem 1rem 2rem; }
+        h1 { font-family: 'Playfair Display SC', serif; font-size: clamp(3rem, 10vw, 5rem); letter-spacing: 0.15em; margin: 0; }
 
-        h1 {
-            font-family: 'Playfair Display SC', serif;
-            font-size: clamp(2.8rem, 8vw, 4.5rem);
-            font-weight: 400;
-            letter-spacing: 0.1em;
-            color: var(--white);
-            margin-bottom: 1rem;
-        }
+        nav { display: flex; justify-content: center; gap: 3rem; margin-top: 1.5rem; }
+        nav a { text-decoration: none; color: var(--white); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; opacity: 0.8; transition: var(--transition); }
+        nav a:hover { opacity: 1; letter-spacing: 3px; }
 
-        /* Nav & Menu logic */
-        nav {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 2rem;
-            border-top: 1px solid rgba(255,255,255,0.3);
-            padding-top: 1rem;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: var(--white);
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-            transition: var(--transition);
-        }
-
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            gap: 6px;
-            cursor: pointer;
-            z-index: 1001;
-            position: absolute;
-            top: 60px; /* Adjusted for announcement bar */
-            right: 2rem;
-        }
-
-        .menu-toggle span { width: 30px; height: 2px; background: var(--white); transition: var(--transition); }
-
-        /* Hero Slider */
+        /* Elegant Hero */
         .hero-slider {
-            width: 92%;
+            width: 94%;
             max-width: 1400px;
-            height: 85vh;
-            margin-bottom: 2rem;
+            height: 75vh;
+            margin: 2rem auto;
             position: relative;
             overflow: hidden;
-            border-radius: 30px;
-            box-shadow: 0 35px 90px rgba(0,0,0,0.5);
+            border-radius: 40px;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.6);
         }
 
-        .slider-container { width: 100%; height: 100%; position: relative; }
         .slide {
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
+            inset: 0;
             opacity: 0;
-            transition: opacity 1.5s ease-in-out;
+            transition: opacity 1.2s ease-in-out, transform 4s linear;
             background-size: cover;
             background-position: center;
         }
-        .slide.active { opacity: 1; }
+        .slide.active { opacity: 1; transform: scale(1.05); }
 
-        .hero-content-box {
-            position: absolute;
-            bottom: 40px; left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255,255,255,0.92);
-            padding: 1.8rem 3rem;
-            border-radius: 15px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .hero-content-box h3 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2.2rem;
-            color: var(--dark-brown);
-            margin-bottom: 1rem;
-        }
-
-        /* Restoration: The Brand Message */
         .brand-description {
-            max-width: 750px;
+            max-width: 700px;
             text-align: center;
-            margin: 4rem auto;
+            margin: 6rem auto;
             font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(1.2rem, 3vw, 1.6rem);
+            font-size: clamp(1.4rem, 4vw, 1.8rem);
             font-style: italic;
-            line-height: 1.8;
-            padding: 0 1.5rem;
-            color: rgba(255,255,255,0.9);
+            line-height: 1.6;
+            color: rgba(255,255,255,0.95);
         }
 
-        /* Product Grid Styles */
-        .products-section { width: 100%; max-width: 1200px; padding: 0 1.5rem; }
-        .section-title {
-            text-align: center;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-        }
-
+        /* Nicer Desktop Layout: Staggered Grid */
+        .products-section { width: 100%; max-width: 1300px; margin: 0 auto; padding: 0 2rem; }
+        
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2.5rem;
-            margin-bottom: 6rem;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 4rem 2rem;
+            margin-bottom: 10rem;
         }
 
         .product-card {
-            background: var(--white);
-            border-radius: 20px;
-            overflow: hidden;
+            grid-column: span 6; /* Default 2 per row on smaller screens */
             text-decoration: none;
-            color: var(--dark-brown);
+            color: inherit;
             transition: var(--transition);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
         }
 
-        .product-card:hover { transform: translateY(-12px); }
-        .product-image { width: 100%; aspect-ratio: 3/4; object-fit: cover; }
-        .product-info { padding: 1.8rem; text-align: center; }
-        .product-info h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; margin-bottom: 0.5rem; }
+        /* The Staggering effect on Desktop */
+        @media (min-width: 1024px) {
+            .product-card:nth-child(1) { grid-column: 1 / span 5; }
+            .product-card:nth-child(2) { grid-column: 7 / span 5; margin-top: 100px; }
+            .product-card:nth-child(3) { grid-column: 2 / span 5; }
+            .product-card:nth-child(4) { grid-column: 8 / span 5; margin-top: -50px; }
+        }
 
+        .img-container {
+            width: 100%;
+            aspect-ratio: 3/4;
+            overflow: hidden;
+            border-radius: 15px;
+            background: rgba(255,255,255,0.05); /* Skeleton placeholder */
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1s var(--transition);
+        }
+
+        .product-card:hover .product-image { transform: scale(1.1); }
+
+        .product-info { margin-top: 1.5rem; text-align: center; }
+        .product-info h2 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; margin: 0; }
+        .product-info p { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; }
+
+        /* Mobile Adjustments */
         @media (max-width: 768px) {
-            .menu-toggle { display: flex; top: 75px; }
-            nav {
-                position: fixed;
-                top: 0; right: -100%;
-                height: 100vh; width: 80%;
-                background: var(--dark-brown);
-                flex-direction: column;
-                justify-content: center;
-                transition: 0.5s ease;
-                z-index: 1000;
-                border-top: none;
-            }
-            nav.active { right: 0; }
-            .products-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+            .products-grid { gap: 2rem 1rem; }
+            .product-card { grid-column: span 6 !important; margin-top: 0 !important; }
+            .product-info h2 { font-size: 1.3rem; }
+            nav { gap: 1.5rem; }
         }
+
+        /* Performance: Fade in animations */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
     </style>
 </head>
 <body>
 
     <div class="announcement-bar">
-        Free shipping for UK. International shipping? 
-        <a href="https://www.instagram.com/satr.labell/?hl=en" target="_blank">Please message satr.label on Instagram</a>
-    </div>
-
-    <div class="menu-toggle" id="mobile-menu">
-        <span></span><span></span><span></span>
+        Free shipping for UK. International? 
+        <a href="https://www.instagram.com/satr.labell/?hl=en" target="_blank">Message satr.label</a>
     </div>
 
     <header>
         <h1>Satr</h1>
-        <nav id="nav-menu">
+        <nav>
             <a href="index.html">Home</a>
             <a href="productsatr.html">Products</a>
             <a href="aboutme.html">About</a>
-            <a href="cart.html">Cart (<span id="cart-count">0</span>)</a>
+            <a href="cart.html">Cart</a>
         </nav>
     </header>
 
     <section class="hero-slider">
-        <div class="slider-container" id="hero-slider"></div>
-        <div class="hero-content-box">
-            <h3 id="hero-abaya-name">Sereen</h3>
-            <a href="sereen.html" id="hero-abaya-link" class="hero-shop-link" style="text-decoration: none; color: white; background: var(--dark-brown); padding: 10px 20px; border-radius: 5px; font-size: 0.8rem; letter-spacing: 1px;">Shop Piece</a>
-        </div>
+        <div id="hero-slider"></div>
     </section>
 
-    <p class="brand-description">
+    <p class="brand-description reveal">
         Satr was born from a personal journey, to create abayas that reflect identity while embracing modern elegance.
     </p>
 
     <main class="products-section">
-        <h2 class="section-title">The Collection</h2>
         <div class="products-grid">
-            <a href="sereen.html" class="product-card">
-                <img src="sareen4.jpeg" alt="Sereen" class="product-image">
-                <div class="product-info"><h2>The Sereen</h2><p>Modern grace in every thread.</p></div>
+            <a href="sereen.html" class="product-card reveal">
+                <div class="img-container">
+                    <img src="sareen4.jpeg" loading="lazy" alt="Sereen" class="product-image">
+                </div>
+                <div class="product-info"><h2>The Sereen</h2><p>Modern Grace</p></div>
             </a>
-            <a href="flora.html" class="product-card">
-                <img src="flora1.jpeg" alt="Flora" class="product-image">
-                <div class="product-info"><h2>The Flora</h2><p>Botanical elegance.</p></div>
+            <a href="flora.html" class="product-card reveal">
+                <div class="img-container">
+                    <img src="flora1.jpeg" loading="lazy" alt="Flora" class="product-image">
+                </div>
+                <div class="product-info"><h2>The Flora</h2><p>Botanical Structure</p></div>
             </a>
-            <a href="noor.html" class="product-card">
-                <img src="noor1.jpeg" alt="Noor" class="product-image">
-                <div class="product-info"><h2>The Noor</h2><p>Radiant simplicity.</p></div>
+            <a href="noor.html" class="product-card reveal">
+                <div class="img-container">
+                    <img src="noor1.jpeg" loading="lazy" alt="Noor" class="product-image">
+                </div>
+                <div class="product-info"><h2>The Noor</h2><p>Radiant Simplicity</p></div>
             </a>
-            <a href="sahara.html" class="product-card">
-                <img src="sahara1.jpeg" alt="Sahara" class="product-image">
-                <div class="product-info"><h2>The Sahara</h2><p>Warm desert tones.</p></div>
+            <a href="sahara.html" class="product-card reveal">
+                <div class="img-container">
+                    <img src="sahara1.jpeg" loading="lazy" alt="Sahara" class="product-image">
+                </div>
+                <div class="product-info"><h2>The Sahara</h2><p>Desert Tones</p></div>
             </a>
         </div>
     </main>
 
     <script>
-        // Hamburger Menu Toggle
-        const menuToggle = document.getElementById('mobile-menu');
-        const navMenu = document.getElementById('nav-menu');
-
-        menuToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            const spans = menuToggle.querySelectorAll('span');
-            spans[0].style.transform = navMenu.classList.contains('active') ? 'rotate(45deg) translate(5px, 6px)' : '';
-            spans[1].style.opacity = navMenu.classList.contains('active') ? '0' : '1';
-            spans[2].style.transform = navMenu.classList.contains('active') ? 'rotate(-45deg) translate(5px, -6px)' : '';
-        });
-
-        // Hero Slider
+        // Hero Slider Logic
         const heroData = [
-            { name: 'Sereen', file: 'sareen3.jpeg', link: 'sereen.html' },
-            { name: 'Flora',  file: 'flora1.jpeg',  link: 'flora.html'  },
-            { name: 'Nila',   file: 'nila6.jpeg',   link: 'nila.html'   }
+            { file: 'sareen3.jpeg' },
+            { file: 'flora1.jpeg' },
+            { file: 'nila6.jpeg' }
         ];
 
         const sliderContainer = document.getElementById('hero-slider');
@@ -292,9 +222,18 @@
             slides[currentSlide].classList.remove('active');
             currentSlide = (currentSlide + 1) % slides.length;
             slides[currentSlide].classList.add('active');
-            document.getElementById('hero-abaya-name').textContent = heroData[currentSlide].name;
-            document.getElementById('hero-abaya-link').href = heroData[currentSlide].link;
-        }, 4000);
+        }, 5000);
+
+        // Scroll Reveal Logic for speed and feel
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     </script>
 </body>
 </html>
