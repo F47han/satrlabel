@@ -13,14 +13,14 @@ const Stripe = require('stripe');
 // ── Authoritative price catalog ────────────────────────────────
 // Prices in pence. NEVER trust client prices. Always charge from here.
 const CATALOG = {
-  'flora':  { name: 'Flora',  price: 4500 },
-  'noor':   { name: 'Noor',   price: 4500 },
-  'sahara': { name: 'Sahara', price: 4500 },
-  'azra':   { name: 'Azra',   price: 4500 },
-  'sereen': { name: 'Sereen', price: 4500 },
-  'layla':  { name: 'Layla',  price: 4500 },
-  'nila':   { name: 'Nila',   price: 4500 },
-  'sama':   { name: 'Sama',   price: 4500 },
+  'flora':  { name: 'Flora',  price: 5000 },
+  'noor':   { name: 'Noor',   price: 5500 },
+  'sahara': { name: 'Sahara', price: 5000 },
+  'azra':   { name: 'Azra',   price: 5000 },
+  'sereen': { name: 'Sereen', price: 5000 },
+  'layla':  { name: 'Layla',  price: 5000 },
+  'nila':   { name: 'Nila',   price: 5000 },
+  'sama':   { name: 'Sama',   price: 5000 },
 };
 
 const VALID_SIZES = ['Small (52)', 'Medium (54)', 'Large (56)'];
@@ -96,7 +96,7 @@ module.exports = async function handler(req, res) {
       success_url: `${process.env.SITE_URL}/success.html?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url:  `${process.env.SITE_URL}/cart.html`,
       shipping_address_collection: {
-        allowed_countries: ['GB', 'SA', 'AE', 'KW', 'QA', 'BH', 'OM'],
+        allowed_countries: ['GB'],
       },
       metadata: {
         source: 'satr-website',
