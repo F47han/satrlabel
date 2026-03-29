@@ -21,8 +21,8 @@
         body {
             margin: 0;
             font-family: 'Montserrat', sans-serif;
-            color: var(--dark-brown); /* Changed to brown */
-            background-color: var(--cream); /* Lighter background for contrast */
+            color: var(--dark-brown);
+            background-color: var(--cream);
             min-height: 100vh;
             overflow-x: hidden;
             line-height: 1.6;
@@ -35,15 +35,16 @@
             background-image: url('background.jpeg');
             background-size: cover;
             background-position: center;
+            background-repeat: no-repeat;
             z-index: -1;
-            opacity: 0.15; /* Softened overlay for better text readability */
+            opacity: 0.25;
             transform: translateZ(0);
         }
 
         /* Announcement Bar */
         .announcement-bar {
             width: 100%;
-            background: rgba(74, 51, 38, 0.95); /* Dark brown background */
+            background: rgba(74, 51, 38, 0.95);
             backdrop-filter: blur(10px);
             padding: 10px 15px;
             text-align: center;
@@ -59,7 +60,7 @@
 
         .announcement-bar, 
         .announcement-bar a {
-            color: var(--white); /* Keep white text on dark bar */
+            color: var(--white);
         }
         
         .announcement-bar a {
@@ -97,7 +98,7 @@
 
         nav a { 
             text-decoration: none; 
-            color: var(--dark-brown); /* Changed to brown */
+            color: var(--dark-brown);
             text-transform: uppercase; 
             font-size: 0.7rem; 
             letter-spacing: 1.5px; 
@@ -105,7 +106,7 @@
             padding: 8px 12px;
             border-radius: 4px;
             transition: var(--transition);
-            min-height: 44px; /* Mobile touch target */
+            min-height: 44px;
             display: flex;
             align-items: center;
         }
@@ -116,11 +117,11 @@
             outline: none;
         }
 
-        /* Hero Slider - Mobile Optimized */
+        /* Hero Slider */
         .hero-slider {
             width: 92%;
             max-width: 1400px;
-            height: 60vh; /* Reduced for mobile */
+            height: 60vh;
             min-height: 300px;
             margin: 1.5rem auto 3rem;
             position: relative;
@@ -147,7 +148,7 @@
             position: absolute;
             bottom: 20px; left: 50%;
             transform: translateX(-50%);
-            background: rgba(248, 245, 242, 0.98); /* Cream background */
+            background: rgba(248, 245, 242, 0.98);
             padding: 1rem 1.5rem;
             border-radius: 12px;
             text-align: center;
@@ -155,14 +156,21 @@
             color: var(--dark-brown);
             box-shadow: 0 8px 25px rgba(0,0,0,0.15);
             width: calc(100% - 40px);
-            max-width: 320px;
+            max-width: 400px;
         }
 
         .hero-content-box h3 {
-            margin: 0 0 8px; 
+            margin: 0 0 12px; 
             font-family: 'Cormorant Garamond', serif; 
             font-size: 1.4rem;
             font-weight: 600;
+        }
+
+        .hero-buttons-container {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
         .hero-shop-link {
@@ -170,7 +178,7 @@
             text-decoration: none;
             color: var(--white);
             background: var(--dark-brown);
-            padding: 0.65rem 1.4rem;
+            padding: 0.65rem 1.2rem;
             font-size: 0.65rem;
             text-transform: uppercase;
             letter-spacing: 1.5px;
@@ -188,6 +196,14 @@
             transform: translateY(-2px);
         }
 
+        .hero-shop-link.secondary {
+            background: var(--medium-brown);
+        }
+        
+        .hero-shop-link.secondary:hover {
+            background: var(--dark-brown);
+        }
+
         /* Products Grid */
         .products-section { 
             width: 100%; 
@@ -199,7 +215,7 @@
         
         .products-grid { 
             display: grid; 
-            grid-template-columns: 1fr; /* Single column on mobile */
+            grid-template-columns: 1fr;
             gap: 2rem; 
             margin-bottom: 4rem;
             width: 100%;
@@ -318,6 +334,8 @@
             .hero-content-box h3 { font-size: 1.3rem; }
             .product-info h2 { font-size: 1.4rem; }
             .products-grid { gap: 1.8rem; margin-bottom: 3rem; }
+            .hero-buttons-container { flex-direction: column; gap: 8px; }
+            .hero-shop-link { width: 100%; }
         }
 
         /* Focus states for accessibility */
@@ -347,7 +365,7 @@
         <div id="hero-slider"></div>
         <div class="hero-content-box">
             <h3 id="hero-abaya-name">Sereen</h3>
-            <a href="sereen.html" id="hero-abaya-link" class="hero-shop-link">Shop Piece</a>
+            <div class="hero-buttons-container" id="hero-buttons"></div>
         </div>
     </section>
 
@@ -397,14 +415,38 @@
     </footer>
 
     <script>
-        // Hero Slider Data
+        // Hero Slider Data - Now supports single or double buttons
         const heroData = [
-            { name: 'Sereen', file: 'sareen3.jpeg', link: 'sereen.html' },
-            { name: 'Flora',  file: 'flora1.jpeg',  link: 'flora.html'  },
-            { name: 'Nila',   file: 'nila6.jpeg',   link: 'nila.html'   }
+            { 
+                name: 'Sereen', 
+                file: 'sareen3.jpeg', 
+                buttons: [{ text: 'Shop Piece', link: 'sereen.html' }] 
+            },
+            { 
+                name: 'Flora',  
+                file: 'flora1.jpeg',  
+                buttons: [{ text: 'Shop Piece', link: 'flora.html' }]  
+            },
+            { 
+                name: 'Nila',   
+                file: 'nila6.jpeg',   
+                buttons: [{ text: 'Shop Piece', link: 'nila.html' }]   
+            },
+            { 
+                name: 'Layn & Sama',   
+                file: 'layandsama.jpg',   
+                buttons: [
+                    { text: 'Shop Layla', link: 'layla.html' },
+                    { text: 'Shop Sama', link: 'sama.html' }
+                ]   
+            }
         ];
 
         const sliderContainer = document.getElementById('hero-slider');
+        const buttonsContainer = document.getElementById('hero-buttons');
+        const heroNameEl = document.getElementById('hero-abaya-name');
+        
+        // Create slides
         heroData.forEach((item, index) => {
             const slide = document.createElement('div');
             slide.className = 'slide' + (index === 0 ? ' active' : '');
@@ -413,11 +455,24 @@
             sliderContainer.appendChild(slide);
         });
 
+        // Function to update buttons based on current slide
+        function updateButtons(buttonsData) {
+            buttonsContainer.innerHTML = '';
+            buttonsData.forEach((btn, index) => {
+                const link = document.createElement('a');
+                link.href = btn.link;
+                link.textContent = btn.text;
+                link.className = 'hero-shop-link' + (index > 0 ? ' secondary' : '');
+                buttonsContainer.appendChild(link);
+            });
+        }
+
+        // Initialize buttons for first slide
+        updateButtons(heroData[0].buttons);
+
         // Auto-rotate slider
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
-        const heroNameEl = document.getElementById('hero-abaya-name');
-        const heroLinkEl = document.getElementById('hero-abaya-link');
         
         function updateSlide(index) {
             slides.forEach((slide, i) => {
@@ -425,7 +480,7 @@
                 slide.setAttribute('aria-hidden', i !== index ? 'true' : 'false');
             });
             heroNameEl.textContent = heroData[index].name;
-            heroLinkEl.href = heroData[index].link;
+            updateButtons(heroData[index].buttons);
         }
 
         setInterval(() => {
@@ -445,13 +500,14 @@
         
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // Prevent broken links during development (optional helper)
-        document.querySelectorAll('a[href$=".html"]').forEach(link => {
-            link.addEventListener('click', (e) => {
-                // Uncomment below to show warning if page doesn't exist yet
-                // if (!link.href.includes(window.location.hostname)) return;
-            });
-        });
+        // Debug: Check if background image loads
+        const bgImg = new Image();
+        bgImg.src = './background.jpeg';
+        bgImg.onload = () => console.log('✅ background.jpeg loaded successfully');
+        bgImg.onerror = () => {
+            console.error('❌ background.jpeg failed to load');
+            console.log('💡 Check: 1) File is named exactly "background.jpeg" 2) It\'s in the same folder as index.html 3) GitHub is case-sensitive!');
+        };
     </script>
 </body>
 </html>
