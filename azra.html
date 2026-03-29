@@ -10,10 +10,11 @@
     <style>
         :root {
             --dark-brown: #4a3326;
-            --medium-brown: #7a6855;
-            --light-brown: #a89a89;
+            --medium-brown: #6b4f3f;
+            --light-brown: #8c7b6b;
             --off-white: #f9f7f5;
             --white: #ffffff;
+            --cream: #f8f5f2;
             --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             --anim: cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -21,8 +22,8 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            color: var(--white);
-            background-color: #2a1d15;
+            color: var(--dark-brown); /* Changed to brown */
+            background-color: var(--cream); /* Light cream background */
             min-height: 100vh;
             overflow-x: hidden;
         }
@@ -34,13 +35,15 @@
             background-image: url('background.jpeg');
             background-size: cover;
             background-position: center;
+            background-repeat: no-repeat;
             z-index: -1;
+            opacity: 0.25; /* Softened for text readability */
         }
 
         /* Announcement Bar */
         .announcement-bar {
             width: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(74, 51, 38, 0.95); /* Dark brown background */
             backdrop-filter: blur(10px);
             padding: 12px 10px;
             text-align: center;
@@ -51,7 +54,14 @@
             top: 0;
             z-index: 3000;
         }
-        .announcement-bar a { color: var(--white); text-decoration: underline; font-weight: 700; }
+        .announcement-bar,
+        .announcement-bar a { 
+            color: var(--white); /* Keep white text on dark bar */
+        }
+        .announcement-bar a { 
+            text-decoration: underline; 
+            font-weight: 700; 
+        }
 
         header {
             text-align: center;
@@ -69,6 +79,7 @@
             letter-spacing: 0.3em;
             font-weight: 300;
             text-transform: uppercase;
+            color: var(--dark-brown); /* Brown text */
         }
 
         nav {
@@ -81,7 +92,7 @@
 
         nav a {
             text-decoration: none;
-            color: var(--white);
+            color: var(--dark-brown); /* Brown text */
             text-transform: uppercase;
             font-size: 0.75rem;
             letter-spacing: 2px;
@@ -89,6 +100,9 @@
             padding-bottom: 4px;
             position: relative;
             transition: var(--transition);
+            min-height: 44px;
+            display: flex;
+            align-items: center;
         }
 
         nav a.active::after, nav a:hover::after {
@@ -97,7 +111,7 @@
             bottom: -4px; left: 50%;
             transform: translateX(-50%);
             width: 60%; height: 1.5px;
-            background: var(--white);
+            background: var(--dark-brown); /* Brown underline */
         }
 
         /* Product layout */
@@ -124,14 +138,13 @@
         /* Image gallery */
         .product-images { display: flex; flex-direction: column; gap: 1.2rem; }
 
-        /* Main image container with swipe/arrows */
         .main-image-wrap {
             position: relative;
             width: 100%;
             border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.4);
-            background: #1a1008;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+            background: var(--off-white);
             aspect-ratio: 3/4;
         }
 
@@ -152,8 +165,8 @@
         .img-arrow {
             position: absolute;
             top: 50%; transform: translateY(-50%);
-            background: rgba(255,255,255,0.18);
-            border: 1px solid rgba(255,255,255,0.3);
+            background: rgba(74, 51, 38, 0.85); /* Brown background */
+            border: 1px solid var(--dark-brown);
             color: var(--white);
             font-size: 1.6rem;
             width: 46px; height: 46px;
@@ -168,7 +181,7 @@
             line-height: 1;
         }
 
-        .img-arrow:hover { background: rgba(255,255,255,0.3); }
+        .img-arrow:hover { background: var(--medium-brown); }
         .img-arrow.prev { left: 14px; }
         .img-arrow.next { right: 14px; }
 
@@ -179,7 +192,7 @@
         .img-counter {
             position: absolute;
             bottom: 14px; right: 16px;
-            background: rgba(0,0,0,0.45);
+            background: rgba(74, 51, 38, 0.9);
             color: var(--white);
             font-size: 0.7rem;
             letter-spacing: 1.5px;
@@ -205,13 +218,15 @@
             cursor: pointer;
             opacity: 0.7;
             transition: all 0.3s ease;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+            border: 2px solid transparent;
         }
 
         .thumbnail:hover { opacity: 0.9; transform: translateY(-2px); }
         .thumbnail.active {
             opacity: 1;
-            box-shadow: 0 0 0 2.5px var(--white), 0 4px 14px rgba(0,0,0,0.25);
+            border-color: var(--dark-brown);
+            box-shadow: 0 4px 14px rgba(0,0,0,0.2);
             transform: scale(1.04);
         }
 
@@ -226,9 +241,8 @@
 
         /* Product details panel */
         .product-details {
-            background: rgba(30, 18, 10, 0.88);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.08);
+            background: var(--white); /* White background for contrast */
+            border: 1px solid rgba(74, 51, 38, 0.15);
             border-radius: 20px;
             padding: 3rem 2.5rem;
             display: flex;
@@ -236,6 +250,7 @@
             align-items: center;
             text-align: center;
             gap: 1.2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
         }
 
         @media (min-width: 1024px) {
@@ -248,7 +263,7 @@
             font-weight: 400;
             letter-spacing: 0.08em;
             line-height: 1.1;
-            color: var(--white);
+            color: var(--dark-brown); /* Brown text */
         }
 
         .product-price {
@@ -256,13 +271,13 @@
             font-size: 2.2rem;
             font-weight: 300;
             letter-spacing: 2px;
-            color: rgba(255,255,255,0.85);
+            color: var(--medium-brown); /* Medium brown */
         }
 
         .product-description {
             font-size: 1rem;
             line-height: 1.8;
-            color: rgba(255,255,255,0.75);
+            color: var(--light-brown); /* Lighter brown for description */
             font-weight: 300;
             max-width: 420px;
         }
@@ -270,11 +285,11 @@
         .divider {
             width: 50px;
             height: 1px;
-            background: rgba(255,255,255,0.25);
+            background: rgba(74, 51, 38, 0.25);
         }
 
         .add-to-cart {
-            background: rgba(255,255,255,0.1);
+            background: var(--dark-brown);
             color: var(--white);
             font-family: 'Montserrat', sans-serif;
             font-weight: 600;
@@ -282,16 +297,20 @@
             letter-spacing: 2.5px;
             text-transform: uppercase;
             padding: 1.2rem 3rem;
-            border: 1px solid rgba(255,255,255,0.25);
+            border: 1px solid var(--dark-brown);
             border-radius: 4px;
             cursor: pointer;
             transition: var(--transition);
             width: 100%;
             max-width: 340px;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .add-to-cart:hover {
-            background: rgba(255,255,255,0.22);
+            background: var(--medium-brown);
             transform: translateY(-2px);
             letter-spacing: 3px;
         }
@@ -299,15 +318,31 @@
         footer {
             text-align: center;
             padding: 4rem 1rem;
-            background: rgba(0,0,0,0.5);
+            background: rgba(74, 51, 38, 0.92);
+            color: var(--white);
+            margin-top: 2rem;
         }
         footer p { font-size: 0.75rem; letter-spacing: 1px; line-height: 1.8; }
+
+        /* Mobile touch targets */
+        @media (max-width: 767px) {
+            nav a { font-size: 0.7rem; padding: 6px 10px; }
+            .product-details { padding: 2rem 1.5rem; }
+            .product-name { font-size: 2.2rem; }
+            .product-price { font-size: 1.8rem; }
+        }
+
+        /* Focus states for accessibility */
+        a:focus, button:focus {
+            outline: 2px solid var(--medium-brown);
+            outline-offset: 2px;
+        }
     </style>
 </head>
 <body>
 
 <div class="announcement-bar">
-    Free shipping for UK | International shipping please <a href="https://www.instagram.com/satr.labell/" target="_blank">message satr.labell</a>
+    Free shipping for UK | International shipping please <a href="https://www.instagram.com/satr.labell/" target="_blank" rel="noopener">message @satr.labell</a>
 </div>
 
 <header>
@@ -316,7 +351,7 @@
         <a href="satrindex.html">Home</a>
         <a href="productsatr.html" class="active">Products</a>
         <a href="aboutme.html">About</a>
-        <a href="cart.html">Cart</a>
+        <a href="cart.html">Cart</a> <!-- ✅ Links to cart.html -->
     </nav>
 </header>
 
@@ -324,23 +359,25 @@
     <section class="product-section">
         <div class="product-images">
             <div class="main-image-wrap" id="mainWrap">
-                <img src="azra4.jpeg" alt="Azra Abaya" id="mainImage">
-                <button class="img-arrow prev" onclick="galleryNav(-1)">&#8249;</button>
-                <button class="img-arrow next" onclick="galleryNav(1)">&#8250;</button>
+                <!-- ✅ Starts with azra1.jpeg -->
+                <img src="azra1.jpeg" alt="Azra Abaya" id="mainImage">
+                <button class="img-arrow prev" onclick="galleryNav(-1)" aria-label="Previous image">&#8249;</button>
+                <button class="img-arrow next" onclick="galleryNav(1)" aria-label="Next image">&#8250;</button>
                 <div class="img-counter" id="imgCounter">1 / 5</div>
             </div>
             <div class="thumbnails-container">
+                <!-- ✅ azra1.jpeg is first and active -->
                 <div class="thumbnail active" data-idx="0">
-                    <img src="azra4.jpeg" alt="Azra view 1">
+                    <img src="azra1.jpeg" alt="Azra view 1">
                 </div>
                 <div class="thumbnail" data-idx="1">
-                    <img src="azra1.jpeg" alt="Azra view 2">
+                    <img src="azra2.jpeg" alt="Azra view 2">
                 </div>
                 <div class="thumbnail" data-idx="2">
-                    <img src="azra2.jpeg" alt="Azra view 3">
+                    <img src="azra3.jpeg" alt="Azra view 3">
                 </div>
                 <div class="thumbnail" data-idx="3">
-                    <img src="azra3.jpeg" alt="Azra view 4">
+                    <img src="azra4.jpeg" alt="Azra view 4">
                 </div>
                 <div class="thumbnail" data-idx="4">
                     <img src="azra5.jpeg" alt="Azra view 5">
@@ -350,7 +387,7 @@
 
         <div class="product-details">
             <div class="product-name">Azra</div>
-            <div class="product-price">£50</div>
+            <div class="product-price">£50</div> <!-- ✅ Price is £50 -->
             <div class="divider"></div>
             <p class="product-description">A black closed abaya with intricate lace detailing at the top and bottom. Features a modest silhouette, hidden pockets and soft lining for everyday elegance.</p>
             <button class="add-to-cart" id="cartBtn">Add to Cart</button>
@@ -363,7 +400,8 @@
 </footer>
 
 <script>
-    const IMAGES = ["azra4.jpeg", "azra1.jpeg", "azra2.jpeg", "azra3.jpeg", "azra5.jpeg"];
+    // ✅ Updated: azra1.jpeg is now first in the array
+    const IMAGES = ["azra1.jpeg", "azra2.jpeg", "azra3.jpeg", "azra4.jpeg", "azra5.jpeg"];
     let currentIdx = 0;
     let touchStartX = 0;
 
@@ -371,14 +409,20 @@
         currentIdx = (idx + IMAGES.length) % IMAGES.length;
         const img = document.getElementById('mainImage');
         const counter = document.getElementById('imgCounter');
+        
         // Update thumbnails
         document.querySelectorAll('.thumbnail').forEach((t, i) => {
             t.classList.toggle('active', i === currentIdx);
         });
+        
         counter.textContent = (currentIdx + 1) + ' / ' + IMAGES.length;
+        
         if (animate) {
             img.style.opacity = '0';
-            setTimeout(() => { img.src = IMAGES[currentIdx]; img.style.opacity = '1'; }, 200);
+            setTimeout(() => { 
+                img.src = IMAGES[currentIdx]; 
+                img.style.opacity = '1'; 
+            }, 200);
         } else {
             img.src = IMAGES[currentIdx];
         }
@@ -393,25 +437,37 @@
 
     // Touch swipe on main image
     const wrap = document.getElementById('mainWrap');
-    wrap.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, {passive: true});
+    wrap.addEventListener('touchstart', e => { 
+        touchStartX = e.changedTouches[0].screenX; 
+    }, {passive: true});
+    
     wrap.addEventListener('touchend', e => {
         const diff = touchStartX - e.changedTouches[0].screenX;
         if (Math.abs(diff) > 50) galleryNav(diff > 0 ? 1 : -1);
     });
 
-    // Keyboard
+    // Keyboard navigation
     document.addEventListener('keydown', e => {
         if (e.key === 'ArrowRight') galleryNav(1);
         if (e.key === 'ArrowLeft') galleryNav(-1);
     });
 
-    // Add to cart
+    // Add to cart animation
     document.getElementById('cartBtn').addEventListener('click', function() {
         const orig = this.textContent;
         this.textContent = 'Added ✓';
-        this.style.background = 'rgba(255,255,255,0.25)';
-        setTimeout(() => { this.textContent = orig; this.style.background = ''; }, 2000);
+        this.style.background = 'var(--medium-brown)';
+        setTimeout(() => { 
+            this.textContent = orig; 
+            this.style.background = ''; 
+        }, 2000);
     });
+
+    // Debug: Check background image
+    const bgTest = new Image();
+    bgTest.src = './background.jpeg';
+    bgTest.onload = () => console.log('✅ background.jpeg loaded');
+    bgTest.onerror = () => console.error('❌ background.jpeg failed - check filename & location');
 </script>
 </body>
 </html>
