@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Satr | Timeless Abayas</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,18 +11,21 @@
     <style>
         :root {
             --dark-brown: #4a3326;
+            --medium-brown: #6b4f3f;
+            --light-brown: #8c7b6b;
             --white: #ffffff;
+            --cream: #f8f5f2;
             --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* High-Quality Background Fix */
         body {
             margin: 0;
             font-family: 'Montserrat', sans-serif;
-            color: var(--white);
-            background-color: #2a1d15;
+            color: var(--dark-brown); /* Changed to brown */
+            background-color: var(--cream); /* Lighter background for contrast */
             min-height: 100vh;
             overflow-x: hidden;
+            line-height: 1.6;
         }
 
         body::before {
@@ -33,18 +36,19 @@
             background-size: cover;
             background-position: center;
             z-index: -1;
+            opacity: 0.15; /* Softened overlay for better text readability */
             transform: translateZ(0);
         }
 
-        /* Announcement Bar with Hyperlink */
+        /* Announcement Bar */
         .announcement-bar {
             width: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(74, 51, 38, 0.95); /* Dark brown background */
             backdrop-filter: blur(10px);
-            padding: 12px 10px;
+            padding: 10px 15px;
             text-align: center;
-            font-size: 0.65rem;
-            letter-spacing: 1.5px;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
             text-transform: uppercase;
             position: sticky;
             top: 0;
@@ -53,54 +57,80 @@
             box-sizing: border-box;
         }
 
+        .announcement-bar, 
         .announcement-bar a {
-            color: var(--white);
+            color: var(--white); /* Keep white text on dark bar */
+        }
+        
+        .announcement-bar a {
             text-decoration: underline;
             font-weight: 700;
             transition: opacity 0.3s ease;
         }
         
-        .announcement-bar a:hover { opacity: 0.8; }
+        .announcement-bar a:hover { opacity: 0.85; }
 
-        header { text-align: center; padding: 2.5rem 1rem 1.5rem; }
+        /* Header & Nav */
+        header { 
+            text-align: center; 
+            padding: 1.5rem 1rem; 
+        }
         
         h1 { 
             font-family: 'Playfair Display SC', serif; 
-            font-size: clamp(2.2rem, 8vw, 4rem); 
-            letter-spacing: 0.3em; 
+            font-size: clamp(1.8rem, 7vw, 3.5rem); 
+            letter-spacing: 0.25em; 
             margin: 0; 
             font-weight: 300; 
             text-transform: uppercase;
+            color: var(--dark-brown);
         }
 
         nav { 
             display: flex; 
             justify-content: center; 
-            gap: 1.5rem; 
-            margin-top: 1.5rem;
+            gap: 1rem; 
+            margin-top: 1rem;
             flex-wrap: wrap;
-        }
-        nav a { 
-            text-decoration: none; 
-            color: var(--white); 
-            text-transform: uppercase; 
-            font-size: 0.75rem; 
-            letter-spacing: 2px; 
-            font-weight: 700;
-            padding-bottom: 4px;
-            transition: var(--transition);
+            padding: 0 10px;
         }
 
-        /* Hero Slider */
+        nav a { 
+            text-decoration: none; 
+            color: var(--dark-brown); /* Changed to brown */
+            text-transform: uppercase; 
+            font-size: 0.7rem; 
+            letter-spacing: 1.5px; 
+            font-weight: 700;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: var(--transition);
+            min-height: 44px; /* Mobile touch target */
+            display: flex;
+            align-items: center;
+        }
+
+        nav a:hover, 
+        nav a:focus {
+            background: rgba(74, 51, 38, 0.1);
+            outline: none;
+        }
+
+        /* Hero Slider - Mobile Optimized */
         .hero-slider {
-            width: 94%;
+            width: 92%;
             max-width: 1400px;
-            height: 80vh;
-            margin: 2rem auto 5rem;
+            height: 60vh; /* Reduced for mobile */
+            min-height: 300px;
+            margin: 1.5rem auto 3rem;
             position: relative;
             overflow: hidden;
-            border-radius: 30px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+        }
+
+        @media (min-width: 768px) {
+            .hero-slider { height: 75vh; }
         }
 
         .slide {
@@ -115,14 +145,24 @@
 
         .hero-content-box {
             position: absolute;
-            bottom: 40px; left: 50%;
+            bottom: 20px; left: 50%;
             transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.98);
-            padding: 1.2rem 2rem;
-            border-radius: 10px;
+            background: rgba(248, 245, 242, 0.98); /* Cream background */
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
             text-align: center;
-            min-width: 240px;
+            min-width: 200px;
             color: var(--dark-brown);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            width: calc(100% - 40px);
+            max-width: 320px;
+        }
+
+        .hero-content-box h3 {
+            margin: 0 0 8px; 
+            font-family: 'Cormorant Garamond', serif; 
+            font-size: 1.4rem;
+            font-weight: 600;
         }
 
         .hero-shop-link {
@@ -130,12 +170,22 @@
             text-decoration: none;
             color: var(--white);
             background: var(--dark-brown);
-            padding: 0.7rem 1.5rem;
-            font-size: 0.7rem;
+            padding: 0.65rem 1.4rem;
+            font-size: 0.65rem;
             text-transform: uppercase;
             letter-spacing: 1.5px;
             font-weight: 700;
-            border-radius: 3px;
+            border-radius: 4px;
+            transition: var(--transition);
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .hero-shop-link:hover {
+            background: var(--medium-brown);
+            transform: translateY(-2px);
         }
 
         /* Products Grid */
@@ -149,78 +199,154 @@
         
         .products-grid { 
             display: grid; 
-            grid-template-columns: repeat(12, 1fr); 
-            gap: 3rem 1.5rem; 
-            margin-bottom: 8rem;
+            grid-template-columns: 1fr; /* Single column on mobile */
+            gap: 2rem; 
+            margin-bottom: 4rem;
             width: 100%;
         }
 
+        @media (min-width: 600px) {
+            .products-grid { grid-template-columns: repeat(2, 1fr); gap: 2.5rem; }
+        }
+        
+        @media (min-width: 769px) {
+            .products-grid { 
+                grid-template-columns: repeat(12, 1fr); 
+                gap: 3rem 1.5rem;
+                margin-bottom: 6rem;
+            }
+            .product-card { grid-column: span 6; }
+            .product-card:nth-child(even) { margin-top: 60px; }
+            .product-card:nth-child(odd) { margin-top: 0; }
+        }
+
         .product-card { 
-            grid-column: span 12; 
             justify-self: center;
             width: 100%;
-            max-width: 340px;
+            max-width: 360px;
             text-decoration: none; 
             color: var(--dark-brown); 
-            background: rgba(255, 255, 255, 0.95); 
-            border-radius: 15px;
+            background: var(--white); 
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
             display: flex;
             flex-direction: column;
             transition: var(--transition);
         }
 
-        @media (min-width: 769px) {
-            .product-card { grid-column: span 6; max-width: 420px; }
-            .product-card:nth-child(even) { margin-top: 100px; }
-            .product-card:nth-child(odd) { margin-top: 0; }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.18);
         }
 
-        .img-container { width: 100%; aspect-ratio: 4/5; overflow: hidden; }
-        .product-image { width: 100%; height: 100%; object-fit: cover; }
+        .img-container { 
+            width: 100%; 
+            aspect-ratio: 4/5; 
+            overflow: hidden; 
+            background: #f0ebe6;
+        }
         
-        .product-info { padding: 1.5rem; text-align: center; }
-        .product-info h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; margin: 0; font-weight: 600; }
+        .product-image { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            transition: transform 0.6s ease;
+        }
+        
+        .product-card:hover .product-image {
+            transform: scale(1.03);
+        }
+        
+        .product-info { 
+            padding: 1.2rem 1rem; 
+            text-align: center; 
+        }
+        
+        .product-info h2 { 
+            font-family: 'Cormorant Garamond', serif; 
+            font-size: 1.5rem; 
+            margin: 0 0 8px; 
+            font-weight: 600;
+        }
         
         .shop-btn-text { 
             display: inline-block; 
-            margin-top: 10px; 
+            margin-top: 8px; 
             font-size: 0.65rem; 
             text-transform: uppercase; 
             letter-spacing: 2px; 
             font-weight: 700;
             color: var(--dark-brown); 
             border-bottom: 2px solid var(--dark-brown);
+            padding-bottom: 2px;
         }
 
-        footer { text-align: center; padding: 4rem 1rem; background: rgba(0,0,0,0.5); }
-        footer p { font-size: 0.75rem; letter-spacing: 1px; line-height: 1.8; }
+        /* Footer */
+        footer { 
+            text-align: center; 
+            padding: 3rem 1rem; 
+            background: rgba(74, 51, 38, 0.92);
+            color: var(--white);
+            margin-top: 2rem;
+        }
+        
+        footer p { 
+            font-size: 0.75rem; 
+            letter-spacing: 0.8px; 
+            line-height: 1.8; 
+            margin: 0;
+        }
 
-        .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s ease-out; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
+        /* Reveal Animation */
+        .reveal { 
+            opacity: 0; 
+            transform: translateY(25px); 
+            transition: 0.7s ease-out; 
+        }
+        .reveal.active { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
+
+        /* Mobile Accessibility */
+        @media (max-width: 599px) {
+            h1 { letter-spacing: 0.2em; }
+            nav { gap: 0.5rem; }
+            nav a { font-size: 0.65rem; padding: 6px 10px; }
+            .hero-content-box { padding: 0.9rem 1.2rem; bottom: 15px; }
+            .hero-content-box h3 { font-size: 1.3rem; }
+            .product-info h2 { font-size: 1.4rem; }
+            .products-grid { gap: 1.8rem; margin-bottom: 3rem; }
+        }
+
+        /* Focus states for accessibility */
+        a:focus, button:focus {
+            outline: 2px solid var(--medium-brown);
+            outline-offset: 2px;
+        }
     </style>
 </head>
 <body>
 
     <div class="announcement-bar">
-        Free shipping for UK | International shipping please <a href="https://www.instagram.com/satr.labell/" target="_blank">message satr.labell</a>
+        Free shipping for UK | International shipping please <a href="https://www.instagram.com/satr.labell/" target="_blank" rel="noopener">message @satr.labell</a>
     </div>
 
     <header>
         <h1>Satr</h1>
-        <nav id="nav-menu">
-            <a href="index.html">Home</a>
+        <nav id="nav-menu" role="navigation" aria-label="Main navigation">
+            <a href="index.html" aria-current="page">Home</a>
             <a href="productsatr.html">Products</a>
             <a href="aboutme.html">About</a>
             <a href="cart.html">Cart</a>
         </nav>
     </header>
 
-    <section class="hero-slider">
+    <section class="hero-slider" aria-label="Featured abayas">
         <div id="hero-slider"></div>
         <div class="hero-content-box">
-            <h3 id="hero-abaya-name" style="margin:0 0 10px; font-family:'Cormorant Garamond'; font-size: 1.6rem;">Sereen</h3>
+            <h3 id="hero-abaya-name">Sereen</h3>
             <a href="sereen.html" id="hero-abaya-link" class="hero-shop-link">Shop Piece</a>
         </div>
     </section>
@@ -228,20 +354,40 @@
     <main class="products-section">
         <div class="products-grid">
             <a href="sereen.html" class="product-card reveal">
-                <div class="img-container"><img src="sareen4.jpeg" loading="lazy" class="product-image"></div>
-                <div class="product-info"><h2>The Sereen</h2><span class="shop-btn-text">Shop Now</span></div>
+                <div class="img-container">
+                    <img src="sareen4.jpeg" alt="The Sereen Abaya in elegant drape" loading="lazy" class="product-image">
+                </div>
+                <div class="product-info">
+                    <h2>The Sereen</h2>
+                    <span class="shop-btn-text">Shop Now</span>
+                </div>
             </a>
             <a href="flora.html" class="product-card reveal">
-                <div class="img-container"><img src="flora1.jpeg" loading="lazy" class="product-image"></div>
-                <div class="product-info"><h2>The Flora</h2><span class="shop-btn-text">Shop Now</span></div>
+                <div class="img-container">
+                    <img src="flora1.jpeg" alt="The Flora Abaya with floral embroidery" loading="lazy" class="product-image">
+                </div>
+                <div class="product-info">
+                    <h2>The Flora</h2>
+                    <span class="shop-btn-text">Shop Now</span>
+                </div>
             </a>
             <a href="noor.html" class="product-card reveal">
-                <div class="img-container"><img src="noor1.jpeg" loading="lazy" class="product-image"></div>
-                <div class="product-info"><h2>The Noor</h2><span class="shop-btn-text">Shop Now</span></div>
+                <div class="img-container">
+                    <img src="noor1.jpeg" alt="The Noor Abaya in luminous fabric" loading="lazy" class="product-image">
+                </div>
+                <div class="product-info">
+                    <h2>The Noor</h2>
+                    <span class="shop-btn-text">Shop Now</span>
+                </div>
             </a>
             <a href="sahara.html" class="product-card reveal">
-                <div class="img-container"><img src="sahara1.jpeg" loading="lazy" class="product-image"></div>
-                <div class="product-info"><h2>The Sahara</h2><span class="shop-btn-text">Shop Now</span></div>
+                <div class="img-container">
+                    <img src="sahara1.jpeg" alt="The Sahara Abaya in earth tones" loading="lazy" class="product-image">
+                </div>
+                <div class="product-info">
+                    <h2>The Sahara</h2>
+                    <span class="shop-btn-text">Shop Now</span>
+                </div>
             </a>
         </div>
     </main>
@@ -251,6 +397,7 @@
     </footer>
 
     <script>
+        // Hero Slider Data
         const heroData = [
             { name: 'Sereen', file: 'sareen3.jpeg', link: 'sereen.html' },
             { name: 'Flora',  file: 'flora1.jpeg',  link: 'flora.html'  },
@@ -262,23 +409,49 @@
             const slide = document.createElement('div');
             slide.className = 'slide' + (index === 0 ? ' active' : '');
             slide.style.backgroundImage = `url('${item.file}')`;
+            slide.setAttribute('aria-hidden', index !== 0 ? 'true' : 'false');
             sliderContainer.appendChild(slide);
         });
 
+        // Auto-rotate slider
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
-        setInterval(() => {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + 1) % slides.length;
-            slides[currentSlide].classList.add('active');
-            document.getElementById('hero-abaya-name').textContent = heroData[currentSlide].name;
-            document.getElementById('hero-abaya-link').href = heroData[currentSlide].link;
-        }, 4000);
+        const heroNameEl = document.getElementById('hero-abaya-name');
+        const heroLinkEl = document.getElementById('hero-abaya-link');
+        
+        function updateSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+                slide.setAttribute('aria-hidden', i !== index ? 'true' : 'false');
+            });
+            heroNameEl.textContent = heroData[index].name;
+            heroLinkEl.href = heroData[index].link;
+        }
 
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateSlide(currentSlide);
+        }, 4500);
+
+        // Reveal on scroll
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
-        }, { threshold: 0.1 });
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+        
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Prevent broken links during development (optional helper)
+        document.querySelectorAll('a[href$=".html"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                // Uncomment below to show warning if page doesn't exist yet
+                // if (!link.href.includes(window.location.hostname)) return;
+            });
+        });
     </script>
 </body>
 </html>
