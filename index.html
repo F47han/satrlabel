@@ -7,7 +7,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@300;400;600;700&family=Playfair+Display+SC:wght@400&display=swap" rel="stylesheet">
-    
     <style>
         :root {
             --dark-brown: #4a3326;
@@ -15,11 +14,12 @@
             --light-brown: #8c7b6b;
             --white: #ffffff;
             --cream: #f8f5f2;
-            --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
-            margin: 0;
             font-family: 'Montserrat', sans-serif;
             color: var(--dark-brown);
             background-color: var(--cream);
@@ -28,115 +28,152 @@
             line-height: 1.6;
         }
 
-        /* BACKGROUND IMAGE FIX */
         body::before {
             content: "";
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            /* Ensure exact filename match */
+            inset: 0;
             background-image: url('background.jpeg');
             background-size: cover;
-            background-position: center center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
+            background-position: center;
             z-index: -1;
-            /* Increased opacity so you can actually see the image */
-            opacity: 0.4; 
-            transform: translateZ(0);
+            opacity: 0.22;
         }
 
-        /* Announcement Bar */
+        /* ── Announcement Bar ── */
         .announcement-bar {
             width: 100%;
-            background: rgba(74, 51, 38, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(74, 51, 38, 0.96);
             padding: 10px 15px;
             text-align: center;
-            font-size: 0.7rem;
+            font-size: 0.68rem;
             letter-spacing: 1px;
             text-transform: uppercase;
             position: sticky;
             top: 0;
             z-index: 3000;
-            line-height: 1.4;
-            box-sizing: border-box;
-        }
-
-        .announcement-bar, 
-        .announcement-bar a {
             color: var(--white);
         }
-        
         .announcement-bar a {
+            color: var(--white);
             text-decoration: underline;
             font-weight: 700;
-            transition: opacity 0.3s ease;
         }
-        
-        .announcement-bar a:hover { opacity: 0.85; }
+        .announcement-bar a:hover { opacity: 0.8; }
 
-        /* Header & Nav */
-        header { 
-            text-align: center; 
-            padding: 1.5rem 1rem; 
+        /* ── Header ── */
+        header {
+            text-align: center;
+            padding: 1.5rem 1rem 0;
+            position: relative;
         }
-        
-        h1 { 
-            font-family: 'Playfair Display SC', serif; 
-            font-size: clamp(1.8rem, 7vw, 3.5rem); 
-            letter-spacing: 0.25em; 
-            margin: 0; 
-            font-weight: 300; 
+
+        .site-logo {
+            font-family: 'Playfair Display SC', serif;
+            font-size: clamp(2rem, 7vw, 3.5rem);
+            letter-spacing: 0.25em;
+            font-weight: 400;
             text-transform: uppercase;
             color: var(--dark-brown);
+            text-decoration: none;
+            display: inline-block;
         }
 
-        nav { 
-            display: flex; 
-            justify-content: center; 
-            gap: 1rem; 
-            margin-top: 1rem;
-            flex-wrap: wrap;
-            padding: 0 10px;
-        }
-
-        nav a { 
-            text-decoration: none; 
+        /* ── Mobile hamburger ── */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: 2px solid var(--dark-brown);
             color: var(--dark-brown);
-            text-transform: uppercase; 
-            font-size: 0.7rem; 
-            letter-spacing: 1.5px; 
+            font-size: 1.3rem;
+            cursor: pointer;
+            position: absolute;
+            top: 1.6rem;
+            right: 1.2rem;
+            z-index: 200;
+            border-radius: 6px;
+            width: 42px; height: 42px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ── Nav ── */
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1.2rem;
+            flex-wrap: wrap;
+            padding: 0 10px 1.2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--dark-brown);
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
             font-weight: 700;
-            padding: 8px 12px;
+            padding: 8px 14px;
             border-radius: 4px;
             transition: var(--transition);
             min-height: 44px;
-            display: flex;
+            display: inline-flex;
             align-items: center;
+            gap: 6px;
         }
-
-        nav a:hover, 
-        nav a:focus {
+        nav a:hover, nav a.active {
             background: rgba(74, 51, 38, 0.1);
-            outline: none;
         }
 
-        /* Hero Slider - BIGGER */
+        .cart-count-badge {
+            display: inline-flex; align-items: center; justify-content: center;
+            background: var(--dark-brown); color: var(--white);
+            font-size: 0.6rem; font-weight: 700;
+            min-width: 18px; height: 18px;
+            border-radius: 9px; padding: 0 4px; line-height: 1;
+        }
+        .cart-count-badge:empty, .cart-count-badge[data-count="0"] { display: none; }
+
+        /* ── Mobile nav styles ── */
+        @media (max-width: 600px) {
+            .menu-toggle { display: inline-flex; }
+            nav {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0; right: 0;
+                background: rgba(248, 245, 242, 0.98);
+                backdrop-filter: blur(10px);
+                border-top: 2px solid var(--dark-brown);
+                z-index: 100;
+                padding: 0.5rem 1rem 1rem;
+                gap: 0;
+            }
+            nav.open { display: flex; }
+            nav a {
+                width: 100%;
+                padding: 12px 10px;
+                border-bottom: 1px solid rgba(74,51,38,0.1);
+                font-size: 0.75rem;
+            }
+            nav a:last-child { border-bottom: none; }
+            header { padding-bottom: 0.5rem; }
+        }
+
+        /* ── Hero Slider ── */
         .hero-slider {
             width: 92%;
             max-width: 1400px;
-            height: 70vh; /* Mobile Height */
-            min-height: 400px;
+            height: 60vh;
+            min-height: 300px;
             margin: 1.5rem auto 3rem;
             position: relative;
             overflow: hidden;
             border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         }
-
-        @media (min-width: 768px) {
-            .hero-slider { height: 85vh; } /* Desktop Height */
-        }
+        @media (min-width: 768px) { .hero-slider { height: 75vh; } }
 
         .slide {
             position: absolute;
@@ -150,203 +187,133 @@
 
         .hero-content-box {
             position: absolute;
-            bottom: 30px; left: 50%;
+            bottom: 20px; left: 50%;
             transform: translateX(-50%);
-            background: rgba(248, 245, 242, 0.98);
-            padding: 1.2rem 1.8rem;
+            background: rgba(248, 245, 242, 0.97);
+            padding: 1rem 1.5rem;
             border-radius: 12px;
             text-align: center;
-            min-width: 200px;
-            color: var(--dark-brown);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
             width: calc(100% - 40px);
-            max-width: 450px;
+            max-width: 400px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
         }
-
         .hero-content-box h3 {
-            margin: 0 0 15px; 
-            font-family: 'Cormorant Garamond', serif; 
-            font-size: 1.6rem;
+            margin: 0 0 12px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
             font-weight: 600;
+            color: var(--dark-brown);
         }
-
         .hero-buttons-container {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            flex-wrap: wrap;
+            display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
         }
-
         .hero-shop-link {
-            display: inline-block;
+            display: inline-flex; align-items: center; justify-content: center;
             text-decoration: none;
             color: var(--white);
             background: var(--dark-brown);
-            padding: 0.75rem 1.4rem;
-            font-size: 0.68rem;
+            padding: 0.65rem 1.2rem;
+            font-size: 0.65rem;
             text-transform: uppercase;
             letter-spacing: 1.5px;
             font-weight: 700;
             border-radius: 4px;
             transition: var(--transition);
             min-height: 44px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
         }
-        
-        .hero-shop-link:hover {
-            background: var(--medium-brown);
-            transform: translateY(-2px);
-        }
-
-        .hero-shop-link.secondary {
-            background: var(--medium-brown);
-        }
-        
-        .hero-shop-link.secondary:hover {
-            background: var(--dark-brown);
+        .hero-shop-link:hover { background: var(--medium-brown); transform: translateY(-2px); }
+        .hero-shop-link.secondary { background: var(--medium-brown); }
+        .hero-shop-link.secondary:hover { background: var(--dark-brown); }
+        @media (max-width: 480px) {
+            .hero-buttons-container { flex-direction: column; }
+            .hero-shop-link { width: 100%; }
         }
 
-        /* Products Grid */
-        .products-section { 
-            width: 100%; 
-            max-width: 1200px; 
-            margin: 0 auto; 
-            padding: 0 1rem; 
-            box-sizing: border-box;
-        }
-        
-        .products-grid { 
-            display: grid; 
-            grid-template-columns: 1fr;
-            gap: 2rem; 
-            margin-bottom: 4rem;
+        /* ── Products Grid ── */
+        .products-section {
             width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
         }
 
+        .products-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
         @media (min-width: 600px) {
             .products-grid { grid-template-columns: repeat(2, 1fr); gap: 2.5rem; }
         }
-        
         @media (min-width: 769px) {
-            .products-grid { 
-                grid-template-columns: repeat(12, 1fr); 
+            .products-grid {
+                grid-template-columns: repeat(12, 1fr);
                 gap: 3rem 1.5rem;
                 margin-bottom: 6rem;
             }
             .product-card { grid-column: span 6; }
             .product-card:nth-child(even) { margin-top: 60px; }
-            .product-card:nth-child(odd) { margin-top: 0; }
         }
 
-        .product-card { 
-            justify-self: center;
+        .product-card {
+            text-decoration: none;
+            color: var(--dark-brown);
+            display: block;
+        }
+
+        .img-container {
             width: 100%;
-            max-width: 360px;
-            text-decoration: none; 
-            color: var(--dark-brown); 
-            background: var(--white); 
-            border-radius: 16px;
+            aspect-ratio: 3/4;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
-            display: flex;
-            flex-direction: column;
-            transition: var(--transition);
+            border-radius: 12px;
+            background: #e8e1d9;
         }
 
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.18);
+        .product-image {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
         }
+        .product-card:hover .product-image { transform: scale(1.04); }
 
-        .img-container { 
-            width: 100%; 
-            aspect-ratio: 4/5; 
-            overflow: hidden; 
-            background: #f0ebe6;
+        .product-info {
+            padding: 1rem 0 0;
+            text-align: center;
         }
-        
-        .product-image { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-            transition: transform 0.6s ease;
-        }
-        
-        .product-card:hover .product-image {
-            transform: scale(1.03);
-        }
-        
-        .product-info { 
-            padding: 1.2rem 1rem; 
-            text-align: center; 
-        }
-        
-        .product-info h2 { 
-            font-family: 'Cormorant Garamond', serif; 
-            font-size: 1.5rem; 
-            margin: 0 0 8px; 
+        .product-info h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            margin: 0 0 8px;
             font-weight: 600;
+            color: var(--dark-brown);
         }
-        
-        .shop-btn-text { 
-            display: inline-block; 
-            margin-top: 8px; 
-            font-size: 0.65rem; 
-            text-transform: uppercase; 
-            letter-spacing: 2px; 
+        .shop-btn-text {
+            display: inline-block;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
             font-weight: 700;
-            color: var(--dark-brown); 
+            color: var(--dark-brown);
             border-bottom: 2px solid var(--dark-brown);
             padding-bottom: 2px;
         }
 
-        /* Footer */
-        footer { 
-            text-align: center; 
-            padding: 3rem 1rem; 
+        /* ── Reveal animation ── */
+        .reveal { opacity: 0; transform: translateY(25px); transition: 0.7s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* ── Footer ── */
+        footer {
+            text-align: center;
+            padding: 3rem 1rem;
             background: rgba(74, 51, 38, 0.92);
             color: var(--white);
             margin-top: 2rem;
         }
-        
-        footer p { 
-            font-size: 0.75rem; 
-            letter-spacing: 0.8px; 
-            line-height: 1.8; 
-            margin: 0;
-        }
+        footer p { font-size: 0.75rem; letter-spacing: 0.8px; line-height: 1.8; }
 
-        /* Reveal Animation */
-        .reveal { 
-            opacity: 0; 
-            transform: translateY(25px); 
-            transition: 0.7s ease-out; 
-        }
-        .reveal.active { 
-            opacity: 1; 
-            transform: translateY(0); 
-        }
-
-        /* Mobile Accessibility */
-        @media (max-width: 599px) {
-            h1 { letter-spacing: 0.2em; }
-            nav { gap: 0.5rem; }
-            nav a { font-size: 0.65rem; padding: 6px 10px; }
-            .hero-content-box { padding: 1rem 1.4rem; bottom: 20px; }
-            .hero-content-box h3 { font-size: 1.4rem; }
-            .product-info h2 { font-size: 1.4rem; }
-            .products-grid { gap: 1.8rem; margin-bottom: 3rem; }
-            .hero-buttons-container { flex-direction: column; gap: 10px; }
-            .hero-shop-link { width: 100%; }
-        }
-
-        /* Focus states for accessibility */
-        a:focus, button:focus {
-            outline: 2px solid var(--medium-brown);
-            outline-offset: 2px;
-        }
+        a:focus, button:focus { outline: 2px solid var(--medium-brown); outline-offset: 2px; }
     </style>
 </head>
 <body>
@@ -356,12 +323,13 @@
     </div>
 
     <header>
-        <h1>Satr</h1>
-        <nav id="nav-menu" role="navigation" aria-label="Main navigation">
-            <a href="index.html" aria-current="page">Home</a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">☰</button>
+        <a href="index.html" class="site-logo">Satr</a>
+        <nav id="mainNav" role="navigation" aria-label="Main navigation">
+            <a href="index.html" class="active">Home</a>
             <a href="productsatr.html">Products</a>
             <a href="aboutme.html">About</a>
-            <a href="cart.html">Cart</a>
+            <a href="cart.html">Cart <span class="cart-count-badge" id="cartBadge"></span></a>
         </nav>
     </header>
 
@@ -377,7 +345,7 @@
         <div class="products-grid">
             <a href="sereen.html" class="product-card reveal">
                 <div class="img-container">
-                    <img src="sareen4.jpeg" alt="The Sereen Abaya in elegant drape" loading="lazy" class="product-image">
+                    <img src="sareen4.jpeg" alt="The Sereen Abaya" loading="lazy" class="product-image">
                 </div>
                 <div class="product-info">
                     <h2>The Sereen</h2>
@@ -386,7 +354,7 @@
             </a>
             <a href="flora.html" class="product-card reveal">
                 <div class="img-container">
-                    <img src="flora1.jpeg" alt="The Flora Abaya with floral embroidery" loading="lazy" class="product-image">
+                    <img src="flora1.jpeg" alt="The Flora Abaya" loading="lazy" class="product-image">
                 </div>
                 <div class="product-info">
                     <h2>The Flora</h2>
@@ -395,7 +363,7 @@
             </a>
             <a href="noor.html" class="product-card reveal">
                 <div class="img-container">
-                    <img src="noor1.jpeg" alt="The Noor Abaya in luminous fabric" loading="lazy" class="product-image">
+                    <img src="noor1.jpeg" alt="The Noor Abaya" loading="lazy" class="product-image">
                 </div>
                 <div class="product-info">
                     <h2>The Noor</h2>
@@ -404,7 +372,7 @@
             </a>
             <a href="sahara.html" class="product-card reveal">
                 <div class="img-container">
-                    <img src="sahara1.jpeg" alt="The Sahara Abaya in earth tones" loading="lazy" class="product-image">
+                    <img src="sahara1.jpeg" alt="The Sahara Abaya" loading="lazy" class="product-image">
                 </div>
                 <div class="product-info">
                     <h2>The Sahara</h2>
@@ -415,104 +383,88 @@
     </main>
 
     <footer>
-        <p>&copy; 2026 Satr. <br> Handcrafted with love for the modern Muslimah.</p>
+        <p>&copy; 2026 Satr. <br>Handcrafted with love for the modern Muslimah.</p>
     </footer>
 
+    <script src="satr-cart.js"></script>
     <script>
-        // Hero Slider Data
-        const heroData = [
-            { 
-                name: 'Sereen', 
-                file: 'sareen3.jpeg', 
-                buttons: [{ text: 'Shop Sereen', link: 'sereen.html' }] 
-            },
-            { 
-                name: 'Flora',  
-                file: 'flora1.jpeg',  
-                buttons: [{ text: 'Shop Flora', link: 'flora.html' }]  
-            },
-            { 
-                name: 'Nila',   
-                file: 'nila6.jpeg',   
-                buttons: [{ text: 'Shop Nila', link: 'nila.html' }]   
-            },
-            { 
-                name: 'Layn & Sama',   
-                file: 'layandsama.jpeg',   // UPDATED FILENAME
-                buttons: [
-                    { text: 'Shop Sama', link: 'sama.html' },    // Sama First
-                    { text: 'Shop Layla', link: 'layla.html' }   // Layla Second
-                ]   
+        // ── Mobile menu ──
+        const toggle = document.getElementById('menuToggle');
+        const nav    = document.getElementById('mainNav');
+        toggle.addEventListener('click', () => {
+            const open = nav.classList.toggle('open');
+            toggle.textContent = open ? '✕' : '☰';
+            toggle.setAttribute('aria-expanded', open);
+        });
+        nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+            nav.classList.remove('open');
+            toggle.textContent = '☰';
+            toggle.setAttribute('aria-expanded', false);
+        }));
+        document.addEventListener('click', e => {
+            if (!nav.contains(e.target) && !toggle.contains(e.target)) {
+                nav.classList.remove('open');
+                toggle.textContent = '☰';
             }
-        ];
-
-        const sliderContainer = document.getElementById('hero-slider');
-        const buttonsContainer = document.getElementById('hero-buttons');
-        const heroNameEl = document.getElementById('hero-abaya-name');
-        
-        // Create slides
-        heroData.forEach((item, index) => {
-            const slide = document.createElement('div');
-            slide.className = 'slide' + (index === 0 ? ' active' : '');
-            slide.style.backgroundImage = `url('${item.file}')`;
-            slide.setAttribute('aria-hidden', index !== 0 ? 'true' : 'false');
-            sliderContainer.appendChild(slide);
         });
 
-        // Function to update buttons based on current slide
-        function updateButtons(buttonsData) {
-            buttonsContainer.innerHTML = '';
-            buttonsData.forEach((btn, index) => {
-                const link = document.createElement('a');
-                link.href = btn.link;
-                link.textContent = btn.text;
-                link.className = 'hero-shop-link' + (index > 0 ? ' secondary' : '');
-                buttonsContainer.appendChild(link);
+        // ── Cart badge ──
+        function updateBadge() {
+            const badge = document.getElementById('cartBadge');
+            if (!badge) return;
+            const count = SatrCart.getSummary().itemCount;
+            badge.textContent = count > 0 ? count : '';
+        }
+        updateBadge();
+        window.addEventListener('satr:cart-updated', updateBadge);
+
+        // ── Hero Slider ──
+        const heroData = [
+            { name: 'Sereen', file: 'sareen3.jpeg', buttons: [{ text: 'Shop Piece', link: 'sereen.html' }] },
+            { name: 'Flora',  file: 'flora1.jpeg',  buttons: [{ text: 'Shop Piece', link: 'flora.html' }] },
+            { name: 'Nila',   file: 'nila6.jpeg',   buttons: [{ text: 'Shop Piece', link: 'nila.html' }] },
+            { name: 'Layla & Sama', file: 'layandsama.jpg', buttons: [
+                { text: 'Shop Layla', link: 'layla.html' },
+                { text: 'Shop Sama',  link: 'sama.html' }
+            ]}
+        ];
+
+        const sliderEl   = document.getElementById('hero-slider');
+        const buttonsEl  = document.getElementById('hero-buttons');
+        const heroNameEl = document.getElementById('hero-abaya-name');
+
+        heroData.forEach((item, i) => {
+            const slide = document.createElement('div');
+            slide.className = 'slide' + (i === 0 ? ' active' : '');
+            slide.style.backgroundImage = `url('${item.file}')`;
+            sliderEl.appendChild(slide);
+        });
+
+        function updateButtons(btns) {
+            buttonsEl.innerHTML = '';
+            btns.forEach((b, i) => {
+                const a = document.createElement('a');
+                a.href = b.link; a.textContent = b.text;
+                a.className = 'hero-shop-link' + (i > 0 ? ' secondary' : '');
+                buttonsEl.appendChild(a);
             });
         }
-
-        // Initialize buttons for first slide
         updateButtons(heroData[0].buttons);
 
-        // Auto-rotate slider
-        let currentSlide = 0;
+        let current = 0;
         const slides = document.querySelectorAll('.slide');
-        
-        function updateSlide(index) {
-            slides.forEach((slide, i) => {
-                slide.classList.toggle('active', i === index);
-                slide.setAttribute('aria-hidden', i !== index ? 'true' : 'false');
-            });
-            heroNameEl.textContent = heroData[index].name;
-            updateButtons(heroData[index].buttons);
+        function goTo(idx) {
+            slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+            heroNameEl.textContent = heroData[idx].name;
+            updateButtons(heroData[idx].buttons);
         }
+        setInterval(() => { current = (current + 1) % slides.length; goTo(current); }, 4500);
 
-        // Switch every 2.5 seconds (2500ms)
-        setInterval(() => {
-            currentSlide = (currentSlide + 1) % slides.length;
-            updateSlide(currentSlide);
-        }, 2500);
-
-        // Reveal on scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
-        
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-        // Debug: Check if background image loads
-        const bgImg = new Image();
-        bgImg.src = './background.jpeg';
-        bgImg.onload = () => console.log('✅ background.jpeg loaded successfully');
-        bgImg.onerror = () => {
-            console.error('❌ background.jpeg failed to load');
-            console.log('💡 Check: 1) File is named exactly "background.jpeg" 2) It\'s in the same folder as index.html 3) GitHub is case-sensitive!');
-        };
+        // ── Reveal on scroll ──
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('active'); obs.unobserve(e.target); } });
+        }, { threshold: 0.12 });
+        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
     </script>
 </body>
 </html>
