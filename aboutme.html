@@ -8,8 +8,9 @@
     <style>
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
         :root{--dark-brown:#4a3326;--medium-brown:#7a6855;--light-brown:#a89a89;--off-white:#f9f7f5;--white:#ffffff;--transition:all 0.35s ease}
-        html{background-color:var(--dark-brown);min-height:100%}
-        body{background:linear-gradient(to bottom,#4a3326 0%,#4f382d 30%,#4a3326 55%,#f1ede6 80%,#ffffff 100%);min-height:100vh;font-family:'Montserrat',sans-serif;color:var(--dark-brown);display:flex;flex-direction:column;align-items:center;padding:0 1.5rem 3rem;overflow-x:hidden}
+        
+        body{
+            position: relative;min-height:100vh;font-family:'Montserrat',sans-serif;color:var(--dark-brown);display:flex;flex-direction:column;align-items:center;padding:0 1.5rem 3rem;overflow-x:hidden}
         header{text-align:center;width:100%;max-width:960px;padding:1.5rem 0 0;position:relative}
         .site-logo{font-family:'Playfair Display SC',serif;font-size:clamp(2.6rem,8vw,4.8rem);font-weight:400;letter-spacing:0.1em;color:var(--white);text-shadow:0 2px 6px rgba(0,0,0,0.25);text-decoration:none;display:inline-block}
         .menu-toggle{display:none;background:none;border:2px solid rgba(255,255,255,0.7);color:var(--white);font-size:1.3rem;cursor:pointer;position:absolute;top:1.8rem;right:0;z-index:200;border-radius:6px;width:42px;height:42px;align-items:center;justify-content:center}
@@ -47,7 +48,24 @@
         footer p{font-size:0.78rem;letter-spacing:0.5px}
         a:focus,button:focus{outline:2px solid rgba(74,51,38,0.5);outline-offset:2px}
         @media(max-width:640px){.about-section{padding:1.8rem 1.3rem}.our-story{margin-bottom:2.5rem}}
-    </style>
+    
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: url('background.jpeg') center center / cover no-repeat;
+            z-index: -2;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: rgba(74, 51, 38, 0.52);
+            z-index: -1;
+        }
+
+        </style>
 </head>
 <body>
     <header>
