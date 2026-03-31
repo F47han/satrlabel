@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sama Abaya | Satr</title>
+    <title>Layla Abaya | Satr</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;600;700&family=Playfair+Display+SC:wght@400;700&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -19,11 +19,11 @@
             --ease: cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        html { background-color: var(--dark-brown); min-height: 100%; }
+        
 
         body {
-            background: linear-gradient(to bottom,
-                #4a3326 0%, #4f382d 30%, #4a3326 55%, #f1ede6 82%, #ffffff 100%);
+            position: relative;
+            
             min-height: 100vh;
             font-family: 'Montserrat', sans-serif;
             color: var(--dark-brown);
@@ -326,7 +326,24 @@
 
         a:focus, button:focus { outline: 2px solid rgba(74,51,38,0.5); outline-offset: 2px; }
 
-    </style>
+    
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: url('background.jpeg') center center / cover no-repeat;
+            z-index: -2;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: rgba(74, 51, 38, 0.52);
+            z-index: -1;
+        }
+
+        </style>
 </head>
 <body>
     <header>
@@ -344,23 +361,23 @@
         <section class="product-section">
             <div class="product-images">
                 <div class="main-image-container">
-                    <img src="sama4.JPEG" alt="Sama Abaya" id="mainImage">
+                    <img src="layla4.JPEG" alt="Layla Abaya" id="mainImage">
                 </div>
                 <div class="thumbnails-container">
-                    <div class="thumbnail active" data-src="sama4.JPEG"><img src="sama4.JPEG" alt="Sama view 1" loading="lazy"></div>
-                    <div class="thumbnail" data-src="sama1.JPEG"><img src="sama1.JPEG" alt="Sama view 2" loading="lazy"></div>
-                    <div class="thumbnail" data-src="sama2.JPEG"><img src="sama2.JPEG" alt="Sama view 3" loading="lazy"></div>
-                    <div class="thumbnail" data-src="sama3.JPEG"><img src="sama3.JPEG" alt="Sama view 4" loading="lazy"></div>
-                    <div class="thumbnail" data-src="sama5.JPEG"><img src="sama5.JPEG" alt="Sama view 5" loading="lazy"></div>
-                    <div class="thumbnail" data-src="sama6.JPEG"><img src="sama6.JPEG" alt="Sama view 6" loading="lazy"></div>
+                    <div class="thumbnail active" data-src="layla4.JPEG"><img src="layla4.JPEG" alt="Layla view 1" loading="lazy"></div>
+                    <div class="thumbnail" data-src="layla1.JPEG"><img src="layla1.JPEG" alt="Layla view 2" loading="lazy"></div>
+                    <div class="thumbnail" data-src="layla2.JPEG"><img src="layla2.JPEG" alt="Layla view 3" loading="lazy"></div>
+                    <div class="thumbnail" data-src="layla3.JPEG"><img src="layla3.JPEG" alt="Layla view 4" loading="lazy"></div>
+                    <div class="thumbnail" data-src="layla5.JPEG"><img src="layla5.JPEG" alt="Layla view 5" loading="lazy"></div>
+                    <div class="thumbnail" data-src="layla6.JPEG"><img src="layla6.JPEG" alt="Layla view 6" loading="lazy"></div>
                 </div>
             </div>
 
             <div class="product-details">
-                <div class="product-name">Sama</div>
+                <div class="product-name">Layla</div>
                 <div class="product-price">£45</div>
                 <div class="divider"></div>
-                <p class="product-description">A serene teal open abaya with delicate lace detailing at the open edges and sleeves. Features lightweight fabric, a flowing silhouette and elegant drape for everyday tranquility.</p>
+                <p class="product-description">A rich maroon open abaya with intricate floral lace detailing. Features lightweight fabric, a flowing silhouette and elegant drape for sophisticated everyday elegance.</p>
                 <span class="size-label">Select Size</span>
                 <div class="size-options">
                     <button class="size-btn" data-size="XS">XS</button>
