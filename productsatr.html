@@ -15,9 +15,10 @@
             --cream: #f1ede6;
             --transition: all 0.35s ease;
         }
-        html { background-color: var(--dark-brown); min-height: 100%; }
+        
         body {
-            background: linear-gradient(to bottom, #4a3326 0%, #4a3326 45%, #f1ede6 80%, #ffffff 100%);
+            position: relative;
+            
             min-height: 100vh;
             font-family: 'Montserrat', sans-serif;
             color: var(--dark-brown);
@@ -137,7 +138,24 @@
         }
         footer p { font-size: 0.78rem; letter-spacing: 0.5px; }
         a:focus, button:focus { outline: 2px solid rgba(74,51,38,0.5); outline-offset: 2px; }
-    </style>
+    
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: url('background.jpeg') center center / cover no-repeat;
+            z-index: -2;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: rgba(74, 51, 38, 0.52);
+            z-index: -1;
+        }
+
+        </style>
 </head>
 <body>
 
