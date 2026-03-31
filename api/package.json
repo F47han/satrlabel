@@ -1,8 +1,11 @@
 {
-  "name": "satr-backend",
+  "name": "satr-store",
   "version": "1.0.0",
-  "description": "SATR serverless checkout function",
+  "description": "Satr Abayas - Timeless modest fashion",
   "dependencies": {
     "stripe": "^14.0.0"
+  },
+  "engines": {
+    "node": "18.x"
   }
 }
