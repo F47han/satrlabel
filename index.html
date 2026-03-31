@@ -20,24 +20,16 @@
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
+            position: relative;
             font-family: 'Montserrat', sans-serif;
             color: var(--dark-brown);
-            background-color: var(--cream);
+            
             min-height: 100vh;
             overflow-x: hidden;
             line-height: 1.6;
         }
 
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            background-image: url('background.jpeg');
-            background-size: cover;
-            background-position: center;
-            z-index: -1;
-            opacity: 0.22;
-        }
+        
 
         /* ── Announcement Bar ── */
         .announcement-bar {
@@ -314,7 +306,24 @@
         footer p { font-size: 0.75rem; letter-spacing: 0.8px; line-height: 1.8; }
 
         a:focus, button:focus { outline: 2px solid var(--medium-brown); outline-offset: 2px; }
-    </style>
+    
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: url('background.jpeg') center center / cover no-repeat;
+            z-index: -2;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: rgba(74, 51, 38, 0.52);
+            z-index: -1;
+        }
+
+        </style>
 </head>
 <body>
 
