@@ -4,514 +4,140 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About | Satr</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500&family=Playfair+Display+SC:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;600;700&family=Playfair+Display+SC:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        :root{--dark-brown:#4a3326;--medium-brown:#7a6855;--light-brown:#a89a89;--off-white:#f9f7f5;--white:#ffffff;--transition:all 0.35s ease}
+        html{background-color:var(--dark-brown);min-height:100%}
+        body{background:linear-gradient(to bottom,#4a3326 0%,#4f382d 30%,#4a3326 55%,#f1ede6 80%,#ffffff 100%);min-height:100vh;font-family:'Montserrat',sans-serif;color:var(--dark-brown);display:flex;flex-direction:column;align-items:center;padding:0 1.5rem 3rem;overflow-x:hidden}
+        header{text-align:center;width:100%;max-width:960px;padding:1.5rem 0 0;position:relative}
+        .site-logo{font-family:'Playfair Display SC',serif;font-size:clamp(2.6rem,8vw,4.8rem);font-weight:400;letter-spacing:0.1em;color:var(--white);text-shadow:0 2px 6px rgba(0,0,0,0.25);text-decoration:none;display:inline-block}
+        .menu-toggle{display:none;background:none;border:2px solid rgba(255,255,255,0.7);color:var(--white);font-size:1.3rem;cursor:pointer;position:absolute;top:1.8rem;right:0;z-index:200;border-radius:6px;width:42px;height:42px;align-items:center;justify-content:center}
+        nav{margin-top:1.3rem;display:flex;justify-content:center;gap:1.5rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,0.35);flex-wrap:wrap}
+        nav a{text-decoration:none;color:var(--white);font-weight:600;font-size:0.72rem;letter-spacing:1.5px;text-transform:uppercase;padding:6px 4px;position:relative;transition:var(--transition);display:inline-flex;align-items:center;gap:5px;min-height:44px}
+        nav a::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%) scaleX(0);width:70%;height:1.5px;background:var(--white);transition:var(--transition);transform-origin:center}
+        nav a:hover::after,nav a.active::after{transform:translateX(-50%) scaleX(1)}
+        .cart-count-badge{display:inline-flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.25);color:var(--white);font-size:0.6rem;font-weight:700;min-width:18px;height:18px;border-radius:9px;padding:0 4px;line-height:1;border:1px solid rgba(255,255,255,0.5)}
+        .cart-count-badge.has-items{background:var(--white);color:var(--dark-brown)}
+        @media(max-width:640px){
+            .menu-toggle{display:inline-flex}
+            nav{display:none;flex-direction:column;position:absolute;top:100%;left:-1.5rem;right:-1.5rem;background:rgba(74,51,38,0.97);backdrop-filter:blur(12px);z-index:100;padding:0.5rem 1.5rem 1rem;gap:0;border-top:1px solid rgba(255,255,255,0.2)}
+            nav.open{display:flex}
+            nav a{width:100%;padding:13px 0;border-bottom:1px solid rgba(255,255,255,0.1);font-size:0.8rem}
+            nav a:last-child{border-bottom:none}
+            nav a::after{display:none}
         }
-
-        :root {
-            --dark-brown: #4a3326;
-            --medium-brown: #7a6855;
-            --light-brown: #a89a89;
-            --off-white: #f9f7f5;
-            --white: #ffffff;
-            --transition: all 0.3s ease;
-        }
-
-        body {
-            background-color: #2a1d15;
-            font-family: 'Montserrat', sans-serif;
-            color: var(--dark-brown);
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 1.5rem;
-            position: relative;
-        }
-
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('background.jpeg');
-            background-size: cover;
-            background-position: center;
-            z-index: -1;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 2rem;
-            width: 100%;
-            max-width: 900px;
-            padding-top: 1rem;
-            position: relative;
-            z-index: 10;
-        }
-
-        h1 {
-            font-family: 'Playfair Display SC', serif;
-            font-size: 4.8rem;
-            font-weight: 400;
-            margin-bottom: 0.5rem;
-            letter-spacing: 0.1em;
-            color: var(--white);
-            position: relative;
-            display: inline-block;
-            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-        }
-
-        h1::after {
-            content: "";
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 50px;
-            height: 1.5px;
-            background-color: var(--white);
-        }
-
-        .menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--white);
-            font-size: 1.8rem;
-            cursor: pointer;
-            position: absolute;
-            top: 1.2rem;
-            right: 1.2rem;
-            z-index: 100;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-        }
-
-        nav {
-            margin-top: 1.5rem;
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            padding-top: 1rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.35);
-        }
-
-        nav a {
-            text-decoration: none;
-            color: var(--white);
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 500;
-            font-size: 1rem;
-            letter-spacing: 0.8px;
-            text-transform: uppercase;
-            padding: 0.6rem 0.4rem;
-            border-radius: 4px;
-            transition: var(--transition);
-            position: relative;
-            display: inline-block;
-            min-width: 80px;
-            text-align: center;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-        }
-
-        nav a:hover, nav a.active { color: var(--white); }
-
-        nav a::after {
-            content: "";
-            position: absolute;
-            bottom: -5px;
-            left: 50%;
-            transform: translateX(-50%) scaleX(0);
-            width: 60%;
-            height: 1.5px;
-            background-color: var(--white);
-            transition: var(--transition);
-            transform-origin: center;
-        }
-
-        nav a:hover::after, nav a.active::after {
-            transform: translateX(-50%) scaleX(1);
-        }
-
-        .about-content {
-            max-width: 900px;
-            width: 100%;
-            margin: 0 auto;
-            z-index: 5;
-        }
-
-        .about-section {
-            background: var(--white);
-            border-radius: 14px;
-            padding: 2.8rem;
-            margin-bottom: 2.8rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.09);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .about-section::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0;
-            width: 7px; height: 100%;
-            background-color: var(--medium-brown);
-        }
-
-        .about-section h2 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2.4rem;
-            color: var(--dark-brown);
-            margin-bottom: 1.9rem;
-            position: relative;
-            padding-bottom: 0.85rem;
-            letter-spacing: -0.02em;
-        }
-
-        .about-section h2::after {
-            content: "";
-            position: absolute;
-            bottom: 0; left: 0;
-            width: 75px; height: 2.2px;
-            background-color: var(--medium-brown);
-        }
-
-        .about-section p {
-            margin-bottom: 1.4rem;
-            line-height: 1.85;
-            color: var(--dark-brown);
-            opacity: 0.93;
-            font-size: 1.08rem;
-        }
-
-        .about-section p:last-child { margin-bottom: 0; }
-
-        .about-section strong {
-            color: var(--dark-brown);
-            font-weight: 600;
-            font-family: 'Cormorant Garamond', serif;
-        }
-
-        /* Contact link styling */
-        .about-section a.contact-link {
-            color: var(--dark-brown);
-            text-decoration: underline;
-            transition: var(--transition);
-        }
-        .about-section a.contact-link:hover { color: var(--medium-brown); }
-
-        .policies-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 2.3rem;
-            margin-top: 1.8rem;
-        }
-
-        .policy-card {
-            background: var(--white);
-            border-radius: 14px;
-            padding: 2.4rem;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.09);
-            position: relative;
-            transition: var(--transition);
-            border-left: 5px solid var(--medium-brown);
-        }
-
-        .policy-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.13);
-        }
-
-        .policy-card h3 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2.1rem;
-            color: var(--dark-brown);
-            margin-bottom: 1.6rem;
-            position: relative;
-            padding-bottom: 0.75rem;
-            letter-spacing: -0.02em;
-        }
-
-        .policy-card h3::after {
-            content: "";
-            position: absolute;
-            bottom: 0; left: 0;
-            width: 55px; height: 2px;
-            background-color: var(--light-brown);
-        }
-
-        .policy-card p {
-            margin-bottom: 1.1rem;
-            line-height: 1.85;
-            color: var(--dark-brown);
-            opacity: 0.9;
-            font-size: 1.05rem;
-        }
-
-        .policy-card p:last-child { margin-bottom: 0; }
-
-        /* International notice inside shipping card */
-        .intl-notice {
-            margin-top: 1.1rem;
-            padding: 1rem 1.2rem;
-            background: var(--off-white);
-            border-left: 3px solid var(--light-brown);
-            border-radius: 0 6px 6px 0;
-            font-size: 1.02rem;
-            line-height: 1.85;
-            color: var(--dark-brown);
-            opacity: 0.9;
-        }
-
-        .intl-notice a {
-            color: var(--dark-brown);
-            font-weight: 500;
-            text-decoration: underline;
-        }
-
-        .our-story {
-            text-align: center;
-            max-width: 780px;
-            margin: 0 auto 2.8rem;
-        }
-
-        .our-story h2 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2.6rem;
-            color: var(--white);
-            margin-bottom: 1.7rem;
-            letter-spacing: -0.02em;
-        }
-
-        .our-story p {
-            font-size: 1.35rem;
-            font-style: italic;
-            color: var(--white);
-            opacity: 0.96;
-            line-height: 1.95;
-            position: relative;
-            padding: 0 1.8rem;
-        }
-
-        .our-story p::before,
-        .our-story p::after {
-            content: "\201C";
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 4.3rem;
-            color: rgba(255, 255, 255, 0.2);
-            position: absolute;
-            line-height: 1;
-        }
-
-        .our-story p::before { top: -2rem; left: -1.1rem; }
-        .our-story p::after {
-            content: "\201D";
-            bottom: -2.6rem;
-            right: -1.1rem;
-        }
-
-        .announcement-bar {
-            width: calc(100% + 3rem);
-            margin: -1.5rem -1.5rem 0;
-            background: rgba(0,0,0,0.75);
-            backdrop-filter: blur(10px);
-            padding: 12px 10px;
-            text-align: center;
-            font-size: 0.65rem;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            position: sticky;
-            top: 0;
-            z-index: 3000;
-            line-height: 1.4;
-            color: #ffffff;
-            font-weight: 500;
-        }
-        .announcement-bar a { color: #ffffff; text-decoration: underline; font-weight: 700; }
-
-        footer {
-            margin-top: 4rem;
-            padding: 1.8rem 1rem;
-            text-align: center;
-            width: 100%;
-            max-width: 800px;
-            border-top: 1px solid rgba(255,255,255,0.25);
-            margin-bottom: 1.5rem;
-            z-index: 5;
-        }
-
-        footer p {
-            font-size: 0.92rem;
-            color: rgba(255,255,255,0.6);
-            letter-spacing: 0.5px;
-            line-height: 1.6;
-        }
-
-        @media (min-width: 768px) {
-            body { padding: 2rem; }
-            h1 { font-size: 5.1rem; }
-            nav { gap: 2.6rem; padding-top: 1.3rem; }
-            nav a { font-size: 1.08rem; letter-spacing: 1px; padding: 0.65rem 0.55rem; }
-            .about-section { padding: 3.3rem; }
-            .policy-card { padding: 2.8rem; }
-            footer { margin-top: 4.5rem; padding: 2rem; }
-        }
-
-        @media (min-width: 1024px) {
-            h1 { font-size: 5rem; }
-            nav { gap: 3.2rem; }
-            nav a { font-size: 1.15rem; letter-spacing: 1.3px; padding: 0.75rem 0.65rem; }
-            .about-section h2 { font-size: 2.7rem; }
-            .policy-card h3 { font-size: 2.3rem; }
-            footer { margin-top: 5rem; padding: 2.2rem; }
-        }
-
-        @media (max-width: 767px) {
-            .menu-toggle { display: block; }
-            nav {
-                display: none;
-                flex-direction: column;
-                gap: 1.2rem;
-                padding-top: 1.4rem;
-                border-top: 1px solid rgba(255, 255, 255, 0.4);
-                background: rgba(74, 51, 38, 0.85);
-                border-radius: 12px;
-                margin-top: 1.2rem;
-                backdrop-filter: blur(5px);
-            }
-            nav.show { display: flex; }
-            nav a { font-size: 1.2rem; padding: 0.9rem 0; letter-spacing: 1.2px; min-width: auto; width: 100%; }
-            nav a::after { display: none; }
-            nav a:hover { background: rgba(255, 255, 255, 0.15); }
-            h1 { font-size: 4rem; }
-            h1::after { width: 48px; bottom: -9px; }
-            .about-section { padding: 2.2rem; }
-            .about-section h2 { font-size: 2.2rem; }
-            .about-section p { font-size: 1.02rem; }
-            .policies-container { grid-template-columns: 1fr; gap: 1.8rem; }
-            .policy-card { padding: 2rem; }
-            .policy-card h3 { font-size: 1.95rem; }
-            .policy-card p { font-size: 1.02rem; }
-            .our-story p { font-size: 1.22rem; padding: 0 1.2rem; line-height: 1.85; }
-            .our-story p::before { font-size: 3.7rem; top: -1.7rem; left: -0.9rem; }
-            .our-story p::after { font-size: 3.7rem; bottom: -2.3rem; right: -0.9rem; }
-            footer { margin-top: 3.5rem; padding: 1.6rem 1rem; }
-        }
+        .about-content{width:100%;max-width:900px;padding-top:3rem}
+        .our-story{text-align:center;max-width:720px;margin:0 auto 3.5rem}
+        .our-story h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:400;color:var(--white);text-shadow:0 2px 6px rgba(0,0,0,0.2);margin-bottom:1.5rem;letter-spacing:0.04em}
+        .our-story p{font-size:1.05rem;font-style:italic;color:rgba(255,255,255,0.88);line-height:1.9;text-shadow:0 1px 4px rgba(0,0,0,0.15)}
+        .about-section{background:rgba(255,255,255,0.92);border-radius:18px;padding:2.5rem;box-shadow:0 10px 32px rgba(0,0,0,0.1);backdrop-filter:blur(6px);margin-bottom:2rem}
+        .about-section h2{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;color:var(--dark-brown);margin-bottom:1.2rem;padding-bottom:0.7rem;border-bottom:1px solid rgba(74,51,38,0.15)}
+        .about-section p{font-size:0.95rem;color:var(--dark-brown);line-height:1.85;margin-bottom:1rem;opacity:0.9}
+        .about-section p:last-child{margin-bottom:0}
+        .about-section a{color:var(--dark-brown);text-decoration:underline}
+        .about-section strong{color:var(--dark-brown)}
+        .policies-grid{display:grid;grid-template-columns:1fr;gap:1.5rem;margin-top:1.5rem}
+        @media(min-width:700px){.policies-grid{grid-template-columns:1fr 1fr}}
+        .policy-card{background:var(--off-white);border-radius:12px;padding:1.8rem;border-left:4px solid var(--medium-brown)}
+        .policy-card h3{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--dark-brown);margin-bottom:1rem}
+        .policy-card p{font-size:0.9rem;color:var(--dark-brown);opacity:0.85;line-height:1.8;margin-bottom:0.7rem}
+        .policy-card p:last-child{margin-bottom:0}
+        footer{width:100%;max-width:900px;text-align:center;padding:2rem 1rem;border-top:1px solid rgba(74,51,38,0.15);color:var(--dark-brown);margin-top:1rem}
+        footer p{font-size:0.78rem;letter-spacing:0.5px}
+        a:focus,button:focus{outline:2px solid rgba(74,51,38,0.5);outline-offset:2px}
+        @media(max-width:640px){.about-section{padding:1.8rem 1.3rem}.our-story{margin-bottom:2.5rem}}
     </style>
 </head>
 <body>
-
-<div class="announcement-bar">
-    Free UK shipping · International orders: <a href="https://www.instagram.com/satr.labell/" target="_blank">message us on Instagram</a>
-</div>
-
     <header>
-        <button class="menu-toggle" id="menuToggle">☰</button>
-        <h1>Satr</h1>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
+        <a href="index.html" class="site-logo">Satr</a>
         <nav id="mainNav">
-            <a href="satrindex.html">Home</a>
+            <a href="index.html">Home</a>
             <a href="productsatr.html">Products</a>
             <a href="aboutme.html" class="active">About</a>
-            <a href="cart.html">Cart</a>
+            <a href="cart.html">Cart <span class="cart-count-badge" id="cartBadge"></span></a>
         </nav>
     </header>
 
     <main class="about-content">
-
         <section class="our-story">
             <h2>Our Story</h2>
-            <p>Satr was born from a deeply personal place — a desire to create abayas that honour identity while embracing modern elegance. Each piece is crafted with the care you'd want for yourself and the women you love. This isn't just clothing; it's a celebration of the confident, graceful woman you are.</p>
+            <p>As the founder of Satr, I created this brand from a deeply personal need — to find abayas that honour my identity while embracing modern elegance. Each piece is crafted with the care I'd want for my own daughters, sisters, and friends. This isn't just clothing; it's a celebration of the confident, graceful woman you are.</p>
         </section>
 
         <section class="about-section">
             <h2>Our Commitment</h2>
-            <p>At Satr, we believe modest fashion should be both beautiful and meaningful. Every abaya is thoughtfully designed and meticulously crafted to honour tradition while embracing contemporary elegance. The name <em>Satr</em> — meaning modesty and covering in Arabic — sits at the heart of everything we create.</p>
-            <p>Our fabrics are carefully selected for their drape, comfort, and durability, because you deserve pieces that feel as beautiful as they look. From the hand-applied lace on the Flora to the flowing silhouette of the Sahara, every detail is considered and finished with care. When you wear Satr, you carry a piece of artistry and intention.</p>
+            <p>At Satr, we believe that modest fashion should be both beautiful and meaningful. Every abaya is thoughtfully designed and meticulously crafted to honour tradition while embracing contemporary elegance. We work with skilled artisans who share our passion for quality and attention to detail.</p>
+            <p>Our fabrics are carefully selected for their drape, comfort, and durability — because you deserve pieces that feel as beautiful as they look. When you wear Satr, you're not just wearing an abaya; you're carrying a piece of artistry and intention.</p>
         </section>
 
         <section class="about-section">
             <h2>Our Policies</h2>
-            <div class="policies-container">
-
+            <div class="policies-grid">
                 <div class="policy-card">
                     <h3>Privacy Policy</h3>
                     <p>Your privacy matters to us. We only collect the information needed to process your order and provide a smooth shopping experience.</p>
                     <p>Your details are kept secure and never shared with anyone except trusted partners such as payment providers and delivery services.</p>
                 </div>
-
                 <div class="policy-card">
-                    <h3>Refund & Returns</h3>
-                    <p>If your Satr piece isn't right, you may request a return or exchange within 14 days of receiving your order.</p>
-                    <p>Items must be unworn, unwashed, and returned with all original tags intact. Once received and inspected, your refund will be processed promptly.</p>
-                    <p>We are unable to accept returns for items showing signs of wear, damage, or fragrance.</p>
+                    <h3>Refund &amp; Returns</h3>
+                    <p>If your Satr piece isn't right, you can request a return or exchange within 14 days of receiving it.</p>
+                    <p>Items must be unworn, unwashed, and returned with all original tags. Once we receive and inspect the item, your refund will be processed.</p>
+                    <p>We cannot accept returns for items that show signs of wear, damage, or perfume.</p>
                 </div>
-
                 <div class="policy-card">
-                    <h3>Shipping</h3>
-                    <p>Orders are prepared within 1–3 working days. You will receive tracking details once your order is on its way.</p>
-                    <p>We offer free shipping on all UK orders. We are not responsible for courier delays beyond our control.</p>
-                    <div class="intl-notice">
-                        <strong>International Orders —</strong> We are currently unable to process international orders directly through our website. If you are based outside the UK and would like to purchase an abaya, please reach out to us via <a href="https://www.instagram.com/satr.labell/" target="_blank">Instagram</a> or <a href="mailto:khanjannat2005@gmail.com">email</a> and we will be happy to assist you personally.
-                    </div>
+                    <h3>Shipping Policy</h3>
+                    <p>Orders are prepared within 1–3 working days. You'll receive tracking details once your order is on its way.</p>
+                    <p>We are not responsible for courier delays or customs clearance issues beyond our control.</p>
                 </div>
-
+                <div class="policy-card">
+                    <h3>International Orders</h3>
+                    <p>Free shipping within the UK. For international orders, please message us on Instagram <a href="https://www.instagram.com/satr.labell/" target="_blank" rel="noopener">@satr.labell</a> before placing your order.</p>
+                </div>
             </div>
         </section>
 
         <section class="about-section">
             <h2>Contact Us</h2>
-            <p>We would be honoured to hear from you. Whether you have a question about sizing, an order enquiry, or simply want to say hello — we are always happy to help.</p>
-            <p><strong>Email:</strong> <a href="mailto:khanjannat2005@gmail.com" class="contact-link">khanjannat2005@gmail.com</a></p>
-            <p><strong>Instagram:</strong> <a href="https://www.instagram.com/satr.labell/" target="_blank" class="contact-link">@satr.labell</a></p>
-            <p><strong>Response Time:</strong> Within 24 hours on business days</p>
+            <p>We'd be honoured to hear from you. Whether you have questions about our collections, need styling advice, or wish to share your Satr story, we're here to serve you with warmth and care.</p>
+            <p><strong>Instagram:</strong> <a href="https://www.instagram.com/satr.labell/" target="_blank" rel="noopener">@satr.labell</a></p>
+            <p><strong>Response Time:</strong> Within 24 business hours</p>
+            <p><strong>Hours:</strong> Monday–Friday, 9am–5pm GMT</p>
         </section>
-
     </main>
 
     <footer>
         <p>&copy; 2026 Satr. Handcrafted with love for the modern Muslimah.</p>
     </footer>
 
+    <script src="satr-cart.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const menuToggle = document.getElementById('menuToggle');
-            const nav = document.getElementById('mainNav');
-
-            menuToggle.addEventListener('click', function () {
-                nav.classList.toggle('show');
-                menuToggle.textContent = nav.classList.contains('show') ? '✕' : '☰';
-            });
-
-            nav.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', function () {
-                    if (window.innerWidth <= 767) {
-                        nav.classList.remove('show');
-                        menuToggle.textContent = '☰';
-                    }
-                });
-            });
-
-            document.addEventListener('click', function (e) {
-                if (window.innerWidth <= 767 &&
-                    !nav.contains(e.target) &&
-                    !menuToggle.contains(e.target) &&
-                    nav.classList.contains('show')) {
-                    nav.classList.remove('show');
-                    menuToggle.textContent = '☰';
-                }
-            });
-
-            window.addEventListener('resize', function () {
-                if (window.innerWidth > 767 && nav.classList.contains('show')) {
-                    nav.classList.remove('show');
-                    menuToggle.textContent = '☰';
-                }
-            });
+        const toggle = document.getElementById('menuToggle');
+        const nav    = document.getElementById('mainNav');
+        toggle.addEventListener('click', () => {
+            const open = nav.classList.toggle('open');
+            toggle.textContent = open ? '\u2715' : '\u2630';
+            toggle.setAttribute('aria-expanded', open);
         });
+        nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+            nav.classList.remove('open'); toggle.textContent = '\u2630';
+        }));
+        document.addEventListener('click', e => {
+            if (!nav.contains(e.target) && !toggle.contains(e.target)) {
+                nav.classList.remove('open'); toggle.textContent = '\u2630';
+            }
+        });
+        function updateBadge() {
+            const b = document.getElementById('cartBadge');
+            if (!b) return;
+            const c = SatrCart.getSummary().itemCount;
+            b.textContent = c > 0 ? c : '';
+            b.classList.toggle('has-items', c > 0);
+        }
+        updateBadge();
+        window.addEventListener('satr:cart-updated', updateBadge);
     </script>
 </body>
 </html>
