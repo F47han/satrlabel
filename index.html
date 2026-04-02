@@ -328,7 +328,7 @@
 <body>
 
     <div class="announcement-bar">
-        Free shipping for UK | International shipping please <a href="https://www.instagram.com/satr.labell/" target="_blank" rel="noopener">message @satr.labell on Instagram</a>
+        Free shipping for UK | International shipping please <a href="https://www.instagram.com/satr.labell/" target="_blank" rel="noopener">message @satr.labell</a>
     </div>
 
     <header>
@@ -352,21 +352,23 @@
 
     <main class="products-section">
         <div class="products-grid">
+            <a href="jamila.html" class="product-card reveal" style="background:rgba(15,10,8,0.88);border-radius:12px;overflow:hidden;position:relative;border:1px solid rgba(201,168,76,0.3);">
+                <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#c9a84c,#e8d08a,#c9a84c,transparent);z-index:2;"></div>
+                <div class="img-container" style="background:#111;">
+                    <img src="jamila1.jpeg" alt="The Jamila Limited Edition Abaya" loading="lazy" class="product-image">
+                </div>
+                <div class="product-info" style="background:rgba(15,10,8,0.88);">
+                    <span style="display:inline-block;font-size:0.55rem;font-family:'Montserrat',sans-serif;font-weight:700;letter-spacing:2px;text-transform:uppercase;background:linear-gradient(135deg,#c9a84c,#e8d08a);color:#1a1208;padding:3px 10px;border-radius:10px;margin-bottom:6px;">◆ Limited Edition ◆</span>
+                    <h2 style="color:#fff;">The Jamila</h2>
+                    <span class="shop-btn-text" style="color:#e8d08a;border-bottom-color:#e8d08a;">Shop Now</span>
+                </div>
+            </a>
             <a href="sereen.html" class="product-card reveal">
                 <div class="img-container">
                     <img src="sareen4.jpeg" alt="The Sereen Abaya" loading="lazy" class="product-image">
                 </div>
                 <div class="product-info">
                     <h2>The Sereen</h2>
-                    <span class="shop-btn-text">Shop Now</span>
-                </div>
-            </a>
-            <a href="flora.html" class="product-card reveal">
-                <div class="img-container">
-                    <img src="flora1.jpeg" alt="The Flora Abaya" loading="lazy" class="product-image">
-                </div>
-                <div class="product-info">
-                    <h2>The Flora</h2>
                     <span class="shop-btn-text">Shop Now</span>
                 </div>
             </a>
@@ -431,7 +433,6 @@
         const heroData = [
             { name: 'Jamila — Limited Edition', file: 'jamila1.jpeg', buttons: [{ text: 'Shop Piece', link: 'jamila.html' }], limited: true },
             { name: 'Sereen', file: 'sareen3.jpeg', buttons: [{ text: 'Shop Piece', link: 'sereen.html' }] },
-            { name: 'Flora',  file: 'flora1.jpeg',  buttons: [{ text: 'Shop Piece', link: 'flora.html' }] },
             { name: 'Nila',   file: 'nila6.jpeg',   buttons: [{ text: 'Shop Piece', link: 'nila.html' }] },
             { name: 'Layla & Sama', file: 'layandsama.jpeg', buttons: [
                 { text: 'Shop Layla', link: 'layla.html' },
@@ -455,7 +456,13 @@
             btns.forEach((b, i) => {
                 const a = document.createElement('a');
                 a.href = b.link; a.textContent = b.text;
-                a.className = 'hero-shop-link' + (i > 0 ? ' secondary' : '');
+                if (limited) {
+                    a.style.cssText = 'background:linear-gradient(135deg,#1a1208,#2d2010);color:#e8d08a;border:1px solid rgba(201,168,76,0.5);display:inline-flex;align-items:center;justify-content:center;text-decoration:none;padding:0.65rem 1.2rem;font-size:0.65rem;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;border-radius:4px;min-height:44px;transition:all 0.35s ease;';
+                    a.onmouseenter = () => { a.style.background = 'linear-gradient(135deg,#c9a84c,#e8d08a)'; a.style.color = '#1a1208'; };
+                    a.onmouseleave = () => { a.style.background = 'linear-gradient(135deg,#1a1208,#2d2010)'; a.style.color = '#e8d08a'; };
+                } else {
+                    a.className = 'hero-shop-link' + (i > 0 ? ' secondary' : '');
+                }
                 buttonsEl.appendChild(a);
             });
         }
