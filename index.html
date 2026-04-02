@@ -16,6 +16,7 @@
             --cream: #f8f5f2;
             --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
+
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
@@ -327,7 +328,7 @@
 <body>
 
     <div class="announcement-bar">
-        Free shipping for UK | International shipping please <a href="https://www.instagram.com/satr.labell/" target="_blank" rel="noopener">message @satr.labell</a>
+        Free shipping for UK | International shipping please <a href="https://www.instagram.com/satr.labell/" target="_blank" rel="noopener">message @satr.labell on Instagram</a>
     </div>
 
     <header>
@@ -428,10 +429,11 @@
 
         // ── Hero Slider ──
         const heroData = [
+            { name: 'Jamila — Limited Edition', file: 'jamila1.jpeg', buttons: [{ text: 'Shop Piece', link: 'jamila.html' }], limited: true },
             { name: 'Sereen', file: 'sareen3.jpeg', buttons: [{ text: 'Shop Piece', link: 'sereen.html' }] },
             { name: 'Flora',  file: 'flora1.jpeg',  buttons: [{ text: 'Shop Piece', link: 'flora.html' }] },
             { name: 'Nila',   file: 'nila6.jpeg',   buttons: [{ text: 'Shop Piece', link: 'nila.html' }] },
-            { name: 'Layla & Sama', file: 'layandsama.jpg', buttons: [
+            { name: 'Layla & Sama', file: 'layandsama.jpeg', buttons: [
                 { text: 'Shop Layla', link: 'layla.html' },
                 { text: 'Shop Sama',  link: 'sama.html' }
             ]}
@@ -448,7 +450,7 @@
             sliderEl.appendChild(slide);
         });
 
-        function updateButtons(btns) {
+        function updateButtons(btns, limited) {
             buttonsEl.innerHTML = '';
             btns.forEach((b, i) => {
                 const a = document.createElement('a');
@@ -457,14 +459,22 @@
                 buttonsEl.appendChild(a);
             });
         }
-        updateButtons(heroData[0].buttons);
+        function updateHeroName(item) {
+            if (item.limited) {
+                heroNameEl.innerHTML = `${item.name} <span style="display:inline-block;font-size:0.55rem;font-family:'Montserrat',sans-serif;font-weight:700;letter-spacing:2px;text-transform:uppercase;background:linear-gradient(135deg,#c9a84c,#e8d08a);color:#1a1208;padding:3px 10px;border-radius:10px;vertical-align:middle;margin-left:6px;">Limited</span>`;
+            } else {
+                heroNameEl.textContent = item.name;
+            }
+        }
+        updateButtons(heroData[0].buttons, heroData[0].limited);
+        updateHeroName(heroData[0]);
 
         let current = 0;
         const slides = document.querySelectorAll('.slide');
         function goTo(idx) {
             slides.forEach((s, i) => s.classList.toggle('active', i === idx));
-            heroNameEl.textContent = heroData[idx].name;
-            updateButtons(heroData[idx].buttons);
+            updateHeroName(heroData[idx]);
+            updateButtons(heroData[idx].buttons, heroData[idx].limited);
         }
         setInterval(() => { current = (current + 1) % slides.length; goTo(current); }, 4500);
 
