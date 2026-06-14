@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yasmine | Satr</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@300;400;600;700&family=Playfair+Display+SC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* PASTE THE SAME STYLE BLOCK FROM ZAHRA HERE */
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="site-logo">Satr</a>
+        <nav id="mainNav">
+            <a href="index.html">Home</a>
+            <a href="productsatr.html" class="active">Products</a>
+            <a href="aboutme.html">About</a>
+            <a href="cart.html">Cart <span class="cart-count-badge" id="cartBadge"></span></a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="product-section">
+            <div class="product-images">
+                <div class="main-image-container">
+                    <img src="yasmine1.jpeg" alt="The Yasmine" id="mainImage">
+                </div>
+                <div class="thumbnails-container">
+                    <div class="thumbnail active" data-src="yasmine1.jpeg"><img src="yasmine1.jpeg"></div>
+                    <div class="thumbnail" data-src="yasmine2.jpeg"><img src="yasmine2.jpeg"></div>
+                    <div class="thumbnail" data-src="yasmine3.jpeg"><img src="yasmine3.jpeg"></div>
+                    <div class="thumbnail" data-src="yasmine4.jpeg"><img src="yasmine4.jpeg"></div>
+                </div>
+            </div>
+
+            <div class="product-details">
+                <div class="limited-badge"><span>◆</span> Limited Spring Piece <span>◆</span></div>
+                <div class="product-name">The Yasmine</div>
+                <div class="product-price">£30</div>
+                <div class="divider"></div>
+                <p class="product-description">Softest cream beige tones meet a timeless silhouette. The Yasmine is designed for effortless grace, making it the perfect staple for your Spring wardrobe.</p>
+                <div class="divider"></div>
+                <span class="size-label">Select Size</span>
+                <div class="size-options">
+                    <button class="size-btn" data-size="Small (54&quot;)">54</button>
+                    <button class="size-btn" data-size="Medium (56&quot;)">56</button>
+                    <button class="size-btn" data-size="Large (58&quot;)">58</button>
+                </div>
+                <button class="add-to-cart" id="addToCart">Add to Basket</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Satr. Handcrafted with love.</p>
+    </footer>
+
+    <script src="cart.js"></script>
+    <script>
+        const thumbnails = document.querySelectorAll('.thumbnail');
+        const mainImage = document.getElementById('mainImage');
+        thumbnails.forEach(t => {
+            t.addEventListener('click', function() {
+                thumbnails.forEach(x => x.classList.remove('active'));
+                this.classList.add('active');
+                mainImage.style.opacity = '0';
+                setTimeout(() => { mainImage.src = this.dataset.src; mainImage.style.opacity = '1'; }, 200);
+            });
+        });
+
+        const sizeBtns = document.querySelectorAll('.size-btn');
+        let selectedSize = 'Small (54")';
+        sizeBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                sizeBtns.forEach(b => b.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedSize = this.dataset.size;
+            });
+        });
+        sizeBtns[0].click();
+
+        document.getElementById('addToCart').addEventListener('click', function() {
+            SatrCart.addItem('yasmine', selectedSize);
+            this.textContent = 'Added ✓';
+            setTimeout(() => { this.textContent = 'Add to Basket'; }, 2000);
+        });
+    </script>
+</body>
+</html>

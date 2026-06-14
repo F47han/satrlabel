@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mood | Satr</title>
+    <style>
+        /* CRITICAL: Prevents white flash and gradient banding */
+        html {
+            background-color: #4a3326;
+            min-height: 100%;
+        }
+        body {
+            background: linear-gradient(to bottom, 
+                #4a3326 0%, 
+                #4f382d 25%, 
+                #4a3326 55%, 
+                #f1ede6 85%, 
+                #ffffff 100%);
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Montserrat', sans-serif;
+            color: #4a3326;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.5rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --dark-brown: #4a3326;
+            --medium-brown: #7a6855;
+            --light-brown: #a89a89;
+            --off-white: #f9f7f5;
+            --white: #ffffff;
+            --transition: all 0.3s ease;
+            --animation-timing: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Gradient overlay removed to prevent banding */
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            width: 100%;
+            max-width: 900px;
+            padding-top: 1rem;
+            position: relative;
+            z-index: 10;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1.2s var(--animation-timing) 0.3s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-family: 'Playfair Display SC', serif;
+            font-size: 4.8rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.1em;
+            color: var(--white);
+            position: relative;
+            display: inline-block;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+            opacity: 0;
+            transform: translateY(15px);
+            animation: fadeInUp 1.4s var(--animation-timing) 0.6s forwards;
+        }
+
+        h1::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 1.5px;
+            background-color: var(--white);
+            opacity: 0;
+            transform: translateX(-50%) scaleX(0.8);
+            animation: underlineGrow 1.2s var(--animation-timing) 1.2s forwards;
+        }
+
+        @keyframes underlineGrow {
+            to {
+                opacity: 1;
+                transform: translateX(-50%) scaleX(1);
+            }
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.8rem;
+            cursor: pointer;
+            position: absolute;
+            top: 1.2rem;
+            right: 1.2rem;
+            z-index: 100;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            animation: fadeIn 1s ease-in 0.8s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        nav {
+            margin-top: 1.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.35);
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInUp 1.2s var(--animation-timing) 0.9s forwards;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--white);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            font-size: 1rem;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            padding: 0.6rem 0.4rem;
+            border-radius: 4px;
+            transition: var(--transition);
+            position: relative;
+            display: inline-block;
+            min-width: 80px;
+            text-align: center;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(8px);
+        }
+
+        nav a:nth-child(1) { animation: fadeInUp 0.9s var(--animation-timing) 1.2s forwards; }
+        nav a:nth-child(2) { animation: fadeInUp 0.9s var(--animation-timing) 1.35s forwards; }
+        nav a:nth-child(3) { animation: fadeInUp 0.9s var(--animation-timing) 1.5s forwards; }
+
+        nav a:hover, nav a.active {
+            color: var(--white);
+        }
+
+        nav a::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+            width: 60%;
+            height: 1.5px;
+            background-color: var(--white);
+            transition: var(--transition);
+            transform-origin: center;
+        }
+
+        nav a:hover::after, nav a.active::after {
+            transform: translateX(-50%) scaleX(1);
+        }
+
+        /* INTRODUCTION SECTION */
+        .mood-intro {
+            max-width: 750px;
+            text-align: center;
+            margin: 2.5rem auto 3.5rem;
+            font-size: 1.4rem;
+            font-weight: 300;
+            color: var(--white);
+            line-height: 1.85;
+            padding: 0 1.5rem;
+            font-style: italic;
+            position: relative;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            z-index: 5;
+            opacity: 0;
+            transform: translateY(25px);
+            animation: fadeInUp 1.6s var(--animation-timing) 1.8s forwards;
+        }
+
+        .mood-intro::before, .mood-intro::after {
+            content: """;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4.2rem;
+            color: rgba(255, 255, 255, 0.12);
+            position: absolute;
+            line-height: 1;
+            z-index: -1;
+            opacity: 0;
+            animation: fadeIn 2s ease-in-out 2.2s forwards;
+        }
+
+        .mood-intro::before { top: -2rem; left: -1.3rem; }
+        .mood-intro::after { content: '"'; bottom: -2.7rem; right: -1.3rem; transform: rotate(180deg); }
+
+        /* SLIDER CONTAINER */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            margin-bottom: 4rem;
+            touch-action: pan-y;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1.4s var(--animation-timing) 2.4s forwards;
+        }
+
+        .slider-wrapper {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.8s var(--animation-timing);
+            will-change: transform;
+            user-select: none;
+        }
+
+        /* MOODBOARD SLIDES */
+        .moodboard {
+            min-width: 100vw;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding-top: 5rem;
+            position: relative;
+            overflow: hidden;
+            background-color: var(--dark-brown);
+        }
+
+        .moodboard::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.35));
+            z-index: 1;
+        }
+
+        /* IMAGE PLACEHOLDER WITH EMBEDDED CSS GRADIENTS */
+        .image-placeholder {
+            width: 90%;
+            max-width: 1200px;
+            height: 70vh;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 5;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s var(--animation-timing);
+        }
+
+        .moodboard.active .image-placeholder {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.3s;
+        }
+
+        /* UNIQUE CSS GRADIENTS FOR EACH MOODBOARD */
+        .moodboard:nth-child(1) .image-placeholder,
+        .moodboard:nth-child(6) .image-placeholder {
+            background: linear-gradient(135deg, #f5f1e9 0%, #e8e1d9 30%, #d4c8b5 70%, #c8bda9 100%);
+        }
+        
+        .moodboard:nth-child(2) .image-placeholder,
+        .moodboard:nth-child(7) .image-placeholder {
+            background: linear-gradient(135deg, #f9f7f5 0%, #f0ebe4 30%, #e0d6c9 70%, #d4c8b5 100%);
+        }
+        
+        .moodboard:nth-child(3) .image-placeholder {
+            background: linear-gradient(135deg, #e8f0e9 0%, #d4e0d5 30%, #c0d0c1 70%, #a8bca8 100%);
+        }
+        
+        .moodboard:nth-child(4) .image-placeholder {
+            background: linear-gradient(135deg, #fff9f0 0%, #f5eed9 30%, #e8e1c9 70%, #dcd3b9 100%);
+        }
+        
+        .moodboard:nth-child(5) .image-placeholder {
+            background: linear-gradient(135deg, #f0f0f5 0%, #e0e0e8 30%, #d0d0d8 70%, #c0c0c8 100%);
+        }
+
+        .image-placeholder::before {
+            content: "";
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(74, 51, 38, 0.08) 0%, rgba(255, 255, 255, 0) 70%);
+            top: -50%;
+            left: -50%;
+            transform: rotate(30deg);
+        }
+
+        /* ⭐ ACTUAL MOODBOARD IMAGES - ADD YOUR IMAGES HERE ⭐ */
+        .moodboard-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 14px;
+            display: block !important;
+            z-index: 10;
+            background: transparent;
+        }
+        
+        /* Override gradient when image is present */
+        .image-placeholder:has(img) {
+            background: none !important;
+        }
+        
+        .image-placeholder:has(img)::before {
+            display: none !important;
+        }
+
+        /* MOODBOARD TITLE */
+        .moodboard h2 {
+            font-family: 'Playfair Display SC', serif;
+            font-size: 4.8rem;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            color: var(--white);
+            position: relative;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+            margin-bottom: 3rem;
+            z-index: 10;
+            opacity: 0;
+            transform: translateY(15px);
+            transition: opacity 0.6s ease, transform 0.6s var(--animation-timing);
+        }
+
+        .moodboard.active h2 {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.2s;
+        }
+
+        /* CLOSING SLIDE - Seamless gradient continuation */
+        .closing-slide {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1.2s var(--animation-timing) 3.8s forwards;
+            position: relative;
+        }
+
+        .closing-slide p {
+            max-width: 750px;
+            font-size: 1.6rem;
+            font-weight: 300;
+            color: #2a211c;
+            line-height: 1.9;
+            font-style: italic;
+            position: relative;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.1);
+            padding: 0 1.5rem;
+            z-index: 5;
+        }
+
+        .closing-slide p::before, .closing-slide p::after {
+            content: """;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4.2rem;
+            color: rgba(255, 255, 255, 0.12);
+            position: absolute;
+            line-height: 1;
+            z-index: -1;
+        }
+
+        .closing-slide p::before { top: -2rem; left: -1.3rem; }
+        .closing-slide p::after { content: '"'; bottom: -2.7rem; right: -1.3rem; transform: rotate(180deg); }
+
+        footer {
+            margin-top: 4rem;
+            padding: 1.8rem 1rem;
+            text-align: center;
+            width: 100%;
+            max-width: 800px;
+            border-top: 1px solid var(--light-brown);
+            margin-bottom: 1.5rem;
+            z-index: 5;
+            opacity: 0;
+            transform: translateY(15px);
+            animation: fadeInUp 1.2s var(--animation-timing) 4.0s forwards;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: var(--medium-brown);
+            letter-spacing: 0.02em;
+        }
+
+        /* MOBILE STYLES */
+        @media (max-width: 767px) {
+            .menu-toggle {
+                display: block;
+            }
+            nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 75%;
+                max-width: 320px;
+                flex-direction: column;
+                justify-content: flex-start;
+                gap: 0;
+                padding-top: 5rem;
+                padding-bottom: 3rem;
+                margin-top: 0;
+                border-top: none;
+                transition: right 0.4s var(--animation-timing);
+                z-index: 90;
+                background: linear-gradient(135deg, var(--dark-brown), #5a453a);
+                box-shadow: -5px 0 20px rgba(0, 0, 0, 0.4);
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                opacity: 1;
+                transform: none;
+                animation: none;
+                backdrop-filter: blur(5px);
+            }
+            nav.show {
+                right: 0;
+            }
+            nav a {
+                font-size: 1.2rem;
+                padding: 0.9rem 0;
+                letter-spacing: 1.2px;
+                min-width: auto;
+                width: 100%;
+                opacity: 1;
+                transform: none;
+                animation: none !important;
+            }
+            nav a::after { display: none; }
+            nav a:hover { background: rgba(255, 255, 255, 0.15); }
+            h1 { font-size: 4rem; }
+            h1::after { width: 48px; bottom: -9px; }
+            .mood-intro { font-size: 1.28rem; margin: 2.2rem auto 3rem; padding: 0 1.2rem; line-height: 1.8; }
+            .mood-intro::before { font-size: 3.6rem; top: -1.7rem; left: -1rem; }
+            .mood-intro::after { font-size: 3.6rem; bottom: -2.4rem; right: -1rem; }
+            .moodboard h2 { font-size: 3.8rem; margin-bottom: 2.5rem; padding: 0 1rem; }
+            .image-placeholder { height: 65vh; width: 95%; }
+            .closing-slide { padding: 0 1.5rem; }
+            .closing-slide p { font-size: 1.38rem; line-height: 1.85; }
+            .closing-slide p::before { font-size: 3.6rem; top: -1.7rem; left: -1rem; }
+            .closing-slide p::after { font-size: 3.6rem; bottom: -2.4rem; right: -1rem; }
+            footer { margin-top: 3.5rem; padding: 1.6rem 1rem; }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500&family=Playfair+Display+SC:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <button class="menu-toggle" id="menuToggle">☰</button>
+        <h1>Satr</h1>
+        <nav id="mainNav">
+            <a href="satrindex.html">Home</a>
+            <a href="productsatr.html">Products</a>
+            <a href="aboutme.html">About</a>
+        </nav>
+    </header>
+    
+    <main>
+	
+        <section class="mood-intro">
+            <p>"This mood page is a quiet space to feel the intention behind each design. Every abaya begins with emotion, texture, and story before it becomes form. These boards hold the inspirations that shaped this collection."</p>
+        </section>
+        
+		    
+		<div class="slider-container">
+            <div class="slider-wrapper" id="sliderWrapper">
+
+                <!-- Duplicate of last slide (Fahda) for seamless loop -->
+                <section class="moodboard">
+                    <h2>Fahda</h2>
+                    <div class="image-placeholder">
+                        <img class="moodboard-image" src="fahdamoodboard.JPG" alt="Fahda Moodboard">
+                    </div>
+                </section>
+
+                <!-- Slide 1: Laila -->
+                <section class="moodboard active">
+                    <h2>Laila</h2>
+                    <div class="image-placeholder">
+                        <img class="moodboard-image" src="lailamoodboard.JPG" alt="Laila Moodboard">
+                    </div>
+                </section>
+
+                <!-- Slide 2: Nila -->
+                <section class="moodboard">
+                    <h2>Nila</h2>
+                    <div class="image-placeholder">
+                        <img class="moodboard-image" src="nilamoodboard.JPG" alt="Nila Moodboard">
+                    </div>
+                </section>
+
+                <!-- Slide 3: Sera -->
+                <section class="moodboard">
+                    <h2>Sera</h2>
+                    <div class="image-placeholder">
+                        <img class="moodboard-image" src="seramoodboard.JPG" alt="Sera Moodboard">
+                    </div>
+                </section>
+
+                <!-- Slide 4: Layla -->
+                <section class="moodboard">
+                    <h2>Layla</h2>
+                    <div class="image-placeholder">
+                        <img class="moodboard-image" src="laylamoodboard.JPG" alt="Layla Moodboard">
+                    </div>
+                </section>
+
+                <!-- Slide 5: Fahda -->
+                <section class="moodboard">
+                    <h2>Fahda</h2>
+                    <div class="image-placeholder">
+                        <img class="moodboard-image" src="fahdamoodboard.JPG" alt="Fahda Moodboard">
+                    </div>
+                </section>
+
+                <!-- Duplicate of first slide (Laila) for seamless loop -->
+                <section class="moodboard">
+                    <h2>Laila</h2>
+                    <div class="image-placeholder">
+                        <img class="moodboard-image" src="lailamoodboard.JPG" alt="Laila Moodboard">
+                    </div>
+                </section>
+
+            </div>
+        </div>
+
+        
+		
+
+        <section class="closing-slide">
+            <p>"Thank you for stepping into the world of SATR. May these pieces remind you that modesty is intention, and intention is a form of beauty."</p>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 Satr. Handcrafted with love for the modern Muslimah.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sliderWrapper = document.getElementById('sliderWrapper');
+            const moodboards = document.querySelectorAll('.moodboard');
+            const totalSlides = moodboards.length;
+            
+            let currentIndex = 1; // Start at first real slide (Laila)
+            let isDragging = false;
+            let startPos = 0;
+            let currentTranslate = 0;
+            let prevTranslate = 0;
+            let animationID = 0;
+            let dragStartX = 0;
+            let dragEndX = 0;
+            let isTransitioning = false;
+            let autoScrollInterval;
+            
+            // Initialize position
+            setPositionByIndex();
+            startAutoScroll();
+            
+            // Touch/Mouse Events
+            sliderWrapper.addEventListener('touchstart', touchStart, {passive: false});
+            sliderWrapper.addEventListener('touchend', touchEnd);
+            sliderWrapper.addEventListener('touchmove', touchMove, {passive: false});
+            sliderWrapper.addEventListener('mousedown', touchStart);
+            sliderWrapper.addEventListener('mouseup', touchEnd);
+            sliderWrapper.addEventListener('mouseleave', touchEnd);
+            sliderWrapper.addEventListener('mousemove', touchMove);
+            
+            // Prevent vertical scroll during horizontal drag
+            sliderWrapper.addEventListener('touchmove', function(e) {
+                if (isDragging) e.preventDefault();
+            }, {passive: false});
+            
+            // Window events
+            window.addEventListener('resize', setPositionByIndex);
+            window.addEventListener('blur', () => clearInterval(autoScrollInterval));
+            window.addEventListener('focus', startAutoScroll);
+            
+            // Touch/Mouse Handlers
+            function touchStart(event) {
+                if (isTransitioning) return;
+                clearInterval(autoScrollInterval);
+                isDragging = true;
+                dragStartX = getPositionX(event);
+                startPos = dragStartX;
+                prevTranslate = currentTranslate;
+                sliderWrapper.style.transition = 'none';
+                animationID = requestAnimationFrame(animationLoop);
+                
+                // Add event listeners for mouse events
+                document.addEventListener('mouseup', touchEnd);
+                document.addEventListener('touchend', touchEnd);
+                document.addEventListener('touchcancel', touchEnd);
+            }
+            
+            function touchEnd() {
+                if (!isDragging) return;
+                isDragging = false;
+                cancelAnimationFrame(animationID);
+                dragEndX = getPositionX({type: isDragging ? 'touch' : 'mouse', pageX: startPos});
+                
+                const movedBy = currentTranslate - prevTranslate;
+                const threshold = window.innerWidth / 4; // Adjusted threshold for better swipe sensitivity
+                const velocity = Math.abs(dragStartX - dragEndX) / 300; // Calculate swipe velocity
+                
+                // Determine slide direction based on distance and velocity
+                if ((movedBy < -threshold && velocity > 0.1) || (movedBy < -100 && velocity > 0.05)) {
+                    if (currentIndex < totalSlides - 2) currentIndex++;
+                } else if ((movedBy > threshold && velocity > 0.1) || (movedBy > 100 && velocity > 0.05)) {
+                    if (currentIndex > 1) currentIndex--;
+                }
+                
+                // Handle loop transitions with safety checks
+                isTransitioning = true;
+                sliderWrapper.style.transition = `transform 0.8s ${getComputedStyle(document.documentElement).getPropertyValue('--animation-timing')}`;
+                
+                if (currentIndex === 0) {
+                    setTimeout(() => {
+                        currentIndex = totalSlides - 2;
+                        sliderWrapper.style.transition = 'none';
+                        activateSlide(currentIndex);
+                        setPositionByIndex();
+                        setTimeout(() => {
+                            sliderWrapper.style.transition = `transform 0.8s ${getComputedStyle(document.documentElement).getPropertyValue('--animation-timing')}`;
+                            isTransitioning = false;
+                        }, 50);
+                    }, 800);
+                } else if (currentIndex === totalSlides - 1) {
+                    setTimeout(() => {
+                        currentIndex = 1;
+                        sliderWrapper.style.transition = 'none';
+                        activateSlide(currentIndex);
+                        setPositionByIndex();
+                        setTimeout(() => {
+                            sliderWrapper.style.transition = `transform 0.8s ${getComputedStyle(document.documentElement).getPropertyValue('--animation-timing')}`;
+                            isTransitioning = false;
+                        }, 50);
+                    }, 800);
+                } else {
+                    setTimeout(() => { isTransitioning = false; }, 800);
+                }
+                
+                activateSlide(currentIndex);
+                setPositionByIndex();
+                setTimeout(startAutoScroll, 5000);
+                
+                // Cleanup event listeners
+                document.removeEventListener('mouseup', touchEnd);
+                document.removeEventListener('touchend', touchEnd);
+                document.removeEventListener('touchcancel', touchEnd);
+            }
+            
+            function touchMove(event) {
+                if (isDragging && !isTransitioning) {
+                    const currentPosition = getPositionX(event);
+                    dragEndX = currentPosition;
+                    currentTranslate = prevTranslate + (currentPosition - startPos);
+                    setSliderPosition();
+                }
+            }
+            
+            function getPositionX(event) {
+                if (event.type.includes('mouse') || event.type === 'mousemove') {
+                    return event.pageX;
+                }
+                return event.touches && event.touches[0] ? event.touches[0].clientX : event.changedTouches[0].clientX;
+            }
+            
+            function animationLoop() {
+                if (isDragging) requestAnimationFrame(animationLoop);
+            }
+            
+            function setSliderPosition() {
+                sliderWrapper.style.transform = `translateX(${currentTranslate}%)`;
+            }
+            
+            function setPositionByIndex() {
+                currentTranslate = -currentIndex * 100;
+                prevTranslate = currentTranslate;
+                setSliderPosition();
+            }
+            
+            function activateSlide(index) {
+                moodboards.forEach(slide => slide.classList.remove('active'));
+                moodboards[index].classList.add('active');
+            }
+            
+            function startAutoScroll() {
+                clearInterval(autoScrollInterval);
+                autoScrollInterval = setInterval(() => {
+                    if (!isDragging && !isTransitioning) {
+                        currentIndex++;
+                        activateSlide(currentIndex);
+                        setPositionByIndex();
+                        
+                        // Handle loop at the end
+                        if (currentIndex === totalSlides - 1) {
+                            setTimeout(() => {
+                                currentIndex = 1;
+                                sliderWrapper.style.transition = 'none';
+                                activateSlide(currentIndex);
+                                setPositionByIndex();
+                                setTimeout(() => {
+                                    sliderWrapper.style.transition = `transform 0.8s ${getComputedStyle(document.documentElement).getPropertyValue('--animation-timing')}`;
+                                }, 50);
+                            }, 800);
+                        }
+                    }
+                }, 7000);
+            }
+            
+            // Mobile menu toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const nav = document.getElementById('mainNav');
+            
+            menuToggle.addEventListener('click', function() {
+                nav.classList.toggle('show');
+                menuToggle.textContent = nav.classList.contains('show') ? '✕' : '☰';
+            });
+            
+            // Close menu on link click (mobile)
+            nav.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', function() {
+                    if (window.innerWidth <= 767) {
+                        nav.classList.remove('show');
+                        menuToggle.textContent = '☰';
+                    }
+                });
+            });
+            
+            // Close menu on outside click (mobile)
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 767 && 
+                    !nav.contains(event.target) && 
+                    !menuToggle.contains(event.target) && 
+                    nav.classList.contains('show')) {
+                    nav.classList.remove('show');
+                    menuToggle.textContent = '☰';
+                }
+            });
+            
+            // Handle window resize for menu
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 767 && nav.classList.contains('show')) {
+                    nav.classList.remove('show');
+                    menuToggle.textContent = '☰';
+                }
+            });
+            
+            // Final background safeguard
+            setTimeout(() => {
+                document.documentElement.style.backgroundColor = '#4a3326';
+                document.body.style.background = 'linear-gradient(to bottom, #4a3326 0%, #4f382d 25%, #4a3326 55%, #f1ede6 85%, #ffffff 100%)';
+            }, 100);
+        });
+    </script>
+</body>
+</html>

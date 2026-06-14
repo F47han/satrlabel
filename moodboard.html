@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mood | Satr</title>
+    <style>
+        /* CRITICAL: Fixed the gradient to be one continuous stretch across the whole page */
+        html {
+            background-color: #4a3326;
+            min-height: 100%;
+        }
+        body {
+            background: linear-gradient(to bottom, 
+                #4a3326 0%, 
+                #4f382d 25%, 
+                #4a3326 55%, 
+                #f1ede6 85%, 
+                #ffffff 100%);
+            background-attachment: scroll;
+            background-repeat: no-repeat;
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Montserrat', sans-serif;
+            color: #4a3326;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.5rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --dark-brown: #4a3326;
+            --medium-brown: #7a6855;
+            --light-brown: #a89a89;
+            --off-white: #f9f7f5;
+            --white: #ffffff;
+            --transition: all 0.3s ease;
+            --animation-timing: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            width: 100%;
+            max-width: 900px;
+            padding-top: 1rem;
+            position: relative;
+            z-index: 10;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1.2s var(--animation-timing) 0.3s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-family: 'Playfair Display SC', serif;
+            font-size: 4.8rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.1em;
+            color: var(--white);
+            position: relative;
+            display: inline-block;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+            opacity: 0;
+            transform: translateY(15px);
+            animation: fadeInUp 1.4s var(--animation-timing) 0.6s forwards;
+        }
+
+        h1::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 1.5px;
+            background-color: var(--white);
+            opacity: 0;
+            transform: translateX(-50%) scaleX(0.8);
+            animation: underlineGrow 1.2s var(--animation-timing) 1.2s forwards;
+        }
+
+        @keyframes underlineGrow {
+            to {
+                opacity: 1;
+                transform: translateX(-50%) scaleX(1);
+            }
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.8rem;
+            cursor: pointer;
+            position: absolute;
+            top: 1.2rem;
+            right: 1.2rem;
+            z-index: 100;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            animation: fadeIn 1s ease-in 0.8s forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        nav {
+            margin-top: 1.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.35);
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInUp 1.2s var(--animation-timing) 0.9s forwards;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--white);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            font-size: 1rem;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            padding: 0.6rem 0.4rem;
+            border-radius: 4px;
+            transition: var(--transition);
+            position: relative;
+            display: inline-block;
+            min-width: 80px;
+            text-align: center;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(8px);
+        }
+
+        nav a:nth-child(1) { animation: fadeInUp 0.9s var(--animation-timing) 1.2s forwards; }
+        nav a:nth-child(2) { animation: fadeInUp 0.9s var(--animation-timing) 1.35s forwards; }
+        nav a:nth-child(3) { animation: fadeInUp 0.9s var(--animation-timing) 1.5s forwards; }
+        nav a:nth-child(4) { animation: fadeInUp 0.9s var(--animation-timing) 1.65s forwards; }
+
+        nav a:hover, nav a.active {
+            color: var(--white);
+        }
+
+        nav a::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+            width: 60%;
+            height: 1.5px;
+            background-color: var(--white);
+            transition: var(--transition);
+            transform-origin: center;
+        }
+
+        nav a:hover::after, nav a.active::after {
+            transform: translateX(-50%) scaleX(1);
+        }
+
+        .mood-intro {
+            max-width: 750px;
+            text-align: center;
+            margin: 2.5rem auto 3.5rem;
+            font-size: 1.4rem;
+            font-weight: 300;
+            color: var(--white);
+            line-height: 1.85;
+            padding: 0 1.5rem;
+            font-style: italic;
+            position: relative;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            z-index: 5;
+            opacity: 0;
+            transform: translateY(25px);
+            animation: fadeInUp 1.6s var(--animation-timing) 1.8s forwards;
+        }
+
+        .mood-intro::before, .mood-intro::after {
+            content: "“";
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4.2rem;
+            color: rgba(255, 255, 255, 0.12);
+            position: absolute;
+            line-height: 1;
+            z-index: -1;
+            opacity: 0;
+            animation: fadeIn 2s ease-in-out 2.2s forwards;
+        }
+
+        .mood-intro::before { top: -2rem; left: -1.3rem; }
+        .mood-intro::after { content: '”'; bottom: -2.7rem; right: -1.3rem; transform: rotate(180deg); }
+
+        /* SLIDER CSS */
+        .slider-container {
+            position: relative;
+            width: 100vw;
+            height: auto;
+            overflow: hidden;
+            margin-bottom: 4rem;
+            touch-action: pan-y;
+            cursor: grab;
+        }
+        
+        .slider-container:active {
+            cursor: grabbing;
+        }
+
+        .slider-wrapper {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            will-change: transform;
+            user-select: none;
+        }
+
+        .moodboard {
+            min-width: 100vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding-top: 2rem;
+            position: relative;
+        }
+
+        .image-placeholder {
+            width: 90%;
+            max-width: 1100px;
+            height: 70vh;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 5;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+        }
+
+        .moodboard-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 14px;
+            display: block;
+        }
+
+        .moodboard h2 {
+            font-family: 'Playfair Display SC', serif;
+            font-size: 4rem;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            color: var(--white);
+            position: relative;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+            margin-bottom: 2rem;
+            z-index: 10;
+        }
+
+        .closing-slide {
+            height: 40vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1.2s var(--animation-timing) 3.8s forwards;
+        }
+
+        .closing-slide p {
+            max-width: 750px;
+            font-size: 1.6rem;
+            font-weight: 300;
+            color: #2a211c;
+            line-height: 1.9;
+            font-style: italic;
+        }
+
+        footer {
+            margin-top: 4rem;
+            padding: 1.8rem 1rem;
+            text-align: center;
+            width: 100%;
+            max-width: 800px;
+            border-top: 1px solid var(--light-brown);
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(15px);
+            animation: fadeInUp 1.2s var(--animation-timing) 4.0s forwards;
+        }
+
+        @media (max-width: 767px) {
+            .menu-toggle { display: block; }
+            nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 75%;
+                max-width: 320px;
+                flex-direction: column;
+                justify-content: flex-start;
+                gap: 0;
+                padding-top: 5rem;
+                padding-bottom: 3rem;
+                margin-top: 0;
+                border-top: none;
+                transition: right 0.4s var(--animation-timing);
+                z-index: 90;
+                background: linear-gradient(135deg, var(--dark-brown), #5a453a);
+                opacity: 1;
+                transform: none;
+                animation: none;
+            }
+            nav.show { right: 0; }
+            nav a { width: 100%; animation: none !important; opacity: 1; transform: none; }
+            h1 { font-size: 3.2rem; }
+            .moodboard h2 { font-size: 2.8rem; }
+            .image-placeholder { height: 50vh; }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500&family=Playfair+Display+SC:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <button class="menu-toggle" id="menuToggle">☰</button>
+        <h1>Satr</h1>
+        <nav id="mainNav">
+            <a href="satrindex.html">Home</a>
+            <a href="productsatr.html">Products</a>
+            <a href="aboutme.html">About</a>
+            <a href="moodboard.html" class="active">Moods</a>
+        </nav>
+    </header>
+    
+    <main>
+        <section class="mood-intro">
+            <p>This mood page is a quiet space to feel the intention behind each design. Every abaya begins with emotion, texture, and story before it becomes form. These boards hold the inspirations that shaped this collection.</p>
+        </section>
+        
+        <div class="slider-container" id="sliderContainer">
+            <div class="slider-wrapper" id="sliderWrapper">
+                
+                <section class="moodboard">
+                    <h2>Noor</h2>
+                    <div class="image-placeholder">
+                        <img class="moodboard-image" src="noormoodboard.JPG" alt="Noor Moodboard">
+                    </div>
+                </section>
+
+                <section class="moodboard">
+                    <h2>Dahlia</h2>
+                    <div class="image-placeholder">
+                        <img class="moodboard-image" src="dahliamoodboard.JPG" alt="Dahlia Moodboard">
+                    </div>
+                </section>
+
+                <section class="moodboard">
+                    <h2>Nila</h2>
+                    <div class="image-placeholder">
+                        <img class="moodboard-image" src="nilamoodboard.JPG" alt="Nila Moodboard">
+                    </div>
+                </section>
+
+                <section class="moodboard">
+                    <h2>Sera</h2>
+                    <div class="image-placeholder">
+                        <img class="moodboard-image" src="seramoodboard.JPG" alt="Sera Moodboard">
+                    </div>
+                </section>
+
+                <section class="moodboard">
+                    <h2>Layla</h2>
+                    <div class="image-placeholder">
+                        <img class="moodboard-image" src="laylamoodboard.JPG" alt="Layla Moodboard">
+                    </div>
+                </section>
+
+                <section class="moodboard">
+                    <h2>Fahda</h2>
+                    <div class="image-placeholder">
+                        <img class="moodboard-image" src="fahdamoodboard.JPG" alt="Fahda Moodboard">
+                    </div>
+                </section>
+
+                <section class="moodboard">
+                    <h2>Noor</h2>
+                    <div class="image-placeholder">
+                        <img class="moodboard-image" src="noormoodboard.JPG" alt="Noor Moodboard">
+                    </div>
+                </section>
+
+                <section class="moodboard">
+                    <h2>Dahlia</h2>
+                    <div class="image-placeholder">
+                        <img class="moodboard-image" src="dahliamoodboard.JPG" alt="Dahlia Moodboard">
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <section class="closing-slide">
+            <p>Thank you for stepping into the world of SATR. May these pieces remind you that modesty is intention, and intention is a form of beauty.</p>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2026 Satr. Handcrafted with love for the modern Muslimah.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sliderContainer = document.getElementById('sliderContainer');
+            const sliderWrapper = document.getElementById('sliderWrapper');
+            const slides = document.querySelectorAll('.moodboard');
+            
+            let currentIndex = 1; // Start at first real slide (Dahlia)
+            let isDragging = false;
+            let startX = 0;
+            let currentTranslate = 0;
+            let prevTranslate = 0;
+            let animationID = 0;
+
+            updatePosition();
+
+            // Event Listeners
+            sliderContainer.addEventListener('mousedown', dragStart);
+            sliderContainer.addEventListener('touchstart', dragStart);
+            sliderContainer.addEventListener('mouseup', dragEnd);
+            sliderContainer.addEventListener('mouseleave', dragEnd);
+            sliderContainer.addEventListener('touchend', dragEnd);
+            sliderContainer.addEventListener('mousemove', dragMove);
+            sliderContainer.addEventListener('touchmove', dragMove);
+
+            function dragStart(e) {
+                isDragging = true;
+                startX = getPositionX(e);
+                sliderWrapper.style.transition = 'none';
+                animationID = requestAnimationFrame(animation);
+            }
+
+            function dragMove(e) {
+                if (isDragging) {
+                    const currentX = getPositionX(e);
+                    const diff = currentX - startX;
+                    currentTranslate = prevTranslate + (diff / window.innerWidth) * 100;
+                }
+            }
+
+            function dragEnd() {
+                isDragging = false;
+                cancelAnimationFrame(animationID);
+                const movedBy = currentTranslate - prevTranslate;
+
+                // Move threshold
+                if (movedBy < -10) currentIndex++;
+                else if (movedBy > 10) currentIndex--;
+
+                moveToSlide();
+            }
+
+            function getPositionX(e) {
+                return e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+            }
+
+            function animation() {
+                setSliderTransform();
+                if (isDragging) requestAnimationFrame(animation);
+            }
+
+            function setSliderTransform() {
+                sliderWrapper.style.transform = `translateX(${currentTranslate}%)`;
+            }
+
+            function moveToSlide() {
+                sliderWrapper.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
+                currentTranslate = currentIndex * -100;
+                setSliderTransform();
+                prevTranslate = currentTranslate;
+
+                // Handle Infinite Loop Jump
+                sliderWrapper.addEventListener('transitionend', function loopJump() {
+                    if (currentIndex === 0) {
+                        currentIndex = slides.length - 2;
+                        updatePosition();
+                    }
+                    if (currentIndex === slides.length - 1) {
+                        currentIndex = 1;
+                        updatePosition();
+                    }
+                    sliderWrapper.removeEventListener('transitionend', loopJump);
+                });
+            }
+
+            function updatePosition() {
+                sliderWrapper.style.transition = 'none';
+                currentTranslate = currentIndex * -100;
+                prevTranslate = currentTranslate;
+                setSliderTransform();
+            }
+
+            // Mobile Menu logic
+            const menuToggle = document.getElementById('menuToggle');
+            const nav = document.getElementById('mainNav');
+            menuToggle.addEventListener('click', () => {
+                nav.classList.toggle('show');
+                menuToggle.textContent = nav.classList.contains('show') ? '✕' : '☰';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products | Satr</title>
+    <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+    <style>
+        html {
+            background-color: #4a3326;
+            min-height: 100%;
+        }
+        body {
+            background: linear-gradient(to bottom, #4a3326 0%, #4f382d 25%, #4a3326 55%, #f1ede6 85%, #ffffff 100%);
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Montserrat', sans-serif;
+            color: #4a3326;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.5rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        h1 {
+            font-family: 'Playfair Display SC', serif;
+            font-size: 4rem;
+            color: #ffffff;
+            letter-spacing: 0.1em;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+            margin-bottom: 0.5rem;
+        }
+
+        nav {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.35);
+            padding-top: 1rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #ffffff;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .product-container {
+            display: flex;
+            flex-direction: row;
+            background: rgba(255, 255, 255, 0.95);
+            max-width: 1000px;
+            width: 95%;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            margin-bottom: 5rem;
+        }
+
+        .product-image {
+            flex: 1;
+            background: #e8e1d9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 500px;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-details {
+            flex: 1;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .category {
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+            color: #7a6855;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-family: 'Playfair Display SC', serif;
+            font-size: 2.5rem;
+            margin: 0 0 1.5rem 0;
+            color: #4a3326;
+        }
+
+        .description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #5a453a;
+            margin-bottom: 2rem;
+        }
+
+        /* Styling the Stripe Button Container */
+        .purchase-zone {
+            margin-top: 1rem;
+            border-top: 1px solid #eee;
+            padding-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .product-container {
+                flex-direction: column;
+            }
+            .product-image {
+                min-height: 400px;
+            }
+            .product-details {
+                padding: 2rem;
+            }
+            h1 { font-size: 3rem; }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Playfair+Display+SC:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <h1>Satr</h1>
+        <nav>
+            <a href="satrindex.html">Home</a>
+            <a href="productsatr.html">Products</a>
+            <a href="aboutme.html">About</a>
+            <a href="moodboard.html">Moods</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="product-container">
+            <div class="product-image">
+                <img src="dahliamoodboard.jpg" alt="Satr Abaya Collection">
+            </div>
+
+            <div class="product-details">
+                <span class="category">Premium Collection</span>
+                <h2>The Dahlia Abaya</h2>
+                <p class="description">
+                    A testament to quiet elegance and intentional design. Handcrafted with premium fabric, 
+                    the Dahlia features a flowing silhouette designed for the modern Muslimah who values 
+                    both modesty and sophistication.
+                </p>
+
+                <div class="purchase-zone">
+                    <stripe-buy-button
+                        buy-button-id="buy_btn_1SyZkxH92PJw9obHJaUOEP6S"
+                        publishable-key="pk_live_51SyJtDH92PJw9obHIZyxF9f6iHjihgTZEmp4UT65MjRnhUIkRyVWfGDIwqgFn4WdMz8XD8I9rUyhQUToWuh6cLHY00XUeos9tA"
+                    >
+                    </stripe-buy-button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer style="color: #7a6855; margin-bottom: 2rem;">
+        <p>&copy; 2026 Satr. Handcrafted with intention.</p>
+    </footer>
+
+</body>
+</html>

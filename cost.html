@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Cost | Satr</title>
+    <meta name="description" content="The Cost — a £1.00 payment test piece from Satr.">
+    <style>
+        html { background-color: #4a3326; min-height: 100%; }
+        body {
+            background: linear-gradient(to bottom, #4a3326 0%, #4a3326 35%, #ffffff 100%);
+            margin: 0; min-height: 100vh;
+        }
+        body:not(.fonts-loaded) * { opacity: 0; }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500&family=Playfair+Display+SC:wght@400;700;900&display=swap"
+          rel="stylesheet" onload="document.body.classList.add('fonts-loaded')">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --dark-brown: #4a3326;
+            --medium-brown: #7a6855;
+            --light-brown: #a89a89;
+            --off-white: #f9f7f5;
+            --white: #ffffff;
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --animation-timing: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        body { font-family: 'Montserrat', sans-serif; color: var(--dark-brown); display: flex; flex-direction: column; align-items: center; padding: 1.5rem; }
+        header { text-align: center; margin-bottom: 3rem; width: 100%; max-width: 900px; padding-top: 1rem; opacity: 0; transform: translateY(20px); animation: fadeInUp 1.2s var(--animation-timing) 0.3s forwards; position: relative; }
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn   { to { opacity: 1; } }
+        h1 { font-family: 'Playfair Display SC', serif; font-size: 4.8rem; font-weight: 400; letter-spacing: 0.1em; color: var(--white); text-shadow: 0 1px 4px rgba(0,0,0,0.2); }
+        .menu-toggle { display: none; background: none; border: none; color: var(--white); font-size: 1.8rem; cursor: pointer; position: absolute; top: 1.2rem; right: 1.2rem; z-index: 100; text-shadow: 0 1px 3px rgba(0,0,0,0.3); opacity: 0; animation: fadeIn 1s ease-in 0.8s forwards; }
+        nav { margin-top: 1.5rem; display: flex; justify-content: center; gap: 2rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.35); opacity: 0; transform: translateY(10px); animation: fadeInUp 1.2s var(--animation-timing) 0.9s forwards; }
+        nav a { text-decoration: none; color: var(--white); font-weight: 500; font-size: 1rem; letter-spacing: 0.8px; text-transform: uppercase; padding: 0.6rem 0.4rem; transition: var(--transition); position: relative; }
+        nav a::after { content: ""; position: absolute; bottom: -5px; left: 50%; transform: translateX(-50%) scaleX(0); width: 60%; height: 1.5px; background-color: var(--white); transition: var(--transition); transform-origin: center; }
+        nav a:hover::after, nav a.active::after { transform: translateX(-50%) scaleX(1); }
+        .cart-link { position: relative; }
+        #cart-badge { display: none; position: absolute; top: -4px; right: -14px; background: var(--white); color: var(--dark-brown); font-size: 0.6rem; font-weight: 700; width: 16px; height: 16px; border-radius: 50%; align-items: center; justify-content: center; }
+        .product-container { width: 100%; max-width: 1000px; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; background: var(--white); border-radius: 14px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 5rem; opacity: 0; transform: translateY(30px); animation: fadeInUp 1s var(--animation-timing) 0.6s forwards; }
+        .product-image-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .product-details { padding: 3rem; display: flex; flex-direction: column; justify-content: center; }
+        .product-details h2 { font-family: 'Cormorant Garamond', serif; font-size: 3rem; color: var(--dark-brown); margin-bottom: 0.5rem; }
+        .product-price { font-size: 1.3rem; color: var(--medium-brown); margin-bottom: 1.5rem; }
+        .product-desc { font-size: 0.9rem; color: var(--medium-brown); line-height: 1.8; margin-bottom: 2rem; }
+        .test-badge { display: inline-block; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.4); color: var(--medium-brown); font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; padding: 6px 14px; border-radius: 20px; margin-bottom: 1rem; }
+        label { display: block; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; color: var(--medium-brown); }
+        select.size-select { width: 100%; background-color: var(--off-white); color: var(--dark-brown); border: 1px solid var(--light-brown); padding: 0.8rem; font-family: 'Montserrat', sans-serif; font-size: 0.85rem; border-radius: 4px; cursor: pointer; outline: none; margin-bottom: 1.2rem; }
+        .add-to-cart-btn { width: 100%; background: var(--dark-brown); color: var(--white); border: none; padding: 1.1rem; text-transform: uppercase; font-family: 'Montserrat', sans-serif; font-size: 0.85rem; font-weight: 600; letter-spacing: 2px; border-radius: 4px; cursor: pointer; transition: var(--transition); opacity: 0.4; pointer-events: none; }
+        .add-to-cart-btn.active { opacity: 1; pointer-events: auto; }
+        .add-to-cart-btn:hover { background: var(--medium-brown); letter-spacing: 3px; }
+        .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--dark-brown); color: var(--white); padding: 1rem 2rem; border-radius: 8px; font-size: 0.85rem; letter-spacing: 1px; transition: transform 0.4s var(--animation-timing); z-index: 1000; white-space: nowrap; }
+        .toast.show { transform: translateX(-50%) translateY(0); }
+        footer { margin-top: 4rem; padding: 2rem; border-top: 1px solid var(--light-brown); color: var(--dark-brown); font-size: 0.9rem; opacity: 0.8; width: 100%; text-align: center; }
+        @media (max-width: 767px) {
+            .menu-toggle { display: block; }
+            nav { display: none; flex-direction: column; gap: 1.2rem; padding-top: 1.4rem; border-top: 1px solid rgba(255,255,255,0.4); background: rgba(74,51,38,0.85); border-radius: 12px; margin-top: 1.2rem; backdrop-filter: blur(5px); }
+            nav.show { display: flex; opacity: 1; transform: translateY(0); }
+            nav a { font-size: 1.2rem; padding: 0.9rem 0; width: 100%; }
+            nav a::after { display: none; }
+            nav a:hover { background: rgba(255,255,255,0.15); }
+            h1 { font-size: 4rem; }
+        }
+        @media (max-width: 700px) { .product-container { grid-template-columns: 1fr; } h1 { font-size: 3.5rem; } }
+    </style>
+</head>
+<body>
+<header>
+    <button class="menu-toggle" id="menuToggle">&#9776;</button>
+    <h1>Satr</h1>
+    <nav id="mainNav">
+        <a href="index.html">Home</a>
+        <a href="productsatr.html" class="active">Products</a>
+        <a href="aboutme.html">About</a>
+        <a href="cart.html" class="cart-link">Cart <span id="cart-badge"></span></a>
+    </nav>
+</header>
+<main>
+    <div class="product-container">
+        <div class="product-image-wrap">
+            <img src="jamila1.jpeg" alt="The Cost">
+        </div>
+        <div class="product-details">
+            <div class="test-badge">Payment Test Item</div>
+            <h2>The Cost</h2>
+            <div class="product-price">&pound;1.00</div>
+            <p class="product-desc">A symbolic piece used to verify our checkout and payment system is working smoothly. Add to basket, proceed to checkout, and complete a &pound;1 test payment to ensure every order reaches you without a hitch.</p>
+            <label for="size-select">Select Size</label>
+            <select class="size-select" id="size-select" onchange="onSizeChange(this)">
+                <option value="" selected disabled>&mdash;</option>
+                <option value="Small (52)">Small (52)</option>
+                <option value="Medium (54)">Medium (54)</option>
+                <option value="Large (56)">Large (56)</option>
+            </select>
+            <button class="add-to-cart-btn" id="add-to-cart" data-product-id="cost" onclick="addToCart()">Add to Basket &mdash; &pound;1.00</button>
+        </div>
+    </div>
+</main>
+<div class="toast" id="toast"></div>
+<footer>
+    <p>&copy; 2026 Satr. Handcrafted with love for the modern Muslimah.</p>
+</footer>
+<script src="cart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.body.classList.add('fonts-loaded');
+        const menuToggle = document.getElementById('menuToggle');
+        const nav = document.getElementById('mainNav');
+        menuToggle.addEventListener('click', function() { nav.classList.toggle('show'); menuToggle.textContent = nav.classList.contains('show') ? '\u2715' : '\u2630'; });
+        nav.querySelectorAll('a').forEach(link => { link.addEventListener('click', function() { if (window.innerWidth <= 767) { nav.classList.remove('show'); menuToggle.textContent = '\u2630'; } }); });
+        document.addEventListener('click', function(e) { if (window.innerWidth <= 767 && !nav.contains(e.target) && !menuToggle.contains(e.target) && nav.classList.contains('show')) { nav.classList.remove('show'); menuToggle.textContent = '\u2630'; } });
+        window.addEventListener('resize', function() { if (window.innerWidth > 767 && nav.classList.contains('show')) { nav.classList.remove('show'); menuToggle.textContent = '\u2630'; } });
+    });
+    function onSizeChange(select) { document.getElementById('add-to-cart').classList.toggle('active', select.value !== ''); }
+    function addToCart() {
+        const btn = document.getElementById('add-to-cart');
+        const select = document.getElementById('size-select');
+        const size = select.value;
+        if (!size) return;
+        SatrCart.addItem(btn.dataset.productId, size);
+        showToast('Cost added to basket');
+    }
+    function showToast(message) { const toast = document.getElementById('toast'); toast.textContent = message; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2500); }
+</script>
+</body>
+</html>

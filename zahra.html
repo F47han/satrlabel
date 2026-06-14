@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zahra | Satr</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@300;400;600;700&family=Playfair+Display+SC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --dark-brown: #4a3326;
+            --medium-brown: #7a6855;
+            --light-brown: #a89a89;
+            --off-white: #f9f7f5;
+            --white: #ffffff;
+            --gold: #c9a84c;
+            --gold-light: #e8d08a;
+            --transition: all 0.35s ease;
+        }
+
+        html { background-color: #111; min-height: 100%; }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Montserrat', sans-serif;
+            color: var(--dark-brown);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 1.5rem 1.5rem;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: url('background.jpeg') center center / cover no-repeat;
+            z-index: -2;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: rgba(20, 14, 10, 0.72);
+            z-index: -1;
+        }
+
+        header {
+            text-align: center;
+            width: 100%;
+            max-width: 960px;
+            padding: 1.5rem 0 0;
+            position: relative;
+            z-index: 10;
+        }
+
+        .site-logo {
+            font-family: 'Playfair Display SC', serif;
+            font-size: clamp(2.6rem, 8vw, 4.8rem);
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            color: var(--white);
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        nav {
+            margin-top: 1.3rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: rgba(255,255,255,0.85);
+            font-weight: 600;
+            font-size: 0.72rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 6px 4px;
+            position: relative;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            min-height: 44px;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+            width: 70%;
+            height: 1.5px;
+            background: var(--gold-light);
+            transition: var(--transition);
+        }
+
+        nav a.active { color: var(--gold-light); }
+        nav a.active::after { transform: translateX(-50%) scaleX(1); }
+
+        .cart-count-badge {
+            display: inline-flex; align-items: center; justify-content: center;
+            background: rgba(201,168,76,0.2); color: var(--gold-light);
+            font-size: 0.6rem; font-weight: 700;
+            min-width: 18px; height: 18px;
+            border-radius: 9px; padding: 0 4px;
+            border: 1px solid rgba(201,168,76,0.4);
+        }
+
+        main { width: 100%; max-width: 1200px; margin: 2.5rem 0; }
+
+        .product-section {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2.5rem;
+        }
+
+        @media (min-width: 860px) {
+            .product-section { grid-template-columns: 1.1fr 0.9fr; gap: 4rem; align-items: start; }
+        }
+
+        .product-images { display: flex; flex-direction: column; gap: 1rem; }
+
+        .main-image-container {
+            width: 100%;
+            aspect-ratio: 3/4;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #111;
+            position: relative;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+        }
+
+        .main-image-container::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            border: 1.5px solid rgba(201,168,76,0.35);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        #mainImage { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s ease; display: block; }
+
+        .thumbnails-container { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+
+        .thumbnail {
+            width: 70px; height: 70px;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid rgba(255,255,255,0.1);
+            transition: var(--transition);
+            background: #111;
+        }
+
+        .thumbnail img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .thumbnail.active { border-color: var(--gold); }
+
+        .product-details {
+            background: rgba(15, 10, 8, 0.88);
+            border: 1px solid rgba(201,168,76,0.2);
+            border-radius: 18px;
+            padding: 2.2rem;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+            backdrop-filter: blur(12px);
+            position: relative;
+        }
+
+        .product-details::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), var(--gold-light), var(--gold), transparent);
+        }
+
+        @media (min-width: 860px) { .product-details { position: sticky; top: 1.5rem; } }
+
+        .limited-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(232,208,138,0.08));
+            color: var(--gold-light); font-size: 0.6rem; font-weight: 700;
+            letter-spacing: 3px; text-transform: uppercase; padding: 7px 16px;
+            border-radius: 20px; margin-bottom: 1.2rem; border: 1px solid rgba(201,168,76,0.35);
+        }
+
+        .product-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2.2rem, 5vw, 3.2rem);
+            font-weight: 600; color: var(--white); margin-bottom: 0.3rem;
+            line-height: 1.1; letter-spacing: 0.02em;
+        }
+
+        .product-price { font-size: 1.5rem; font-weight: 600; color: var(--gold-light); margin-bottom: 1.2rem; }
+
+        .divider { height: 1px; background: rgba(201,168,76,0.15); margin: 1.2rem 0; }
+
+        .product-description { font-size: 0.93rem; color: rgba(255,255,255,0.75); line-height: 1.85; margin-bottom: 1rem; }
+
+        .size-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,0.6); margin-bottom: 0.7rem; display: block; }
+
+        .size-options { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.6rem; }
+
+        .size-btn {
+            padding: 0.5rem 1rem; border: 1.5px solid rgba(201,168,76,0.25);
+            border-radius: 6px; background: none; font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem; font-weight: 600; color: rgba(255,255,255,0.7);
+            cursor: pointer; transition: var(--transition); min-height: 42px;
+        }
+
+        .size-btn.selected { background: var(--gold); color: #1a1208; border-color: var(--gold); font-weight: 700; }
+
+        .add-to-cart {
+            width: 100%; padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light), var(--gold));
+            background-size: 200% auto; color: #1a1208; border: none;
+            border-radius: 8px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 2px; cursor: pointer; transition: 0.4s; min-height: 52px;
+        }
+
+        .add-to-cart:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,168,76,0.35); }
+
+        footer {
+            width: 100%; max-width: 960px; text-align: center;
+            padding: 2rem 1rem; border-top: 1px solid rgba(201,168,76,0.15);
+            color: rgba(255,255,255,0.4); margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="site-logo">Satr</a>
+        <nav id="mainNav">
+            <a href="index.html">Home</a>
+            <a href="productsatr.html" class="active">Products</a>
+            <a href="aboutme.html">About</a>
+            <a href="cart.html">Cart <span class="cart-count-badge" id="cartBadge"></span></a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="product-section">
+            <div class="product-images">
+                <div class="main-image-container">
+                    <img src="zahra1.jpeg" alt="The Zahra" id="mainImage">
+                </div>
+                <div class="thumbnails-container">
+                    <div class="thumbnail active" data-src="zahra1.jpeg"><img src="zahra1.jpeg"></div>
+                    <div class="thumbnail" data-src="zahra2.jpeg"><img src="zahra2.jpeg"></div>
+                    <div class="thumbnail" data-src="zahra3.jpeg"><img src="zahra3.jpeg"></div>
+                    <div class="thumbnail" data-src="zahra4.jpeg"><img src="zahra4.jpeg"></div>
+                    <div class="thumbnail" data-src="zahra5.jpeg"><img src="zahra5.jpeg"></div>
+                </div>
+            </div>
+
+            <div class="product-details">
+                <div class="limited-badge"><span>◆</span> Limited Spring Piece <span>◆</span></div>
+                <div class="product-name">The Zahra</div>
+                <div class="product-price">£30</div>
+                <div class="divider"></div>
+                <p class="product-description">A signature piece of the Spring '26 collection. The Zahra in earthy olive offers a sophisticated, natural drape, crafted for comfort and elegance.</p>
+                <div class="divider"></div>
+                <span class="size-label">Select Size</span>
+                <div class="size-options">
+                    <button class="size-btn" data-size="Small (54&quot;)">54</button>
+                    <button class="size-btn" data-size="Medium (56&quot;)">56</button>
+                    <button class="size-btn" data-size="Large (58&quot;)">58</button>
+                </div>
+                <button class="add-to-cart" id="addToCart">Add to Basket</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Satr. Handcrafted with love.</p>
+    </footer>
+
+    <script src="cart.js"></script>
+    <script>
+        const thumbnails = document.querySelectorAll('.thumbnail');
+        const mainImage = document.getElementById('mainImage');
+        thumbnails.forEach(t => {
+            t.addEventListener('click', function() {
+                thumbnails.forEach(x => x.classList.remove('active'));
+                this.classList.add('active');
+                mainImage.style.opacity = '0';
+                setTimeout(() => { mainImage.src = this.dataset.src; mainImage.style.opacity = '1'; }, 200);
+            });
+        });
+
+        const sizeBtns = document.querySelectorAll('.size-btn');
+        let selectedSize = 'Small (54")';
+        sizeBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                sizeBtns.forEach(b => b.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedSize = this.dataset.size;
+            });
+        });
+        sizeBtns[0].click();
+
+        document.getElementById('addToCart').addEventListener('click', function() {
+            SatrCart.addItem('zahra', selectedSize);
+            this.textContent = 'Added ✓';
+            setTimeout(() => { this.textContent = 'Add to Basket'; }, 2000);
+        });
+    </script>
+</body>
+</html>

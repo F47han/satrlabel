@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Satr Label | Timeless Abayas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@200;300;400;500;600&family=Playfair+Display+SC:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-brown: #3d2b20;
+            --gold-text: #c9a84c;
+            --white: #ffffff;
+            --transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            position: relative;
+            font-family: 'Montserrat', sans-serif;
+            color: var(--white);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        /* ── Background ── */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: url('background.jpeg') center center / cover no-repeat;
+            z-index: -2;
+        }
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: rgba(28, 20, 15, 0.65);
+            z-index: -1;
+        }
+
+        /* ── Announcement Bar ── */
+        .announcement-bar {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
+            padding: 14px 20px;
+            text-align: center;
+            font-size: 0.65rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            position: sticky;
+            top: 0;
+            z-index: 3000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            line-height: 1.4;
+        }
+        .announcement-bar a {
+            color: var(--gold-text);
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+        }
+        .announcement-bar a:hover { opacity: 0.8; }
+
+        /* ── Header & Nav ── */
+        header { text-align: center; padding: 3rem 1rem 1.5rem; }
+        .site-logo {
+            font-family: 'Playfair Display SC', serif;
+            font-size: clamp(2.2rem, 8vw, 4rem);
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--white);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        nav { display: flex; justify-content: center; gap: 2.5rem; margin-top: 2rem; }
+        nav a {
+            text-decoration: none; color: var(--white); text-transform: uppercase;
+            font-size: 0.7rem; letter-spacing: 2px; font-weight: 400;
+            opacity: 0.8; transition: var(--transition);
+        }
+        nav a:hover { opacity: 1; color: var(--gold-text); }
+
+        /* ── Hero Sliders ── */
+        .hero-slider, .spring-hero-slider {
+            width: 92%; max-width: 1300px; height: 80vh; 
+            margin: 2rem auto 4rem; position: relative; 
+            overflow: hidden; border-radius: 4px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+        }
+
+        .slide, .spring-slide {
+            position: absolute; inset: 0; opacity: 0; transition: opacity 1.5s ease;
+            background-size: cover; background-position: center 20%;
+        }
+        .slide.active, .spring-slide.active { opacity: 1; }
+
+        .hero-content-box {
+            position: absolute; bottom: 50px; left: 50%; transform: translateX(-50%);
+            background: rgba(15, 10, 8, 0.85); backdrop-filter: blur(10px);
+            padding: 2.5rem 3.5rem; text-align: center; width: 90%;
+            max-width: 500px; border: 1px solid rgba(201, 168, 76, 0.3); z-index: 10;
+        }
+
+        .hero-content-box h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.8rem; font-weight: 300; font-style: italic; margin-bottom: 1rem;
+        }
+
+        .hero-shop-link {
+            display: inline-block; padding: 12px 40px; border: 1px solid var(--gold-text);
+            color: var(--gold-text); text-decoration: none; text-transform: uppercase;
+            font-size: 0.65rem; font-weight: 600; letter-spacing: 3px; transition: var(--transition);
+        }
+        .hero-shop-link:hover { background: var(--gold-text); color: #000; }
+
+        /* ── Interactive Question Section ── */
+        .choice-btn {
+            background: transparent; border: 1px solid rgba(255,255,255,0.4); 
+            color: white; padding: 15px 45px; font-family: 'Montserrat'; 
+            text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: var(--transition);
+        }
+        .choice-btn:hover { background: var(--white); color: #000; }
+
+        /* ── Product Grid ── */
+        .products-section { width: 95%; max-width: 1200px; margin: 0 auto; padding-bottom: 8rem; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 4rem; }
+        
+        .product-card { text-decoration: none; color: var(--white); display: block; transition: var(--transition); position: relative; }
+        .img-container { width: 100%; aspect-ratio: 3/4; overflow: hidden; margin-bottom: 1.5rem; background: #1a1a1a; }
+        .product-image { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s ease; }
+        .product-card:hover .product-image { transform: scale(1.08); }
+        
+        .product-info h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 400; margin-bottom: 0.5rem; }
+        .view-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 3px; color: var(--gold-text); font-weight: 600; }
+
+        #product-spotlight { max-width: 450px; margin: 0 auto 6rem; display: none; }
+        .reveal { opacity: 0; transform: translateY(40px); transition: 1s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <div class="announcement-bar">
+        Free shipping for UK | For International Shipping please message 
+        <a href="https://www.instagram.com/satr.labell/" target="_blank">@SATR.LABELL ON INSTAGRAM</a>
+    </div>
+
+    <header>
+        <a href="index.html" class="site-logo">Satr</a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="productsatr.html">Products</a>
+            <a href="aboutme.html">About</a>
+            <a href="cart.html">Basket</a>
+        </nav>
+    </header>
+
+    <section class="hero-slider">
+        <div id="hero-slider-main"></div>
+        <div class="hero-content-box">
+            <h3 id="hero-name-main">The Jamila</h3>
+            <a href="jamila.html" id="hero-dynamic-link" class="hero-shop-link">View Piece</a>
+        </div>
+    </section>
+
+    <section class="spring-hero-slider reveal">
+        <div id="spring-slider-images"></div>
+        <div class="hero-content-box">
+            <h3 style="font-family:'Cormorant Garamond';">Spring '26</h3>
+            <p style="font-size: 0.6rem; text-transform: uppercase; letter-spacing: 4px; color: var(--gold-text);">Limited Release</p>
+        </div>
+    </section>
+
+    <section class="reveal" style="text-align: center; padding: 4rem 1rem;">
+        <h2 style="font-family:'Cormorant Garamond'; font-size: clamp(2rem, 5vw, 3rem); font-weight:300; margin-bottom: 3rem;">Which shade whispers to your grace?</h2>
+        <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+            <button class="choice-btn" onclick="revealProduct('zahra')">Earth Olive</button>
+            <button class="choice-btn" onclick="revealProduct('yasmine')">Soft Cream</button>
+        </div>
+    </section>
+
+    <div id="product-spotlight" class="reveal">
+        <a href="zahra.html" id="spot-zahra" class="product-card" style="display:none;">
+            <div class="img-container"><img src="zahra1.jpeg" class="product-image"></div>
+            <div class="product-info" style="text-align: center;"><h2>The Zahra</h2><span class="view-label">Discover Piece</span></div>
+        </a>
+        <a href="yasmine.html" id="spot-yasmine" class="product-card" style="display:none;">
+            <div class="img-container"><img src="yasmine1.jpeg" class="product-image"></div>
+            <div class="product-info" style="text-align: center;"><h2>The Yasmine</h2><span class="view-label">Discover Piece</span></div>
+        </a>
+    </div>
+
+    <main class="products-section">
+        <h2 style="font-family:'Cormorant Garamond'; text-align: center; margin-bottom: 4rem; font-size: 2.5rem; font-weight: 300; color: var(--gold-text);">The Signature Collection</h2>
+        <div class="products-grid">
+            <a href="jamila.html" class="product-card reveal">
+                <div class="img-container"><img src="jamila1.jpeg" class="product-image"></div>
+                <div class="product-info"><h2>The Jamila</h2><span class="view-label">Shop Now</span></div>
+            </a>
+            <a href="sereen.html" class="product-card reveal">
+                <div class="img-container"><img src="sareen4.jpeg" class="product-image"></div>
+                <div class="product-info"><h2>The Sereen</h2><span class="view-label">Shop Now</span></div>
+            </a>
+            <a href="noor.html" class="product-card reveal">
+                <div class="img-container"><img src="noor3.jpeg" class="product-image"></div>
+                <div class="product-info"><h2>The Noor</h2><span class="view-label">Shop Now</span></div>
+            </a>
+            <a href="sahara.html" class="product-card reveal">
+                <div class="img-container"><img src="sahara1.jpeg" class="product-image"></div>
+                <div class="product-info"><h2>The Sahara</h2><span class="view-label">Shop Now</span></div>
+            </a>
+        </div>
+    </main>
+
+    <script>
+        const mainData = [
+            { name: "The Jamila", img: "jamila1.jpeg", url: "jamila.html" },
+            { name: "The Sereen", img: "sareen3.jpeg", url: "sereen.html" },
+            { name: "The Nila", img: "nila6.jpeg", url: "nila.html" }
+        ];
+
+        const mainSlider = document.getElementById('hero-slider-main');
+        const mainTitle = document.getElementById('hero-name-main');
+        const mainLink = document.getElementById('hero-dynamic-link');
+
+        mainData.forEach((d, i) => {
+            const div = document.createElement('div');
+            div.className = 'slide' + (i === 0 ? ' active' : '');
+            div.style.backgroundImage = `url('${d.img}')`;
+            mainSlider.appendChild(div);
+        });
+
+        const springImgs = ['zahra3.jpeg', 'yasmine3.jpeg', 'zahra2.jpeg', 'yasmine2.jpeg'];
+        const springSlider = document.getElementById('spring-slider-images');
+        springImgs.forEach((img, i) => {
+            const div = document.createElement('div');
+            div.className = 'spring-slide' + (i === 0 ? ' active' : '');
+            div.style.backgroundImage = `url('${img}')`;
+            springSlider.appendChild(div);
+        });
+
+        let mIdx = 0, sIdx = 0;
+        setInterval(() => {
+            const slides = document.querySelectorAll('.slide');
+            slides[mIdx].classList.remove('active');
+            mIdx = (mIdx + 1) % slides.length;
+            slides[mIdx].classList.add('active');
+            mainTitle.textContent = mainData[mIdx].name;
+            mainLink.href = mainData[mIdx].url;
+        }, 5000);
+
+        setInterval(() => {
+            const sSlides = document.querySelectorAll('.spring-slide');
+            sSlides[sIdx].classList.remove('active');
+            sIdx = (sIdx + 1) % sSlides.length;
+            sSlides[sIdx].classList.add('active');
+        }, 4000);
+
+        function revealProduct(id) {
+            const spot = document.getElementById('product-spotlight');
+            spot.style.display = 'block';
+            document.getElementById('spot-zahra').style.display = (id === 'zahra' ? 'block' : 'none');
+            document.getElementById('spot-yasmine').style.display = (id === 'yasmine' ? 'block' : 'none');
+            spot.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('active'); });
+        });
+        document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    </script>
+</body>
+</html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flora | Satr</title>
+    <style>
+        html { background-color: #4a3326; min-height: 100%; }
+        body {
+            background: linear-gradient(to bottom, #4a3326 0%, #4a3326 35%, #ffffff 100%);
+            margin: 0; min-height: 100vh;
+        }
+        body:not(.fonts-loaded) * { opacity: 0; }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500&family=Playfair+Display+SC:wght@400;700;900&display=swap"
+          rel="stylesheet" onload="document.body.classList.add('fonts-loaded')">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --dark-brown: #4a3326;
+            --medium-brown: #7a6855;
+            --light-brown: #a89a89;
+            --off-white: #f9f7f5;
+            --white: #ffffff;
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --animation-timing: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--dark-brown);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.5rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            width: 100%;
+            max-width: 900px;
+            padding-top: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1.2s var(--animation-timing) 0.3s forwards;
+        }
+
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+
+        h1 {
+            font-family: 'Playfair Display SC', serif;
+            font-size: 4.8rem;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            color: var(--white);
+            text-shadow: 0 1px 4px rgba(0,0,0,0.2);
+        }
+
+        nav {
+            margin-top: 1.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.35);
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--white);
+            font-weight: 500;
+            font-size: 1rem;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            padding: 0.6rem 0.4rem;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        nav a:hover::after {
+            content: "";
+            position: absolute;
+            bottom: -5px; left: 50%;
+            transform: translateX(-50%);
+            width: 60%; height: 1.5px;
+            background-color: var(--white);
+        }
+
+        /* Cart badge */
+        .cart-link { position: relative; }
+        #cart-badge {
+            display: none;
+            position: absolute;
+            top: -4px; right: -14px;
+            background: var(--white);
+            color: var(--dark-brown);
+            font-size: 0.6rem;
+            font-weight: 700;
+            width: 16px; height: 16px;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ── Product Layout ── */
+        .product-container {
+            width: 100%;
+            max-width: 1000px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            background: var(--white);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 5rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s var(--animation-timing) 0.6s forwards;
+        }
+
+        .product-image-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .product-details {
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .product-details h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            color: var(--dark-brown);
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            color: var(--medium-brown);
+            margin-bottom: 1.5rem;
+        }
+
+        .product-desc {
+            font-size: 0.9rem;
+            color: var(--medium-brown);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 6px;
+            color: var(--medium-brown);
+        }
+
+        select.size-select {
+            width: 100%;
+            background-color: var(--off-white);
+            color: var(--dark-brown);
+            border: 1px solid var(--light-brown);
+            padding: 0.8rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            border-radius: 4px;
+            cursor: pointer;
+            outline: none;
+            margin-bottom: 1.2rem;
+        }
+
+        .add-to-cart-btn {
+            width: 100%;
+            background: var(--dark-brown);
+            color: var(--white);
+            border: none;
+            padding: 1.1rem;
+            text-transform: uppercase;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .add-to-cart-btn.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .add-to-cart-btn:hover { background: var(--medium-brown); letter-spacing: 3px; }
+
+        /* Feedback toast */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--dark-brown);
+            color: var(--white);
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            transition: transform 0.4s var(--animation-timing);
+            z-index: 1000;
+            white-space: nowrap;
+        }
+
+        .toast.show { transform: translateX(-50%) translateY(0); }
+
+        footer {
+            margin-top: 4rem;
+            padding: 2rem;
+            border-top: 1px solid var(--light-brown);
+            color: var(--dark-brown);
+            font-size: 0.9rem;
+            opacity: 0.8;
+            width: 100%;
+            text-align: center;
+        }
+
+        @media (max-width: 700px) {
+            .product-container { grid-template-columns: 1fr; }
+            h1 { font-size: 3.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Satr</h1>
+    <nav>
+        <a href="satrindex.html">Home</a>
+        <a href="productsatr.html">Products</a>
+        <a href="aboutme.html">About</a>
+        <a href="moodboard.html">Moods</a>
+        <a href="cart.html" class="cart-link">
+            Cart <span id="cart-badge"></span>
+        </a>
+    </nav>
+</header>
+
+<main>
+    <div class="product-container">
+        <div class="product-image-wrap">
+            <img src="flora1.JPEG" alt="Flora Abaya">
+        </div>
+        <div class="product-details">
+            <h2>The Flora</h2>
+            <div class="product-price">£45.00</div>
+            <p class="product-desc">
+                A delicate balance of botanical elegance and modest structure. 
+                Crafted with intention — for the woman who moves with quiet confidence.
+            </p>
+
+            <label for="size-select">Select Size</label>
+            <select class="size-select" id="size-select" onchange="onSizeChange(this)">
+                <option value="" selected disabled>—</option>
+                <option value="Small (52)">Small (52)</option>
+                <option value="Medium (54)">Medium (54)</option>
+                <option value="Large (56)">Large (56)</option>
+            </select>
+
+            <!--
+                KEY: data-product-id must match the key in CATALOG inside cart.js
+                     'flora', 'noor', 'sahara', 'azra', 'sereen', 'layla', 'nila', 'sama'
+            -->
+            <button
+                class="add-to-cart-btn"
+                id="add-to-cart"
+                data-product-id="flora"
+                onclick="addToCart()">
+                Add to Cart
+            </button>
+        </div>
+    </div>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<footer>
+    <p>&copy; 2026 Satr. Handcrafted with love.</p>
+</footer>
+
+<script src="cart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.body.classList.add('fonts-loaded');
+    });
+
+    function onSizeChange(select) {
+        const btn = document.getElementById('add-to-cart');
+        btn.classList.toggle('active', select.value !== '');
+    }
+
+    function addToCart() {
+        const btn    = document.getElementById('add-to-cart');
+        const select = document.getElementById('size-select');
+
+        const productId = btn.dataset.productId;  // 'flora'
+        const size      = select.value;
+
+        if (!size) return;
+
+        SatrCart.addItem(productId, size);
+        showToast(`${productId.charAt(0).toUpperCase() + productId.slice(1)} added to cart`);
+    }
+
+    function showToast(message) {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Jamila | Satr</title>
+    <meta name="description" content="The Jamila — an exclusive edition abaya from Satr. Handcrafted elegance, modern modest wear.">
+    <style>
+        html { background-color: #4a3326; min-height: 100%; }
+        body { background: linear-gradient(to bottom, #4a3326 0%, #4f382d 25%, #4a3326 55%, #f1ede6 85%, #ffffff 100%); margin: 0; min-height: 100vh; }
+        body:not(.fonts-loaded) * { opacity: 0; }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500&family=Playfair+Display+SC:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --dark-brown: #4a3326; --medium-brown: #7a6855; --light-brown: #a89a89; --off-white: #f9f7f5; --white: #ffffff; --transition: all 0.35s ease; --animation-timing: cubic-bezier(0.16, 1, 0.3, 1); }
+        body { font-family: 'Montserrat', sans-serif; color: var(--dark-brown); line-height: 1.6; display: flex; flex-direction: column; align-items: center; padding: 1.5rem; overflow-x: hidden; position: relative; }
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { to { opacity: 1; } }
+
+        /* Header */
+        header { text-align: center; margin-bottom: 2rem; width: 100%; max-width: 900px; padding-top: 1rem; position: relative; z-index: 10; opacity: 0; transform: translateY(20px); animation: fadeInUp 1.2s var(--animation-timing) 0.3s forwards; }
+        h1 { font-family: 'Playfair Display SC', serif; font-size: 4.8rem; font-weight: 400; letter-spacing: 0.1em; color: var(--white); text-shadow: 0 2px 6px rgba(0,0,0,0.25); opacity: 0; transform: translateY(15px); animation: fadeInUp 1.4s var(--animation-timing) 0.6s forwards; }
+        .menu-toggle { display: none; background: none; border: none; color: var(--white); font-size: 1.8rem; cursor: pointer; position: absolute; top: 1.2rem; right: 1.2rem; z-index: 100; text-shadow: 0 1px 3px rgba(0,0,0,0.3); opacity: 0; animation: fadeIn 1s ease-in 0.8s forwards; }
+        nav { margin-top: 1.5rem; display: flex; justify-content: center; gap: 2rem; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.35); opacity: 0; transform: translateY(10px); animation: fadeInUp 1.2s var(--animation-timing) 0.9s forwards; }
+        nav a { text-decoration: none; color: var(--white); font-weight: 500; font-size: 1rem; letter-spacing: 0.8px; text-transform: uppercase; padding: 0.6rem 0.4rem; transition: var(--transition); position: relative; }
+        nav a::after { content: ""; position: absolute; bottom: -5px; left: 50%; transform: translateX(-50%) scaleX(0); width: 60%; height: 1.5px; background-color: var(--white); transition: var(--transition); transform-origin: center; }
+        nav a:hover::after, nav a.active::after { transform: translateX(-50%) scaleX(1); }
+        .cart-link { position: relative; }
+        #cart-badge { display: none; position: absolute; top: -4px; right: -14px; background: var(--white); color: var(--dark-brown); font-size: 0.6rem; font-weight: 700; width: 16px; height: 16px; border-radius: 50%; align-items: center; justify-content: center; }
+
+        /* Product section */
+        main { width: 100%; max-width: 1200px; margin: 2.5rem 0; }
+        .product-section { display: grid; grid-template-columns: 1fr; gap: 2.5rem; }
+        @media (min-width: 860px) { .product-section { grid-template-columns: 1.1fr 0.9fr; gap: 4rem; align-items: start; } }
+        .product-images { display: flex; flex-direction: column; gap: 1rem; }
+        .main-image-container { width: 100%; aspect-ratio: 3/4; border-radius: 16px; overflow: hidden; background: #111; position: relative; box-shadow: 0 25px 60px rgba(0,0,0,0.3); }
+        .main-image-container::after { content: ''; position: absolute; inset: 0; border-radius: 16px; border: 1.5px solid rgba(201,168,76,0.35); pointer-events: none; z-index: 2; }
+        #mainImage { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s ease; display: block; }
+        .thumbnails-container { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+        .thumbnail { width: 70px; height: 70px; border-radius: 8px; overflow: hidden; cursor: pointer; border: 2px solid rgba(255,255,255,0.1); transition: var(--transition); background: #111; }
+        .thumbnail img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .thumbnail.active { border-color: #c9a84c; }
+
+        /* Product details panel */
+        .product-details { background: rgba(15,10,8,0.88); border: 1px solid rgba(201,168,76,0.2); border-radius: 18px; padding: 2.2rem; box-shadow: 0 12px 40px rgba(0,0,0,0.4); backdrop-filter: blur(12px); position: relative; }
+        .product-details::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #c9a84c, #e8d08a, #c9a84c, transparent); }
+        @media (min-width: 860px) { .product-details { position: sticky; top: 1.5rem; } }
+        .limited-badge { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(232,208,138,0.08)); color: #e8d08a; font-size: 0.6rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; padding: 7px 16px; border-radius: 20px; margin-bottom: 1.2rem; border: 1px solid rgba(201,168,76,0.35); }
+        .product-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 5vw, 3.2rem); font-weight: 600; color: #ffffff; margin-bottom: 0.3rem; line-height: 1.1; letter-spacing: 0.02em; }
+        .product-price { font-size: 1.5rem; font-weight: 600; color: #e8d08a; margin-bottom: 1.2rem; }
+        .divider { height: 1px; background: rgba(201,168,76,0.15); margin: 1.2rem 0; }
+        .product-description { font-size: 0.93rem; color: rgba(255,255,255,0.75); line-height: 1.85; margin-bottom: 1rem; }
+        .size-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,0.6); margin-bottom: 0.7rem; display: block; }
+        .size-options { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.6rem; }
+        .size-btn { padding: 0.5rem 1rem; border: 1.5px solid rgba(201,168,76,0.25); border-radius: 6px; background: none; font-family: 'Montserrat', sans-serif; font-size: 0.8rem; font-weight: 600; color: rgba(255,255,255,0.7); cursor: pointer; transition: var(--transition); min-height: 42px; }
+        .size-btn.selected { background: #c9a84c; color: #1a1208; border-color: #c9a84c; font-weight: 700; }
+        .add-to-cart { width: 100%; padding: 1rem 2rem; background: linear-gradient(135deg, #c9a84c, #e8d08a, #c9a84c); background-size: 200% auto; color: #1a1208; border: none; border-radius: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: 0.4s; min-height: 52px; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; }
+        .add-to-cart:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,168,76,0.35); }
+
+        /* Footer */
+        footer { width: 100%; max-width: 960px; text-align: center; padding: 2rem 1rem; border-top: 1px solid rgba(201,168,76,0.15); color: rgba(255,255,255,0.4); margin-top: 2rem; }
+
+        /* Mobile */
+        @media (max-width: 767px) {
+            .menu-toggle { display: block; }
+            nav { display: none; flex-direction: column; gap: 1.2rem; padding-top: 1.4rem; background: rgba(74,51,38,0.85); border-radius: 12px; margin-top: 1.2rem; backdrop-filter: blur(5px); }
+            nav.show { display: flex; opacity: 1; transform: translateY(0); }
+            nav a { font-size: 1.2rem; padding: 0.9rem 0; width: 100%; }
+            nav a::after { display: none; }
+            nav a:hover { background: rgba(255,255,255,0.15); }
+            h1 { font-size: 4rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <button class="menu-toggle" id="menuToggle">&#9776;</button>
+        <h1>Satr</h1>
+        <nav id="mainNav">
+            <a href="index.html">Home</a>
+            <a href="productsatr.html" class="active">Products</a>
+            <a href="aboutme.html">About</a>
+            <a href="cart.html" class="cart-link">Cart <span id="cart-badge"></span></a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="product-section">
+            <div class="product-images">
+                <div class="main-image-container">
+                    <img src="jamila1.jpeg" alt="The Jamila Abaya" id="mainImage" onerror="this.parentElement.style.background='linear-gradient(135deg,#f5f1e9 0%,#e8e1d9 100%)';this.style.display='none'">
+                </div>
+                <div class="thumbnails-container">
+                    <div class="thumbnail active" data-src="jamila1.jpeg"><img src="jamila1.jpeg" alt="Jamila View 1" onerror="this.style.display='none'"></div>
+                    <div class="thumbnail" data-src="jamila2.jpeg"><img src="jamila2.jpeg" alt="Jamila View 2" onerror="this.style.display='none'"></div>
+                </div>
+            </div>
+
+            <div class="product-details">
+                <div class="limited-badge"><span>&#9670;</span> Exclusive Edition <span>&#9670;</span></div>
+                <div class="product-name">The Jamila</div>
+                <div class="product-price">&pound;55</div>
+                <div class="divider"></div>
+                <p class="product-description">An exclusive signature piece from the Satr collection. The Jamila is crafted with an unwavering dedication to elegance &mdash; a timeless silhouette that moves with grace and intention. For the woman who commands presence effortlessly.</p>
+                <div class="divider"></div>
+                <span class="size-label">Select Size</span>
+                <div class="size-options">
+                    <button class="size-btn" data-size="Small (52)">52</button>
+                    <button class="size-btn" data-size="Medium (54)">54</button>
+                    <button class="size-btn" data-size="Large (56)">56</button>
+                </div>
+                <button class="add-to-cart" id="addToCart">Add to Basket</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Satr. Handcrafted with love.</p>
+    </footer>
+
+    <script src="cart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.classList.add('fonts-loaded');
+
+            // Thumbnails
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            const mainImage = document.getElementById('mainImage');
+            thumbnails.forEach(t => {
+                t.addEventListener('click', function() {
+                    thumbnails.forEach(x => x.classList.remove('active'));
+                    this.classList.add('active');
+                    mainImage.style.opacity = '0';
+                    setTimeout(() => { mainImage.src = this.dataset.src; mainImage.style.opacity = '1'; }, 200);
+                });
+            });
+
+            // Size selection
+            const sizeBtns = document.querySelectorAll('.size-btn');
+            let selectedSize = 'Small (52)';
+            sizeBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    sizeBtns.forEach(b => b.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedSize = this.dataset.size;
+                });
+            });
+            sizeBtns[0].click();
+
+            // Add to cart
+            document.getElementById('addToCart').addEventListener('click', function() {
+                SatrCart.addItem('jamila', selectedSize);
+                this.textContent = 'Added to Basket';
+                setTimeout(() => { this.textContent = 'Add to Basket'; }, 2000);
+            });
+
+            // Mobile menu
+            const menuToggle = document.getElementById('menuToggle');
+            const nav = document.getElementById('mainNav');
+            menuToggle.addEventListener('click', function() { nav.classList.toggle('show'); menuToggle.textContent = nav.classList.contains('show') ? '\u2715' : '\u2630'; });
+            nav.querySelectorAll('a').forEach(link => { link.addEventListener('click', function() { if (window.innerWidth <= 767) { nav.classList.remove('show'); menuToggle.textContent = '\u2630'; } }); });
+            document.addEventListener('click', function(e) { if (window.innerWidth <= 767 && !nav.contains(e.target) && !menuToggle.contains(e.target) && nav.classList.contains('show')) { nav.classList.remove('show'); menuToggle.textContent = '\u2630'; } });
+            window.addEventListener('resize', function() { if (window.innerWidth > 767 && nav.classList.contains('show')) { nav.classList.remove('show'); menuToggle.textContent = '\u2630'; } });
+        });
+    </script>
+</body>
+</html>

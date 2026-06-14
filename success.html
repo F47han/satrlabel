@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmed | Satr</title>
+    <style>
+        html { background-color: #4a3326; min-height: 100%; }
+        body {
+            background: linear-gradient(to bottom, #4a3326 0%, #4a3326 40%, #ffffff 100%);
+            margin: 0; min-height: 100vh;
+        }
+        body:not(.fonts-loaded) * { opacity: 0; }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500&family=Playfair+Display+SC:wght@400;700;900&display=swap"
+          rel="stylesheet" onload="document.body.classList.add('fonts-loaded')">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --dark-brown: #4a3326;
+            --medium-brown: #7a6855;
+            --light-brown: #a89a89;
+            --off-white: #f9f7f5;
+            --white: #ffffff;
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --animation-timing: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--dark-brown);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.5rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            width: 100%;
+            max-width: 900px;
+            padding-top: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1.2s var(--animation-timing) 0.3s forwards;
+        }
+
+        @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+
+        h1 {
+            font-family: 'Playfair Display SC', serif;
+            font-size: 4.8rem;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            color: var(--white);
+            text-shadow: 0 1px 4px rgba(0,0,0,0.2);
+        }
+
+        nav {
+            margin-top: 1.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.35);
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--white);
+            font-weight: 500;
+            font-size: 1rem;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            padding: 0.6rem 0.4rem;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        nav a:hover::after {
+            content: "";
+            position: absolute;
+            bottom: -5px; left: 50%;
+            transform: translateX(-50%);
+            width: 60%; height: 1.5px;
+            background-color: var(--white);
+        }
+
+        .success-container {
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            background: var(--white);
+            border-radius: 14px;
+            padding: 4rem 3rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s var(--animation-timing) 0.6s forwards;
+        }
+
+        .checkmark {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .success-container h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.4rem;
+            color: var(--dark-brown);
+            margin-bottom: 1rem;
+        }
+
+        .success-container p {
+            font-size: 0.95rem;
+            color: var(--medium-brown);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .continue-btn {
+            display: inline-block;
+            background: var(--dark-brown);
+            color: var(--white);
+            text-decoration: none;
+            padding: 1rem 2.5rem;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .continue-btn:hover { background: var(--medium-brown); letter-spacing: 3px; }
+
+        footer {
+            margin-top: 4rem;
+            padding: 2rem;
+            border-top: 1px solid var(--light-brown);
+            color: var(--dark-brown);
+            font-size: 0.9rem;
+            opacity: 0.8;
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Satr</h1>
+    <nav>
+        <a href="satrindex.html">Home</a>
+        <a href="productsatr.html">Products</a>
+        <a href="aboutme.html">About</a>
+        <a href="moodboard.html">Moods</a>
+    </nav>
+</header>
+
+<main>
+    <div class="success-container">
+        <div class="checkmark">✓</div>
+        <h2>Thank You</h2>
+        <p>
+            Your order has been confirmed and is being prepared with care.<br>
+            You will receive a confirmation email shortly.
+        </p>
+        <a href="productsatr.html" class="continue-btn">Continue Shopping</a>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 Satr. Handcrafted with love.</p>
+</footer>
+
+<script src="cart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.body.classList.add('fonts-loaded');
+        // Clear the cart after successful payment
+        SatrCart.clearCart();
+    });
+</script>
+</body>
+</html>
