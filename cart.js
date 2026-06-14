@@ -19,8 +19,8 @@ const SatrCart = (() => {
     'nila':    { name: 'Nila',    price: 4500 },
     'sama':    { name: 'Sama',    price: 4500 },
     'cost':    { name: 'Cost',    price: 100  }, // £1 — payment test
-    'yasmine': { name: 'Yasmine', price: 4500 },
-    'zahra':   { name: 'Zahra',   price: 5000 },
+    'yasmine': { name: 'Yasmine', price: 3000 },
+    'zahra':   { name: 'Zahra',   price: 3000 },
     'jamila':  { name: 'Jamila',  price: 5500 },
   };
 
