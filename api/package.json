@@ -1,0 +1,8 @@
+{
+  "name": "satr-api",
+  "version": "1.0.0",
+  "description": "SATR serverless backend",
+  "dependencies": {
+    "stripe": "^14.0.0"
+  }
+}
