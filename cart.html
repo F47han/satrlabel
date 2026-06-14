@@ -367,27 +367,29 @@
                 return;
             }
 
-            const itemsHTML = summary.items.map(item => `
-                <div class="cart-item">
+            // Build items using data attributes instead of inline onclick
+            // to avoid issues with special characters (quotes, apostrophes) in size strings
+            const itemsHTML = summary.items.map((item, idx) => `
+                <div class="cart-item" data-idx="${idx}" data-product-id="${item.productId}" data-size="${item.size.replace(/"/g, '&quot;')}" data-qty="${item.quantity}">
                     <div class="item-info">
                         <h3>${item.name}</h3>
                         <div class="item-size">Size: ${item.size}</div>
                         <div class="item-unit-price">£${(item.price / 100).toFixed(2)} each</div>
                     </div>
                     <div class="qty-row">
-                        <button class="qty-btn" onclick="changeQty('${item.productId}', '${item.size}', ${item.quantity - 1})">−</button>
+                        <button class="qty-btn qty-minus">−</button>
                         <span class="qty-display">${item.quantity}</span>
-                        <button class="qty-btn" onclick="changeQty('${item.productId}', '${item.size}', ${item.quantity + 1})">+</button>
+                        <button class="qty-btn qty-plus">+</button>
                     </div>
                     <div class="item-right">
                         <span class="item-total">£${((item.price * item.quantity) / 100).toFixed(2)}</span>
-                        <button class="remove-btn" onclick="SatrCart.removeItem('${item.productId}', '${item.size}')">Remove</button>
+                        <button class="remove-btn">Remove</button>
                     </div>
                 </div>
             `).join('');
 
             container.innerHTML = `
-                <div class="cart-items">${itemsHTML}</div>
+                <div class="cart-items" id="cart-items-list">${itemsHTML}</div>
                 <div class="order-summary">
                     <div class="summary-title">Order Summary</div>
                     <div class="summary-row">
@@ -407,6 +409,23 @@
                     </button>
                     <p class="checkout-note">Secure payment via Stripe · UK delivery only</p>
                 </div>`;
+
+            // Wire up buttons via event delegation (safe — no string injection)
+            document.getElementById('cart-items-list').addEventListener('click', function(e) {
+                const row = e.target.closest('.cart-item');
+                if (!row) return;
+                const productId = row.dataset.productId;
+                const size      = row.dataset.size;
+                const qty       = parseInt(row.dataset.qty, 10);
+
+                if (e.target.classList.contains('remove-btn')) {
+                    SatrCart.removeItem(productId, size);
+                } else if (e.target.classList.contains('qty-minus')) {
+                    SatrCart.updateQuantity(productId, size, qty - 1);
+                } else if (e.target.classList.contains('qty-plus')) {
+                    SatrCart.updateQuantity(productId, size, qty + 1);
+                }
+            });
         }
 
         function changeQty(productId, size, newQty) {
