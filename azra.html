@@ -3,471 +3,328 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Azra Abaya | Satr</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@300;400;600;700&family=Playfair+Display+SC:wght@400&display=swap" rel="stylesheet">
+    <title>Satr | Satr</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@300;400;600;700&family=Playfair+Display+SC:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
         :root {
             --dark-brown: #4a3326;
-            --medium-brown: #6b4f3f;
-            --light-brown: #8c7b6b;
+            --medium-brown: #7a6855;
+            --light-brown: #a89a89;
             --off-white: #f9f7f5;
             --white: #ffffff;
-            --cream: #f8f5f2;
-            --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            --anim: cubic-bezier(0.16, 1, 0.3, 1);
+            --gold: #c9a84c;
+            --gold-light: #e8d08a;
+            --transition: all 0.35s ease;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { background-color: #111; min-height: 100%; }
 
         body {
-            font-family: 'Montserrat', sans-serif;
-            color: var(--dark-brown); /* Changed to brown */
-            background-color: var(--cream); /* Light cream background */
             min-height: 100vh;
+            font-family: 'Montserrat', sans-serif;
+            color: var(--dark-brown);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 1.5rem 1.5rem;
             overflow-x: hidden;
+            position: relative;
         }
 
         body::before {
             content: "";
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('background.jpeg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            z-index: -1;
-            opacity: 0.25; /* Softened for text readability */
+            inset: 0;
+            background: url('background.jpeg') center center / cover no-repeat;
+            z-index: -2;
         }
 
-        /* Announcement Bar */
-        .announcement-bar {
-            width: 100%;
-            background: rgba(74, 51, 38, 0.95); /* Dark brown background */
-            backdrop-filter: blur(10px);
-            padding: 12px 10px;
-            text-align: center;
-            font-size: 0.65rem;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            position: sticky;
-            top: 0;
-            z-index: 3000;
-        }
-        .announcement-bar,
-        .announcement-bar a { 
-            color: var(--white); /* Keep white text on dark bar */
-        }
-        .announcement-bar a { 
-            text-decoration: underline; 
-            font-weight: 700; 
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: rgba(20, 14, 10, 0.72);
+            z-index: -1;
         }
 
         header {
             text-align: center;
-            padding: 2.5rem 1rem 1.5rem;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeUp 1.2s var(--anim) 0.2s forwards;
+            width: 100%;
+            max-width: 960px;
+            padding: 1.5rem 0 0;
+            position: relative;
+            z-index: 10;
         }
 
-        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-
-        h1 {
+        .site-logo {
             font-family: 'Playfair Display SC', serif;
-            font-size: clamp(2.2rem, 8vw, 4rem);
-            letter-spacing: 0.3em;
-            font-weight: 300;
-            text-transform: uppercase;
-            color: var(--dark-brown); /* Brown text */
+            font-size: clamp(2.6rem, 8vw, 4.8rem);
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            color: var(--white);
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+            text-decoration: none;
+            display: inline-block;
         }
 
         nav {
+            margin-top: 1.3rem;
             display: flex;
             justify-content: center;
             gap: 1.5rem;
-            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
             flex-wrap: wrap;
         }
 
         nav a {
             text-decoration: none;
-            color: var(--dark-brown); /* Brown text */
+            color: rgba(255,255,255,0.85);
+            font-weight: 600;
+            font-size: 0.72rem;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
-            font-size: 0.75rem;
-            letter-spacing: 2px;
-            font-weight: 700;
-            padding-bottom: 4px;
+            padding: 6px 4px;
             position: relative;
             transition: var(--transition);
-            min-height: 44px;
-            display: flex;
+            display: inline-flex;
             align-items: center;
+            min-height: 44px;
         }
 
-        nav a.active::after, nav a:hover::after {
-            content: "";
+        nav a::after {
+            content: '';
             position: absolute;
-            bottom: -4px; left: 50%;
-            transform: translateX(-50%);
-            width: 60%; height: 1.5px;
-            background: var(--dark-brown); /* Brown underline */
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+            width: 70%;
+            height: 1.5px;
+            background: var(--gold-light);
+            transition: var(--transition);
         }
 
-        /* Product layout */
+        nav a.active { color: var(--gold-light); }
+        nav a.active::after { transform: translateX(-50%) scaleX(1); }
+
+        .cart-count-badge {
+            display: inline-flex; align-items: center; justify-content: center;
+            background: rgba(201,168,76,0.2); color: var(--gold-light);
+            font-size: 0.6rem; font-weight: 700;
+            min-width: 18px; height: 18px;
+            border-radius: 9px; padding: 0 4px;
+            border: 1px solid rgba(201,168,76,0.4);
+        }
+
+        main { width: 100%; max-width: 1200px; margin: 2.5rem 0; }
+
         .product-section {
-            width: 100%;
-            max-width: 1200px;
-            margin: 2rem auto 5rem;
-            padding: 0 1.5rem;
             display: grid;
             grid-template-columns: 1fr;
             gap: 2.5rem;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeUp 1.2s var(--anim) 0.5s forwards;
         }
 
-        @media (min-width: 1024px) {
-            .product-section {
-                grid-template-columns: 1.1fr 0.9fr;
-                gap: 4rem;
-            }
+        @media (min-width: 860px) {
+            .product-section { grid-template-columns: 1.1fr 0.9fr; gap: 4rem; align-items: start; }
         }
 
-        /* Image gallery */
-        .product-images { display: flex; flex-direction: column; gap: 1.2rem; }
+        .product-images { display: flex; flex-direction: column; gap: 1rem; }
 
-        .main-image-wrap {
-            position: relative;
+        .main-image-container {
             width: 100%;
+            aspect-ratio: 3/4;
             border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.2);
-            background: var(--off-white);
-            aspect-ratio: 3/4;
+            background: #111;
+            position: relative;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.6);
         }
 
-        @media (min-width: 1024px) {
-            .main-image-wrap { aspect-ratio: unset; height: 88vh; }
-        }
-
-        .main-image-wrap img {
-            width: 100%; height: 100%;
-            object-fit: cover;
-            display: block;
-            transition: opacity 0.3s ease, transform 0.5s ease;
-        }
-
-        .main-image-wrap:hover img { transform: scale(1.02); }
-
-        /* Desktop arrows */
-        .img-arrow {
+        .main-image-container::after {
+            content: '';
             position: absolute;
-            top: 50%; transform: translateY(-50%);
-            background: rgba(74, 51, 38, 0.85); /* Brown background */
-            border: 1px solid var(--dark-brown);
-            color: var(--white);
-            font-size: 1.6rem;
-            width: 46px; height: 46px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.3s ease;
-            z-index: 10;
-            user-select: none;
-            line-height: 1;
+            inset: 0;
+            border-radius: 16px;
+            border: 1.5px solid rgba(201,168,76,0.35);
+            pointer-events: none;
+            z-index: 2;
         }
 
-        .img-arrow:hover { background: var(--medium-brown); }
-        .img-arrow.prev { left: 14px; }
-        .img-arrow.next { right: 14px; }
+        #mainImage { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s ease; display: block; }
 
-        @media (min-width: 768px) {
-            .img-arrow { display: flex; }
-        }
-
-        .img-counter {
-            position: absolute;
-            bottom: 14px; right: 16px;
-            background: rgba(74, 51, 38, 0.9);
-            color: var(--white);
-            font-size: 0.7rem;
-            letter-spacing: 1.5px;
-            padding: 4px 10px;
-            border-radius: 20px;
-        }
-
-        /* Thumbnails */
-        .thumbnails-container {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 0.7rem;
-        }
-
-        @media (max-width: 500px) {
-            .thumbnails-container { grid-template-columns: repeat(4, 1fr); }
-        }
+        .thumbnails-container { display: flex; gap: 0.6rem; flex-wrap: wrap; }
 
         .thumbnail {
-            aspect-ratio: 3/4;
+            width: 70px; height: 70px;
             border-radius: 8px;
             overflow: hidden;
             cursor: pointer;
-            opacity: 0.7;
-            transition: all 0.3s ease;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
-            border: 2px solid transparent;
+            border: 2px solid rgba(255,255,255,0.1);
+            transition: var(--transition);
+            background: #111;
         }
 
-        .thumbnail:hover { opacity: 0.9; transform: translateY(-2px); }
-        .thumbnail.active {
-            opacity: 1;
-            border-color: var(--dark-brown);
-            box-shadow: 0 4px 14px rgba(0,0,0,0.2);
-            transform: scale(1.04);
-        }
+        .thumbnail img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .thumbnail.active { border-color: var(--gold); }
 
-        .thumbnail img {
-            width: 100%; height: 100%;
-            object-fit: cover;
-            display: block;
-            transition: transform 0.4s ease;
-        }
-
-        .thumbnail:hover img { transform: scale(1.08); }
-
-        /* Product details panel */
         .product-details {
-            background: var(--white); /* White background for contrast */
-            border: 1px solid rgba(74, 51, 38, 0.15);
-            border-radius: 20px;
-            padding: 3rem 2.5rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            gap: 1.2rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            background: rgba(15, 10, 8, 0.88);
+            border: 1px solid rgba(201,168,76,0.2);
+            border-radius: 18px;
+            padding: 2.2rem;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+            backdrop-filter: blur(12px);
+            position: relative;
         }
 
-        @media (min-width: 1024px) {
-            .product-details { align-self: center; padding: 3.5rem 3rem; }
+        .product-details::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), var(--gold-light), var(--gold), transparent);
         }
+
+        @media (min-width: 860px) { .product-details { position: sticky; top: 1.5rem; } }
 
         .product-name {
-            font-family: 'Playfair Display SC', serif;
-            font-size: clamp(2.8rem, 6vw, 4.5rem);
-            font-weight: 400;
-            letter-spacing: 0.08em;
-            line-height: 1.1;
-            color: var(--dark-brown); /* Brown text */
-        }
-
-        .product-price {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 2.2rem;
-            font-weight: 300;
-            letter-spacing: 2px;
-            color: var(--medium-brown); /* Medium brown */
+            font-size: clamp(2.2rem, 5vw, 3.2rem);
+            font-weight: 600; color: var(--white); margin-bottom: 0.3rem;
+            line-height: 1.1; letter-spacing: 0.02em;
         }
 
-        .product-description {
-            font-size: 1rem;
-            line-height: 1.8;
-            color: var(--light-brown); /* Lighter brown for description */
-            font-weight: 300;
-            max-width: 420px;
+        .product-price { font-size: 1.5rem; font-weight: 600; color: var(--gold-light); margin-bottom: 1.2rem; }
+
+        .divider { height: 1px; background: rgba(201,168,76,0.15); margin: 1.2rem 0; }
+
+        .product-description { font-size: 0.93rem; color: rgba(255,255,255,0.75); line-height: 1.85; margin-bottom: 1rem; }
+
+        .size-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,0.6); margin-bottom: 0.7rem; display: block; }
+
+        .size-options { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.6rem; }
+
+        .size-btn {
+            padding: 0.5rem 1rem; border: 1.5px solid rgba(201,168,76,0.25);
+            border-radius: 6px; background: none; font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem; font-weight: 600; color: rgba(255,255,255,0.7);
+            cursor: pointer; transition: var(--transition); min-height: 42px;
         }
 
-        .divider {
-            width: 50px;
-            height: 1px;
-            background: rgba(74, 51, 38, 0.25);
-        }
+        .size-btn.selected { background: var(--gold); color: #1a1208; border-color: var(--gold); font-weight: 700; }
 
         .add-to-cart {
-            background: var(--dark-brown);
-            color: var(--white);
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 600;
-            font-size: 0.8rem;
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            padding: 1.2rem 3rem;
-            border: 1px solid var(--dark-brown);
-            border-radius: 4px;
-            cursor: pointer;
-            transition: var(--transition);
-            width: 100%;
-            max-width: 340px;
-            min-height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 100%; padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light), var(--gold));
+            background-size: 200% auto; color: #1a1208; border: none;
+            border-radius: 8px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 2px; cursor: pointer; transition: 0.4s; min-height: 52px;
         }
 
-        .add-to-cart:hover {
-            background: var(--medium-brown);
-            transform: translateY(-2px);
-            letter-spacing: 3px;
-        }
+        .add-to-cart:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,168,76,0.35); }
 
         footer {
-            text-align: center;
-            padding: 4rem 1rem;
-            background: rgba(74, 51, 38, 0.92);
-            color: var(--white);
-            margin-top: 2rem;
-        }
-        footer p { font-size: 0.75rem; letter-spacing: 1px; line-height: 1.8; }
-
-        /* Mobile touch targets */
-        @media (max-width: 767px) {
-            nav a { font-size: 0.7rem; padding: 6px 10px; }
-            .product-details { padding: 2rem 1.5rem; }
-            .product-name { font-size: 2.2rem; }
-            .product-price { font-size: 1.8rem; }
-        }
-
-        /* Focus states for accessibility */
-        a:focus, button:focus {
-            outline: 2px solid var(--medium-brown);
-            outline-offset: 2px;
+            width: 100%; max-width: 960px; text-align: center;
+            padding: 2rem 1rem; border-top: 1px solid rgba(201,168,76,0.15);
+            color: rgba(255,255,255,0.4); margin-top: 2rem;
         }
     </style>
 </head>
 <body>
 
-<div class="announcement-bar">
-    Free shipping for UK | International shipping please <a href="https://www.instagram.com/satr.labell/" target="_blank" rel="noopener">message @satr.labell</a>
-</div>
+    <header>
+        <a href="index.html" class="site-logo">Satr</a>
+        <nav id="mainNav">
+            <a href="index.html">Home</a>
+            <a href="productsatr.html" class="active">Products</a>
+            <a href="aboutme.html">About</a>
+            <a href="cart.html">Cart <span class="cart-count-badge" id="cartBadge"></span></a>
+        </nav>
+    </header>
 
-<header>
-    <h1>Satr</h1>
-    <nav>
-        <a href="satrindex.html">Home</a>
-        <a href="productsatr.html" class="active">Products</a>
-        <a href="aboutme.html">About</a>
-        <a href="cart.html">Cart</a> <!-- ✅ Links to cart.html -->
-    </nav>
-</header>
-
-<main>
-    <section class="product-section">
-        <div class="product-images">
-            <div class="main-image-wrap" id="mainWrap">
-                <!-- ✅ Starts with azra1.jpeg -->
-                <img src="azra1.jpeg" alt="Azra Abaya" id="mainImage">
-                <button class="img-arrow prev" onclick="galleryNav(-1)" aria-label="Previous image">&#8249;</button>
-                <button class="img-arrow next" onclick="galleryNav(1)" aria-label="Next image">&#8250;</button>
-                <div class="img-counter" id="imgCounter">1 / 5</div>
-            </div>
-            <div class="thumbnails-container">
-                <!-- ✅ azra1.jpeg is first and active -->
-                <div class="thumbnail active" data-idx="0">
-                    <img src="azra1.jpeg" alt="Azra view 1">
+    <main>
+        <section class="product-section">
+            <div class="product-images">
+                <div class="main-image-container">
+                    <img src="azra1.jpeg" alt="The Satr" id="mainImage">
                 </div>
-                <div class="thumbnail" data-idx="1">
-                    <img src="azra2.jpeg" alt="Azra view 2">
-                </div>
-                <div class="thumbnail" data-idx="2">
-                    <img src="azra3.jpeg" alt="Azra view 3">
-                </div>
-                <div class="thumbnail" data-idx="3">
-                    <img src="azra4.jpeg" alt="Azra view 4">
-                </div>
-                <div class="thumbnail" data-idx="4">
-                    <img src="azra5.jpeg" alt="Azra view 5">
+                <div class="thumbnails-container">
+                    <div class="thumbnail active" data-src="azra1.jpeg"><img src="azra1.jpeg" alt="Satr view 1"></div>
+                    <div class="thumbnail" data-src="azra2.jpeg"><img src="azra2.jpeg" alt="Satr view 2"></div>
+                    <div class="thumbnail" data-src="azra3.jpeg"><img src="azra3.jpeg" alt="Satr view 3"></div>
+                    <div class="thumbnail" data-src="azra4.jpeg"><img src="azra4.jpeg" alt="Satr view 4"></div>
+                    <div class="thumbnail" data-src="azra5.jpeg"><img src="azra5.jpeg" alt="Satr view 5"></div>
                 </div>
             </div>
-        </div>
 
-        <div class="product-details">
-            <div class="product-name">Azra</div>
-            <div class="product-price">£50</div> <!-- ✅ Price is £50 -->
-            <div class="divider"></div>
-            <p class="product-description">A black closed abaya with intricate lace detailing at the top and bottom. Features a modest silhouette, hidden pockets and soft lining for everyday elegance.</p>
-            <button class="add-to-cart" id="cartBtn">Add to Cart</button>
-        </div>
-    </section>
-</main>
+            <div class="product-details">
+                <div class="product-name">The Satr</div>
+                <div class="product-price">£50</div>
+                <div class="divider"></div>
+                <div class="product-description">A black closed abaya with intricate lace detailing at the top and bottom. Features a modest silhouette, hidden pockets and soft lining for everyday elegance.</div>
+                <div class="divider"></div>
+                <span class="size-label">Select Size</span>
+                <div class="size-options">
+                    <button class="size-btn" data-size="Small (54)">54</button>
+                    <button class="size-btn" data-size="Medium (56)">56</button>
+                    <button class="size-btn" data-size="Large (58)">58</button>
+                </div>
+                <button class="add-to-cart" id="addToCart">Add to Basket</button>
+            </div>
+        </section>
+    </main>
 
-<footer>
-    <p>&copy; 2026 Satr.<br>Handcrafted with love for the modern Muslimah.</p>
-</footer>
+    <footer>
+        <p>&copy; 2026 Satr. Handcrafted with love for the modern Muslimah.</p>
+    </footer>
 
-<script>
-    // ✅ Updated: azra1.jpeg is now first in the array
-    const IMAGES = ["azra1.jpeg", "azra2.jpeg", "azra3.jpeg", "azra4.jpeg", "azra5.jpeg"];
-    let currentIdx = 0;
-    let touchStartX = 0;
+    <script src="cart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mainImage = document.getElementById('mainImage');
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            
+            const IMAGES = [
+                "azra1.jpeg",
+                "azra2.jpeg",
+                "azra3.jpeg",
+                "azra4.jpeg",
+                "azra5.jpeg"
+            ];
+            
+            thumbnails.forEach((thumb, index) => {
+                thumb.addEventListener('click', () => {
+                    thumbnails.forEach(t => t.classList.remove('active'));
+                    thumb.classList.add('active');
+                    mainImage.style.opacity = 0;
+                    setTimeout(() => {
+                        mainImage.src = IMAGES[index];
+                        mainImage.style.opacity = 1;
+                    }, 300);
+                });
+            });
 
-    function setImage(idx, animate) {
-        currentIdx = (idx + IMAGES.length) % IMAGES.length;
-        const img = document.getElementById('mainImage');
-        const counter = document.getElementById('imgCounter');
-        
-        // Update thumbnails
-        document.querySelectorAll('.thumbnail').forEach((t, i) => {
-            t.classList.toggle('active', i === currentIdx);
+            const sizeBtns = document.querySelectorAll('.size-btn');
+            let selectedSize = null;
+
+            sizeBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    sizeBtns.forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    selectedSize = btn.dataset.size;
+                });
+            });
+
+            document.getElementById('addToCart').addEventListener('click', () => {
+                if (!selectedSize) {
+                    alert('Please select a size first.');
+                    return;
+                }
+                SatrCart.addItem('azra', selectedSize, 1);
+            });
         });
-        
-        counter.textContent = (currentIdx + 1) + ' / ' + IMAGES.length;
-        
-        if (animate) {
-            img.style.opacity = '0';
-            setTimeout(() => { 
-                img.src = IMAGES[currentIdx]; 
-                img.style.opacity = '1'; 
-            }, 200);
-        } else {
-            img.src = IMAGES[currentIdx];
-        }
-    }
-
-    function galleryNav(dir) { setImage(currentIdx + dir, true); }
-
-    // Thumbnail clicks
-    document.querySelectorAll('.thumbnail').forEach((thumb, i) => {
-        thumb.addEventListener('click', () => setImage(i, true));
-    });
-
-    // Touch swipe on main image
-    const wrap = document.getElementById('mainWrap');
-    wrap.addEventListener('touchstart', e => { 
-        touchStartX = e.changedTouches[0].screenX; 
-    }, {passive: true});
-    
-    wrap.addEventListener('touchend', e => {
-        const diff = touchStartX - e.changedTouches[0].screenX;
-        if (Math.abs(diff) > 50) galleryNav(diff > 0 ? 1 : -1);
-    });
-
-    // Keyboard navigation
-    document.addEventListener('keydown', e => {
-        if (e.key === 'ArrowRight') galleryNav(1);
-        if (e.key === 'ArrowLeft') galleryNav(-1);
-    });
-
-    // Add to cart animation
-    document.getElementById('cartBtn').addEventListener('click', function() {
-        const orig = this.textContent;
-        this.textContent = 'Added ✓';
-        this.style.background = 'var(--medium-brown)';
-        setTimeout(() => { 
-            this.textContent = orig; 
-            this.style.background = ''; 
-        }, 2000);
-    });
-
-    // Debug: Check background image
-    const bgTest = new Image();
-    bgTest.src = './background.jpeg';
-    bgTest.onload = () => console.log('✅ background.jpeg loaded');
-    bgTest.onerror = () => console.error('❌ background.jpeg failed - check filename & location');
-</script>
+    </script>
 </body>
 </html>
